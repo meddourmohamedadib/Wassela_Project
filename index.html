@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصلة - تسجيل الدخول</title>
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- قائمة اختيار اللغة العصرية والثابتة -->
+    <!-- أدوات أعلى الصفحة: الترجمة وزر العودة -->
+    <div class="top-nav-controls">
+        <!-- 1. قائمة اختيار اللغة -->
+        <div class="lang-switcher">
+            <div class="lang-container-box">
+                <i class="fa-solid fa-globe"></i>
+                <select id="custom-lang-select">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 2. زر العودة للرئيسية (تحت الترجمة مباشرة بنفس الستايل) -->
+        <a href="landing.html" class="back-home-float">
+            <i class="fa-solid fa-house"></i>
+            <span data-i18n="back_to_home">العودة للرئيسية</span>
+        </a>
+    </div>
+
+    <div class="login-container">
+        <!-- الشعار -->
+        <div class="logo-box">
+            <img src="assets/images/logo.png" id="main-logo" alt="شعار منصة وصلة" draggable="false">
+            <h2 data-i18n="welcome_title">مرحباً بك في <span>وصلة</span></h2>
+            <p data-i18n="welcome_desc">المنصة التعليمية الأولى في الجزائر</p>
+        </div>
+
+        <!-- أزرار التبديل الرئيسية (طالب / أستاذ) -->
+        <div class="toggle-buttons">
+            <button id="btn-student" class="active" onclick="switchRole('student')">
+                <i class="fa-solid fa-user-graduate"></i> <span data-i18n="student_tab">طالب</span>
+            </button>
+            <button id="btn-teacher" onclick="switchRole('teacher')">
+                <i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="teacher_tab">أستاذ</span>
+            </button>
+        </div>
+
+        <!-- ================= قسم الطالب ================= -->
+        <div id="section-student" class="role-section active-section">
+            <!-- تبديل فرعي (دخول / إنشاء حساب) -->
+            <div class="sub-toggle">
+                <button id="btn-student-login" class="sub-btn active" onclick="switchStudentMode('login')" data-i18n="sub_login">تسجيل الدخول</button>
+                <button id="btn-student-register" class="sub-btn" onclick="switchStudentMode('register')" data-i18n="sub_student_register">إنشاء حساب جديد</button>
+            </div>
+
+            <!-- 1. نموذج تسجيل دخول الطالب -->
+            <form id="form-student-login" class="auth-form active-sub-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="البريد الإلكتروني" data-i18n="email_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="كلمة المرور" data-i18n="password_placeholder" required>
+                </div>
+                <a href="#" class="forgot-password" data-i18n="forgot_pass">نسيت كلمة المرور؟</a>
+                <button type="submit" class="submit-btn" data-i18n="btn_login">تسجيل الدخول</button>
+            </form>
+
+            <!-- 2. نموذج إنشاء حساب الطالب -->
+            <form id="form-student-register" class="auth-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="الاسم الكامل" data-i18n="fullname_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="البريد الإلكتروني" data-i18n="email_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="كلمة المرور الجديدة" data-i18n="new_password_placeholder" required>
+                </div>
+
+                <!-- المرحلة التعليمية -->
+                <div class="input-group">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <select id="educational-level" class="dynamic-select" required>
+                        <option value="" disabled selected data-i18n="edu_level_default">اختر المرحلة التعليمية</option>
+                        <option value="bac" data-i18n="edu_bac">تعليم ثانوي (شعب الباكالوريا)</option>
+                        <option value="univ" data-i18n="edu_univ">تعليم جامعي (التخصصات الجامعية)</option>
+                        <option value="grandes_ecoles" data-i18n="edu_grandes_ecoles">المدارس العليا (Grandes Écoles)</option>
+                    </select>
+                </div>
+
+                <!-- صندوق البحث والقائمة الظاهرة مباشرة في الأسفل -->
+                <div class="specialty-box-wrapper" id="specialty-box-wrapper" style="display: none;">
+                    <label class="specialty-label" data-i18n="select_specialty_label">اختر التخصص أو الشعبة:</label>
+                    <div class="input-group specialty-search-group">
+                        <i class="fa-solid fa-search"></i>
+<input type="text" id="specialty-search-input" placeholder="ابحث عن التخصص أو الشعبة..." data-i18n="search_specialty_placeholder" autocomplete="off">                    </div>
+                    <div class="specialty-scroll-list" id="specialty-options-list">
+                        <!-- تُعبأ العناصر ديناميكياً هنا -->
+                    </div>
+                    <!-- حقل مخفي لضمان إرسال القيمة المختارة مع النموذج -->
+                    <input type="hidden" id="specialty-hidden-input" required>
+                </div>
+
+                <button type="submit" class="submit-btn" data-i18n="btn_complete_reg">إتمام التسجيل</button>
+            </form>
+        </div>
+
+
+        <!-- ================= قسم الأستاذ ================= -->
+        <div id="section-teacher" class="role-section">
+            <!-- تبديل فرعي (دخول / إنشاء حساب) -->
+            <div class="sub-toggle">
+                <button id="btn-teacher-login" class="sub-btn active" onclick="switchTeacherMode('login')" data-i18n="sub_login">تسجيل الدخول</button>
+                <button id="btn-teacher-register" class="sub-btn" onclick="switchTeacherMode('register')" data-i18n="sub_teacher_register">إنشاء حساب أستاذ</button>
+            </div>
+
+            <!-- 1. نموذج تسجيل دخول الأستاذ -->
+            <form id="form-teacher-login" class="auth-form active-sub-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="البريد الإلكتروني للأستاذ" data-i18n="teacher_email_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="كلمة المرور" data-i18n="password_placeholder" required>
+                </div>
+                <a href="#" class="forgot-password" data-i18n="forgot_pass">نسيت كلمة المرور؟</a>
+                <button type="submit" class="submit-btn" data-i18n="btn_teacher_dashboard">دخول لوحة الأستاذ</button>
+            </form>
+
+            <!-- 2. نموذج إنشاء حساب الأستاذ -->
+            <form id="form-teacher-register" class="auth-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="الاسم الكامل للأستاذ" data-i18n="teacher_fullname_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="البريد الإلكتروني" data-i18n="email_placeholder" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="كلمة المرور" data-i18n="password_placeholder" required>
+                </div>
+                <div class="input-group highlight-input">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" placeholder="كود التفعيل (من الإدارة)" data-i18n="code_placeholder" required>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="btn_create_teacher">إنشاء حساب أستاذ جديد</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- ملفات الجافاسكريفت -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <!-- حقوق المطور -->
+
+</body>
+</html>

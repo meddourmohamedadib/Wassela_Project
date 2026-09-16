@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة وصلة - المستقبل الذكي للتعليم في الجزائر</title>
+    <link rel="stylesheet" href="css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- الشريط العلوي (Navbar) -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand-logo">
+    <img src="assets/images/logo.png" alt="شعار وصلة" class="nav-logo-img" draggable="false">
+    <div class="logo-text">
+        <span data-i18n="logo_sub">المنصة التعليمية الأولى في الجزائر</span>
+    </div>
+</div>
+
+            <nav class="nav-links">
+                <a href="#features" data-i18n="nav_features">المميزات</a>
+                <a href="#tracks" data-i18n="nav_tracks">المسارات التعليمية</a>
+                <a href="#about" data-i18n="nav_about">عن المنصة</a>
+                <a href="#developers" data-i18n="nav_devs">فريق التطوير</a>
+            </nav>
+
+            <div class="nav-actions">
+               <div class="lang-selector">
+    <i class="fa-solid fa-globe"></i>
+    <select id="custom-lang-select">
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+    </select>
+</div>
+                <!-- زر الدخول -->
+                <a href="index.html" class="btn-enter">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span data-i18n="btn_enter_platform">دخول المنصة</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم الهيرو (Hero Section) -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <i class="fa-solid fa-bolt"></i>
+                <span data-i18n="hero_badge">تجمع أفضل الأساتذة والطلاب عبر 58 ولاية</span>
+            </div>
+            <h1 data-i18n="hero_title">المستقبل الذكي للتعليم في الجزائر</h1>
+            <p data-i18n="hero_desc">منصة تعليمية متكاملة تدمج بين خبرة أساتذة النخبة وقوة الذكاء الاصطناعي لتأطير التلاميذ والطلبة في جميع المراحل والمسارات.</p>
+            <div class="hero-cta">
+                <button id="openPricingModal" class="btn btn-primary">
+    <i class="fa-solid fa-gem"></i>
+    <span data-i18n="btn_subscriptions">عرض الاشتراكات</span>
+</button>
+                <a href="#tracks" class="btn-secondary" data-i18n="btn_explore_tracks">استكشف التخصصات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section class="section-container" id="features">
+        <div class="section-header">
+            <span class="sub-title" data-i18n="feat_subtitle">لماذا وصلة؟</span>
+            <h2 data-i18n="feat_heading">بيئة تعليمية متكاملة لضمان التفوق</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-box"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h3 data-i18n="feat_1_title">أساتذة نخبة</h3>
+                <p data-i18n="feat_1_desc">نخبة من كبار الأساتذة والمختصين من مختلف أنحاء الوطن لضمان أعلى تحصيل علمي ومتابعة دقيقة لكل تلميذ.</p>
+            </div>
+            <div class="feature-card highlighted-card">
+                <div class="icon-box"><i class="fa-solid fa-robot"></i></div>
+                <h3 data-i18n="feat_2_title">ذكاء اصطناعي 24/7</h3>
+                <p data-i18n="feat_2_desc">مساعد ذكي يحلل ويقيم مستوى الطالب باستمرار، ويوفر مسارات تعلم مخصصة مع مراقبة وإجابة فورية طيلة 24 ساعة.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
+                <h3 data-i18n="feat_3_title">مكتبة رقمية شاملة</h3>
+                <p data-i18n="feat_3_desc">مركز موحد يضم جميع المصادر التعليمية، السلاسل، التمارين المحلولة، والكتب المدرسية منظمة ومتاحة للتحميل.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المسارات التعليمية -->
+    <section class="section-container tracks-bg" id="tracks">
+        <div class="section-header">
+            <span class="sub-title" data-i18n="tracks_subtitle">مسارات شاملة</span>
+            <h2 data-i18n="tracks_heading">المسارات التعليمية المتاحة في المنصة</h2>
+        </div>
+        <div class="tracks-grid">
+            <div class="track-card">
+                <div class="track-header">
+                    <i class="fa-solid fa-school"></i>
+                    <h3 data-i18n="track_bac_title">تعليم ثانوي (شعب البكالوريا)</h3>
+                </div>
+                <ul class="track-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_exp">علوم تجريبية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_math">رياضيات</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_tm">تقني رياضي (ميكانيك، كهرباء، هندسة مدنية، طرائق)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_eco">تسيير وإقتصاد</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_lit">آداب وفلسفة</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="bac_lang">لغات أجنبية</span></li>
+                </ul>
+            </div>
+
+            <div class="track-card">
+                <div class="track-header">
+                    <i class="fa-solid fa-university"></i>
+                    <h3 data-i18n="track_univ_title">التعليم الجامعي (التخصصات الجامعية)</h3>
+                </div>
+                <ul class="track-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="univ_cs">إعلام آلي (Computer Science)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="univ_st">علوم وتكنولوجيا (ST)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="univ_sm">علوم المادة (SM)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="univ_med">علوم طبية (طب، صيدلة، طب أسنان)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="univ_eco">علوم اقتصادية وتجارية وعلوم التسيير</span></li>
+                </ul>
+            </div>
+
+            <div class="track-card">
+                <div class="track-header">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <h3 data-i18n="track_ge_title">المدارس العليا (Grandes Écoles)</h3>
+                </div>
+                <ul class="track-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="ge_esi">المدرسة الوطنية العليا للإعلام الآلي (ESI)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="ge_ai">المدرسة الوطنية العليا للذكاء الاصطناعي (ENSIA)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="ge_ens">المدارس العليا لأساتذة التعليم (ENS)</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="ge_poly">المدارس الوطنية العليا للتكنولوجيا والمهندسين</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم عن المنصة -->
+    <section class="section-container" id="about">
+        <div class="about-box">
+            <h2 data-i18n="about_title">رؤية منصة وصلة</h2>
+            <p data-i18n="about_desc">تم بناء منصة وصلة برؤية وطنية طموحة لإحداث ثورة حقيقية في المنظومة التربوية والتعليمية الجزائرية. يهدف المشروع إلى تذليل العقبات أمام التلاميذ والطلبة في كل ربوع الوطن من خلال ربطهم المستمر بأجود الكفاءات والأساتذة، وتوفير أدوات الذكاء الاصطناعي التي تضمن التحصيل المستمر وتذليل الصعوبات الدراسية خطوة بخطوة.</p>
+        </div>
+    </section>
+
+    <!-- قسم فريق التطوير (3 المطورين) -->
+    <section class="section-container" id="developers">
+        <div class="section-header">
+            <span class="sub-title" data-i18n="devs_subtitle">الخلفية التقنية</span>
+            <h2 data-i18n="devs_heading">فريق الهندسة والتطوير للمشروع</h2>
+        </div>
+        <div class="developers-grid">
+            
+            <!-- المطور الأول: محمد أمين -->
+            <div class="dev-card">
+                <div class="dev-avatar">
+                    <img src="assets/images/dev1.png" alt="محمد أمين">
+                </div>
+                <h3>محمد أمين</h3>
+                <span class="dev-role">Lead Full-Stack & System Engineer</span>
+                <p data-i18n="dev1_desc">مهندس معماري للمنصة ومطور الأنظمة البرمجية والربط المتكامل بين أجزاء المشروع.</p>
+            </div>
+
+            <!-- المطور الثاني: سعاد سايحي -->
+            <div class="dev-card">
+                <div class="dev-avatar">
+                    <img src="assets/images/dev2.png" alt="سعاد سايحي">
+                </div>
+                <h3 data-i18n="dev2_name">سعاد سايحي</h3>
+                <span class="dev-role">AI & Data Science Specialist</span>
+                <p data-i18n="dev2_desc">المسؤول عن تطوير نماذج التقييم الآلي وأنظمة التتبع المستمر 24/7 للتلاميذ.</p>
+            </div>
+
+            <!-- المطور الثالث: أديب مدور -->
+            <div class="dev-card">
+                <div class="dev-avatar">
+                    <img src="assets/images/dev3.png" alt="أديب مدور">
+                </div>
+                <h3 data-i18n="dev3_name">أديب مدور</h3>
+                <span class="dev-role">UI/UX Architect</span>
+                <p data-i18n="dev3_desc">مصمم واجهات المستخدم لضمان تجربة سلسة ولتصميم عصري متناسق ومريح للعين.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <p data-i18n="footer_text">© 2026 منصة وصلة التعليمية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    <!-- Modal الاشتراكات -->
+<div id="pricingModal" class="modal-overlay">
+    <div class="modal-card">
+        <button class="modal-close" id="closePricingModal" aria-label="إغلاق">&times;</button>
+        <div class="modal-header">
+            <h2 data-i18n="modal_title">اختر الخطة المناسبة لنجاحك</h2>
+            <p data-i18n="modal_subtitle">استثمر في مستقبلك الدراسي مع منصة وصلة واحصل على أفضل تجربة تعليمية</p>
+        </div>
+        <div class="pricing-grid">
+            <!-- الخطة الشهرية -->
+            <div class="price-card">
+                <div class="card-badge-placeholder"></div>
+                <h3 data-i18n="monthly_title">الاشتراك الشهري</h3>
+                <div class="price-box">
+                    <span class="price-amount" data-i18n="monthly_price">2,000 د.ج</span>
+                    <span class="price-period" data-i18n="per_month">/ شهرياً</span>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="monthly_feat_1">الوصول الكامل لجميع الدروس والمصادر التعليمية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="monthly_feat_2">حضور البثوث المباشرة لمتابعة أساتذتك المفضلين</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="monthly_feat_3">تمارين محلولة وسلاسل تطبيقات تفاعلية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="monthly_feat_4">دعم وتوجيه يومي للإجابة على التساؤلات</span></li>
+                </ul>
+                <button class="btn-subscribe btn-outlined" data-i18n="btn_subscribe">سجل واختر العرض</button>
+            </div>
+            <!-- الخطة السنوية -->
+            <div class="price-card popular">
+                <div class="card-badge" data-i18n="annual_badge">توفير 33% 🔥</div>
+                <h3 data-i18n="annual_title">الاشتراك السنوي</h3>
+                <div class="price-box">
+                    <span class="old-price" data-i18n="annual_old_price">18,000 د.ج</span>
+                    <span class="price-amount" data-i18n="annual_price">12,000 د.ج</span>
+                    <span class="price-period" data-i18n="per_year">/ سنوياً</span>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="annual_feat_1">كل مميزات الاشتراك الشهري بلا حدود</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="annual_feat_2">وصول كامل ومفتوح طوال السنة الدراسية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="annual_feat_3">تحميل ملخصات حصرية وملفات PDF ملخصة</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="annual_feat_4">مراجعات مركزة ومحاكاة للامتحانات الرسمية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="annual_feat_5">أولوية طرح الأسئلة والتفاعل المباشر مع أساتذة النخبة</span></li>
+                </ul>
+                <button class="btn-subscribe btn-solid" data-i18n="btn_subscribe">سجل واختر العرض</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ملفات الجافاسكريبت -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+        <script src="js/main.js"></script>
+
+    <!-- حقوق المطور -->
+
+</body>
+</html>

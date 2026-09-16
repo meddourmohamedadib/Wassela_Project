@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+
+body {
+    /* لون خلفية مريح ومقارب لخلفية الشعار */
+    background-color: #f4f5f0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.logo-box {
+    user-select: none; /* يمنع تحديد النصوص تماماً عند الضغط المتتالي */
+}
+
+.logo-box img {
+    width: 185px; /* تكبير الحجم بشكل حقيقي ومباشر دون الحاجة لـ scale لتجنب أي تداخل */
+    margin-bottom: 25px; 
+    pointer-events: none; /* يمنع الصورة تماماً من اعتراض الضغطات */
+    user-select: none;
+}
+
+/* أضف هذا الكود في نهاية الملف لتغيير شكل الأزرار عندما تتعطل */
+button:disabled {
+    background-color: #cccccc !important; /* لون رمادي باهت */
+    color: #666666 !important;
+    cursor: not-allowed !important; /* مؤشر الماوس كعلامة منع */
+    box-shadow: none !important;
+    opacity: 0.7;
+}
+
+.logo-box h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.logo-box h2 span {
+    /* لون الأخضر الداكن من الشعار */
+    color: #165a35; 
+}
+
+.logo-box p {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.toggle-buttons {
+    display: flex;
+    background-color: #f0f2f0;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.toggle-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-buttons button i {
+    margin-left: 5px;
+}
+
+.toggle-buttons button.active {
+    /* الأخضر الفاتح من الزخرفة */
+    background-color: #3f9b53; 
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(63, 155, 83, 0.3);
+}
+
+.login-form {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.login-form.active-form {
+    display: block;
+}
+
+/* توحيد وتحديث تصميم جميع الحقول والقوائم لتكون عصرية ومتطابقة */
+.input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+/* الأيقونة الموجودة في يمين الحقل */
+.input-group i {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 16px;
+    pointer-events: none; /* لضمان عدم إعاقة النقر */
+    z-index: 2;
+}
+
+/* تصميم موحد لكل من الحقول النصية والقوائم المنسدلة */
+.input-group input,
+.input-group select.dynamic-select {
+    width: 100%;
+    padding: 13px 48px 13px 45px; /* مساحة دقيقة للأيقونة يمين والسهم يسار */
+    border: 1.5px solid #e1e4e8;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    font-family: inherit;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* تأثير التركيز (Focus) العصري */
+.input-group input:focus,
+.input-group select.dynamic-select:focus {
+    border-color: #165a35;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(22, 90, 53, 0.1);
+}
+
+/* جعل القائمة المنسدلة عصرية وإخفاء سهم المتصفح القديم */
+.input-group select.dynamic-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    /* إضافة سهم أنيق وعصري جهة اليسار لأن الصفحة RTL */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 16px center;
+    background-size: 15px;
+}
+
+/* تمييز حقل كود الأستاذ */
+.highlight-input input {
+    border-color: #3f9b53;
+    background-color: #f9fdf9;
+}
+
+.highlight-input i {
+    color: #3f9b53;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    color: #3f9b53;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #165a35; /* الأخضر الداكن */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #114226;
+    box-shadow: 0 5px 15px rgba(22, 90, 53, 0.3);
+}
+
+/* تصميم قائمة اللغات العصرية والثابتة */
+.lang-switcher {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 10000;
+}
+
+.lang-container-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 6px 14px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.lang-container-box:hover {
+    border-color: #2e7d32;
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.15);
+}
+
+.lang-container-box i.fa-globe {
+    color: #2e7d32;
+    font-size: 16px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+
+.lang-switcher select {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    padding-right: 5px;
+    padding-left: 15px;
+}
+
+/* دعم الهواتف المحمولة لجعلها مناسبة للشاشات الصغيرة */
+@media (max-width: 480px) {
+    .lang-switcher {
+        top: 15px;
+        right: 15px;
+    }
+    .lang-container-box {
+        padding: 4px 10px;
+    }
+    .lang-switcher select {
+        font-size: 12px;
+    }
+}
+/* إخفاء الأقسام غير النشطة */
+.role-section {
+    display: none;
+}
+.role-section.active-section {
+    display: block;
+}
+
+.auth-form {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+.auth-form.active-sub-form {
+    display: block;
+}
+
+/* تصميم أزرار التبديل الفرعية (دخول / إنشاء حساب) */
+.sub-toggle {
+    display: flex;
+    background-color: #f0f2f0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 3px;
+}
+
+.sub-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.sub-btn.active {
+    background-color: #ffffff;
+    color: #165a35;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+/* تصميم صندوق التخصصات والبحث الظاهر مباشرة */
+.specialty-box-wrapper {
+    margin-bottom: 18px;
+    background: #f8f9fa;
+    border: 1.5px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.specialty-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.specialty-search-group {
+    margin-bottom: 10px !important;
+}
+
+.specialty-search-group input {
+    background-color: #fff !important;
+}
+
+.specialty-scroll-list {
+    max-height: 170px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.specialty-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.specialty-item:hover {
+    background-color: #f0f7f4;
+    color: #165a35;
+}
+
+.specialty-item.selected {
+    background-color: #165a35;
+    color: #fff;
+    font-weight: 600;
+}
+
+.specialty-item.no-results {
+    color: #888;
+    text-align: center;
+    cursor: default;
+}
+.specialty-item.no-results:hover {
+    background: transparent;
+}
+/* ==========================================
+   أدوات أعلى الصفحة (الترجمة + زر العودة)
+   ========================================== */
+.top-nav-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* التنسيق المتطاول والعصري لزر العودة */
+/* ==========================================
+   تنسيق زر العودة للرئيسية أسفل الترجمة
+   ========================================== */
+.back-home-float {
+    position: fixed;
+    top: 75px;        /* يُنزِل الزر أسفل مربع اللغة تماماً */
+    right: 20px;       /* يثبته على اليمين تحت زر اللغة */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 18px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    color: #475569;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 999;
+}
+
+.back-home-float i {
+    color: #10b981;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+/* تأثير عند مرور الماوس */
+.back-home-float:hover {
+    background: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+    transform: translateY(-2px);
+}
+
+.back-home-float:hover i {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* دعم اتجاه اللغات الأجنبية LTR (تغيير الموضِع لليسار تلقائياً) */
+[dir="ltr"] .back-home-float {
+    right: auto;
+    left: 20px;
+}
