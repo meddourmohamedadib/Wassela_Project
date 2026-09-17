@@ -1,1 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Wassla — Teacher Dashboard</title>
+
+    <!-- Cairo Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <!-- Teacher Styles -->
+    <link rel="stylesheet" href="css/teacher.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TEACHER DASHBOARD
+         Frontend Prototype — No Backend / No Database
+    ====================================================== -->
+
+    <div class="teacher-app">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="teacher-sidebar" id="teacherSidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+                <a href="landing.html" class="brand-link">
+                    <img
+                        src="assets/images/logo.png"
+                        alt="Wassla Logo"
+                        class="sidebar-logo"
+                    >
+
+                    <div class="brand-text">
+                        <strong>Wassla</strong>
+                        <span>Teacher Space</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Teacher Profile -->
+            <div class="sidebar-profile">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="profile-info">
+                    <strong>Teacher</strong>
+                    <span>Instructor</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+
+                <p class="nav-label">MAIN</p>
+
+                <button
+                    class="nav-item active"
+                    data-section="dashboard"
+                    type="button"
+                >
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-section="courses"
+                    type="button"
+                >
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>My Courses</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-section="create-course"
+                    type="button"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create Course</span>
+                </button>
+
+                <p class="nav-label">STUDENTS</p>
+
+                <button
+                    class="nav-item"
+                    data-section="students"
+                    type="button"
+                >
+                    <i class="fa-solid fa-users"></i>
+                    <span>Students</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-section="progress"
+                    type="button"
+                >
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Student Progress</span>
+                </button>
+
+                <p class="nav-label">TEACHING</p>
+
+                <button
+                    class="nav-item"
+                    data-section="live-sessions"
+                    type="button"
+                >
+                    <i class="fa-solid fa-video"></i>
+                    <span>Live Sessions</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-section="resources"
+                    type="button"
+                >
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Resources</span>
+                </button>
+
+            </nav>
+
+            <!-- Sidebar Bottom -->
+            <div class="sidebar-bottom">
+
+                <button
+                    class="nav-item"
+                    data-section="settings"
+                    type="button"
+                >
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </button>
+
+                <a href="index.html" class="logout-item">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Back to Login</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN AREA ================= -->
+        <main class="teacher-main">
+
+            <!-- Topbar -->
+            <header class="teacher-topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="mobile-menu-btn"
+                        id="mobileMenuBtn"
+                        type="button"
+                        aria-label="Open menu"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div class="page-heading">
+                        <span class="page-kicker">Teacher Space</span>
+                        <h1 id="pageTitle">Dashboard</h1>
+                    </div>
+
+                </div>
+
+                <div class="topbar-actions">
+
+                    <!-- Search -->
+                    <button
+                        class="topbar-icon-btn"
+                        type="button"
+                        title="Search"
+                        id="searchBtn"
+                    >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                    <!-- Notifications -->
+                    <button
+                        class="topbar-icon-btn notification-btn"
+                        type="button"
+                        title="Notifications"
+                        id="notificationBtn"
+                    >
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <!-- Language -->
+                    <select
+                        class="language-select"
+                        id="languageSelect"
+                        aria-label="Language"
+                    >
+                        <option value="en">EN</option>
+                        <option value="fr">FR</option>
+                        <option value="ar">AR</option>
+                    </select>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= CONTENT ================= -->
+            <div class="teacher-content">
+
+
+                <!-- =================================================
+                     DASHBOARD SECTION
+                ================================================== -->
+                <section
+                    class="dashboard-section page-section active-section"
+                    id="dashboard"
+                >
+
+                    <!-- Welcome Card -->
+                    <div class="welcome-card">
+
+                        <div class="welcome-content">
+
+                            <span class="welcome-badge">
+                                <i class="fa-solid fa-sparkles"></i>
+                                Teacher Dashboard
+                            </span>
+
+                            <h2>
+                                Welcome back,
+                                <span>Teacher!</span>
+                            </h2>
+
+                            <p>
+                                Keep your courses organized, follow your students'
+                                progress, and create a better learning experience.
+                            </p>
+
+                            <button
+                                class="primary-btn"
+                                type="button"
+                                data-section-target="create-course"
+                            >
+                                <i class="fa-solid fa-plus"></i>
+                                Create a Course
+                            </button>
+
+                        </div>
+
+                        <div class="welcome-visual">
+                            <div class="welcome-icon">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Statistics -->
+                    <div class="stats-grid">
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+
+                            <div class="stat-info">
+                                <span>Total Courses</span>
+                                <strong>8</strong>
+                                <small>
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    2 this month
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+
+                            <div class="stat-info">
+                                <span>Total Students</span>
+                                <strong>246</strong>
+                                <small>
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    18 new
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+
+                            <div class="stat-info">
+                                <span>Average Progress</span>
+                                <strong>74%</strong>
+                                <small>
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    +6.4%
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+
+                            <div class="stat-info">
+                                <span>Live Sessions</span>
+                                <strong>12</strong>
+                                <small>
+                                    3 upcoming
+                                </small>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Dashboard Grid -->
+                    <div class="dashboard-grid">
+
+
+                        <!-- Course Performance -->
+                        <div class="dashboard-card course-performance-card">
+
+                            <div class="card-header">
+
+                                <div>
+                                    <span class="card-kicker">Overview</span>
+                                    <h3>Course Performance</h3>
+                                </div>
+
+                                <button
+                                    class="text-btn"
+                                    type="button"
+                                    data-section-target="courses"
+                                >
+                                    View all
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="course-performance-list">
+
+                                <div class="performance-item">
+
+                                    <div class="performance-course">
+                                        <div class="course-mini-icon">
+                                            <i class="fa-solid fa-brain"></i>
+                                        </div>
+
+                                        <div>
+                                            <strong>Introduction to AI</strong>
+                                            <span>86 students</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="performance-progress">
+                                        <div class="progress-header">
+                                            <span>Progress</span>
+                                            <strong>82%</strong>
+                                        </div>
+
+                                        <div class="progress-bar">
+                                            <span style="width: 82%;"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="performance-item">
+
+                                    <div class="performance-course">
+                                        <div class="course-mini-icon">
+                                            <i class="fa-solid fa-code"></i>
+                                        </div>
+
+                                        <div>
+                                            <strong>Python Programming</strong>
+                                            <span>64 students</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="performance-progress">
+                                        <div class="progress-header">
+                                            <span>Progress</span>
+                                            <strong>71%</strong>
+                                        </div>
+
+                                        <div class="progress-bar">
+                                            <span style="width: 71%;"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="performance-item">
+
+                                    <div class="performance-course">
+                                        <div class="course-mini-icon">
+                                            <i class="fa-solid fa-database"></i>
+                                        </div>
+
+                                        <div>
+                                            <strong>Data Structures</strong>
+                                            <span>51 students</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="performance-progress">
+                                        <div class="progress-header">
+                                            <span>Progress</span>
+                                            <strong>66%</strong>
+                                        </div>
+
+                                        <div class="progress-bar">
+                                            <span style="width: 66%;"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- AI Insights -->
+                        <div class="dashboard-card ai-insights-card">
+
+                            <div class="card-header">
+
+                                <div>
+                                    <span class="card-kicker">Wassla AI</span>
+                                    <h3>Student Insights</h3>
+                                </div>
+
+                                <div class="ai-icon">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+
+                            </div>
+
+
+                            <div class="ai-insight">
+
+                                <div class="insight-icon warning">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Needs attention</strong>
+                                    <p>
+                                        12 students may need additional support
+                                        in the latest lesson.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="ai-insight">
+
+                                <div class="insight-icon success">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Positive progress</strong>
+                                    <p>
+                                        Most students improved their activity
+                                        this week.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="secondary-btn full-btn"
+                                type="button"
+                                data-section-target="progress"
+                            >
+                                View Student Progress
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Recent Activity -->
+                    <div class="dashboard-card recent-activity-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <span class="card-kicker">Latest</span>
+                                <h3>Recent Student Activity</h3>
+                            </div>
+
+                            <button
+                                class="text-btn"
+                                type="button"
+                                data-section-target="students"
+                            >
+                                View students
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="activity-table-wrapper">
+
+                            <table class="activity-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Course</th>
+                                        <th>Activity</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">A</div>
+                                                <strong>Amine B.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Introduction to AI</td>
+                                        <td>Completed a lesson</td>
+                                        <td>84%</td>
+
+                                        <td>
+                                            <span class="status-badge success">
+                                                Active
+                                            </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">S</div>
+                                                <strong>Sarah M.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Python Programming</td>
+                                        <td>Submitted an assignment</td>
+                                        <td>76%</td>
+
+                                        <td>
+                                            <span class="status-badge success">
+                                                Active
+                                            </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">Y</div>
+                                                <strong>Yanis K.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Data Structures</td>
+                                        <td>Needs review</td>
+                                        <td>48%</td>
+
+                                        <td>
+                                            <span class="status-badge warning">
+                                                Attention
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     MY COURSES
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="courses"
+                >
+
+                    <div class="section-intro">
+
+                        <div>
+                            <span class="page-kicker">Teaching</span>
+                            <h2>My Courses</h2>
+                            <p>
+                                Manage the courses you are teaching on Wassla.
+                            </p>
+                        </div>
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            data-section-target="create-course"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                            Create Course
+                        </button>
+
+                    </div>
+
+
+                    <div class="course-grid">
+
+                        <article class="course-card">
+                            <div class="course-card-icon">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+
+                            <div class="course-card-body">
+                                <span class="course-category">Artificial Intelligence</span>
+                                <h3>Introduction to AI</h3>
+
+                                <p>
+                                    Learn the fundamentals of artificial
+                                    intelligence and its applications.
+                                </p>
+
+                                <div class="course-meta">
+                                    <span>
+                                        <i class="fa-solid fa-users"></i>
+                                        86 students
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        12 lessons
+                                    </span>
+                                </div>
+
+                                <div class="course-progress">
+                                    <div>
+                                        <span>Student progress</span>
+                                        <strong>82%</strong>
+                                    </div>
+
+                                    <div class="progress-bar">
+                                        <span style="width:82%;"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="course-action" type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </article>
+
+
+                        <article class="course-card">
+                            <div class="course-card-icon">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+
+                            <div class="course-card-body">
+                                <span class="course-category">Programming</span>
+                                <h3>Python Programming</h3>
+
+                                <p>
+                                    A practical introduction to Python
+                                    programming for beginners.
+                                </p>
+
+                                <div class="course-meta">
+                                    <span>
+                                        <i class="fa-solid fa-users"></i>
+                                        64 students
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        18 lessons
+                                    </span>
+                                </div>
+
+                                <div class="course-progress">
+                                    <div>
+                                        <span>Student progress</span>
+                                        <strong>71%</strong>
+                                    </div>
+
+                                    <div class="progress-bar">
+                                        <span style="width:71%;"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="course-action" type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </article>
+
+
+                        <article class="course-card">
+                            <div class="course-card-icon">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
+
+                            <div class="course-card-body">
+                                <span class="course-category">Computer Science</span>
+                                <h3>Data Structures</h3>
+
+                                <p>
+                                    Understand essential data structures and
+                                    problem-solving techniques.
+                                </p>
+
+                                <div class="course-meta">
+                                    <span>
+                                        <i class="fa-solid fa-users"></i>
+                                        51 students
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        15 lessons
+                                    </span>
+                                </div>
+
+                                <div class="course-progress">
+                                    <div>
+                                        <span>Student progress</span>
+                                        <strong>66%</strong>
+                                    </div>
+
+                                    <div class="progress-bar">
+                                        <span style="width:66%;"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="course-action" type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     CREATE COURSE
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="create-course"
+                >
+
+                    <div class="section-intro">
+                        <div>
+                            <span class="page-kicker">Create</span>
+                            <h2>Create a Course</h2>
+                            <p>
+                                Build a new learning experience for your students.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-card">
+
+                        <form id="courseForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group full">
+                                    <label for="courseTitle">
+                                        Course Title
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="courseTitle"
+                                        placeholder="e.g. Machine Learning Fundamentals"
+                                    >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="courseCategory">
+                                        Category
+                                    </label>
+
+                                    <select id="courseCategory">
+                                        <option value="">Select category</option>
+                                        <option>Artificial Intelligence</option>
+                                        <option>Programming</option>
+                                        <option>Mathematics</option>
+                                        <option>Computer Science</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="courseLevel">
+                                        Level
+                                    </label>
+
+                                    <select id="courseLevel">
+                                        <option value="">Select level</option>
+                                        <option>Beginner</option>
+                                        <option>Intermediate</option>
+                                        <option>Advanced</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group full">
+                                    <label for="courseDescription">
+                                        Description
+                                    </label>
+
+                                    <textarea
+                                        id="courseDescription"
+                                        rows="5"
+                                        placeholder="Describe what students will learn..."
+                                    ></textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="lessonCount">
+                                        Number of Lessons
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="lessonCount"
+                                        min="1"
+                                        placeholder="10"
+                                    >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="courseDuration">
+                                        Estimated Duration
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="courseDuration"
+                                        placeholder="e.g. 6 weeks"
+                                    >
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="button"
+                                    class="secondary-btn"
+                                    id="previewCourseBtn"
+                                >
+                                    <i class="fa-regular fa-eye"></i>
+                                    Preview
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="primary-btn"
+                                >
+                                    <i class="fa-solid fa-plus"></i>
+                                    Create Course
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     STUDENTS
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="students"
+                >
+
+                    <div class="section-intro">
+                        <div>
+                            <span class="page-kicker">Students</span>
+                            <h2>My Students</h2>
+                            <p>
+                                A quick overview of students learning with you.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="student-summary-grid">
+
+                        <div class="mini-stat-card">
+                            <span>Total Students</span>
+                            <strong>246</strong>
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div class="mini-stat-card">
+                            <span>Active This Week</span>
+                            <strong>198</strong>
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+
+                        <div class="mini-stat-card">
+                            <span>Needs Attention</span>
+                            <strong>12</strong>
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <span class="card-kicker">Students</span>
+                                <h3>Student List</h3>
+                            </div>
+
+                            <div class="table-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="search"
+                                    id="studentSearch"
+                                    placeholder="Search students..."
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-table-wrapper">
+
+                            <table class="activity-table students-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Course</th>
+                                        <th>Progress</th>
+                                        <th>Last Activity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">A</div>
+                                                <strong>Amine B.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Introduction to AI</td>
+                                        <td>84%</td>
+                                        <td>Today</td>
+
+                                        <td>
+                                            <span class="status-badge success">
+                                                Active
+                                            </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">S</div>
+                                                <strong>Sarah M.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Python Programming</td>
+                                        <td>76%</td>
+                                        <td>Yesterday</td>
+
+                                        <td>
+                                            <span class="status-badge success">
+                                                Active
+                                            </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="student-cell">
+                                                <div class="student-avatar">Y</div>
+                                                <strong>Yanis K.</strong>
+                                            </div>
+                                        </td>
+
+                                        <td>Data Structures</td>
+                                        <td>48%</td>
+                                        <td>4 days ago</td>
+
+                                        <td>
+                                            <span class="status-badge warning">
+                                                Attention
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     STUDENT PROGRESS
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="progress"
+                >
+
+                    <div class="section-intro">
+                        <div>
+                            <span class="page-kicker">Analytics</span>
+                            <h2>Student Progress</h2>
+                            <p>
+                                Understand how students are progressing through
+                                your courses.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="progress-overview">
+
+                        <div class="progress-main-card">
+
+                            <div class="card-header">
+                                <div>
+                                    <span class="card-kicker">Overall</span>
+                                    <h3>Learning Progress</h3>
+                                </div>
+
+                                <strong class="large-percentage">74%</strong>
+                            </div>
+
+                            <div class="large-progress-bar">
+                                <span style="width:74%;"></span>
+                            </div>
+
+                            <p>
+                                Average progress across your active courses.
+                            </p>
+
+                        </div>
+
+
+                        <div class="ai-progress-card">
+
+                            <div class="ai-icon">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+
+                            <div>
+                                <span>AI Insight</span>
+                                <strong>12 students may need support</strong>
+
+                                <p>
+                                    Based on the sample learning activity
+                                    displayed in this prototype.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+                            <div>
+                                <span class="card-kicker">Course analysis</span>
+                                <h3>Progress by Course</h3>
+                            </div>
+                        </div>
+
+
+                        <div class="progress-course-list">
+
+                            <div class="progress-course-item">
+
+                                <div class="progress-course-title">
+                                    <strong>Introduction to AI</strong>
+                                    <span>82%</span>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:82%;"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-course-item">
+
+                                <div class="progress-course-title">
+                                    <strong>Python Programming</strong>
+                                    <span>71%</span>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:71%;"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-course-item">
+
+                                <div class="progress-course-title">
+                                    <strong>Data Structures</strong>
+                                    <span>66%</span>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:66%;"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     LIVE SESSIONS
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="live-sessions"
+                >
+
+                    <div class="section-intro">
+
+                        <div>
+                            <span class="page-kicker">Teaching</span>
+                            <h2>Live Sessions</h2>
+                            <p>
+                                Organize upcoming learning sessions with your students.
+                            </p>
+                        </div>
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            id="createSessionBtn"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                            New Session
+                        </button>
+
+                    </div>
+
+
+                    <div class="session-grid">
+
+                        <article class="session-card upcoming">
+
+                            <div class="session-date">
+                                <span>18</span>
+                                <small>SEP</small>
+                            </div>
+
+                            <div class="session-content">
+
+                                <span class="session-status">
+                                    Upcoming
+                                </span>
+
+                                <h3>AI Fundamentals — Q&A</h3>
+
+                                <p>
+                                    Review important concepts and answer
+                                    student questions.
+                                </p>
+
+                                <div class="session-meta">
+                                    <span>
+                                        <i class="fa-regular fa-clock"></i>
+                                        18:00
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-users"></i>
+                                        32 students
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="secondary-btn"
+                                type="button"
+                            >
+                                View
+                            </button>
+
+                        </article>
+
+
+                        <article class="session-card upcoming">
+
+                            <div class="session-date">
+                                <span>21</span>
+                                <small>SEP</small>
+                            </div>
+
+                            <div class="session-content">
+
+                                <span class="session-status">
+                                    Upcoming
+                                </span>
+
+                                <h3>Python Workshop</h3>
+
+                                <p>
+                                    Practical coding session for beginner students.
+                                </p>
+
+                                <div class="session-meta">
+                                    <span>
+                                        <i class="fa-regular fa-clock"></i>
+                                        17:30
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-users"></i>
+                                        24 students
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="secondary-btn"
+                                type="button"
+                            >
+                                View
+                            </button>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     RESOURCES
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="resources"
+                >
+
+                    <div class="section-intro">
+
+                        <div>
+                            <span class="page-kicker">Library</span>
+                            <h2>Resources</h2>
+                            <p>
+                                Keep your teaching materials organized.
+                            </p>
+                        </div>
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            id="uploadResourceBtn"
+                        >
+                            <i class="fa-solid fa-upload"></i>
+                            Add Resource
+                        </button>
+
+                    </div>
+
+
+                    <div class="resource-grid">
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon pdf">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </div>
+
+                            <div>
+                                <strong>AI Fundamentals.pdf</strong>
+                                <span>PDF · 2.4 MB</span>
+                            </div>
+
+                            <button type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon video">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+
+                            <div>
+                                <strong>Python Lesson 01</strong>
+                                <span>Video · 18 min</span>
+                            </div>
+
+                            <button type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon document">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+
+                            <div>
+                                <strong>Data Structures Notes</strong>
+                                <span>Document · 1.1 MB</span>
+                            </div>
+
+                            <button type="button">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     SETTINGS
+                ================================================== -->
+                <section
+                    class="page-section"
+                    id="settings"
+                >
+
+                    <div class="section-intro">
+
+                        <div>
+                            <span class="page-kicker">Preferences</span>
+                            <h2>Settings</h2>
+                            <p>
+                                Customize your teacher workspace.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-card">
+
+                        <div class="settings-profile">
+
+                            <div class="large-profile-avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+
+                            <div>
+                                <h3>Teacher Profile</h3>
+                                <p>
+                                    This is a prototype profile area.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-divider"></div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>Notifications</strong>
+                                <span>
+                                    Receive updates about student activity.
+                                </span>
+                            </div>
+
+                            <label class="toggle">
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+                                <span class="toggle-slider"></span>
+                            </label>
+
+                        </div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>AI Insights</strong>
+                                <span>
+                                    Show learning insights on your dashboard.
+                                </span>
+                            </div>
+
+                            <label class="toggle">
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+                                <span class="toggle-slider"></span>
+                            </label>
+
+                        </div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>Compact Sidebar</strong>
+                                <span>
+                                    Use a smaller navigation sidebar.
+                                </span>
+                            </div>
+
+                            <label class="toggle">
+                                <input
+                                    type="checkbox"
+                                    id="compactSidebarToggle"
+                                >
+                                <span class="toggle-slider"></span>
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= MOBILE OVERLAY ================= -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ================= COURSE PREVIEW MODAL ================= -->
+    <div
+        class="modal-overlay"
+        id="coursePreviewModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-card">
+
+            <button
+                class="modal-close"
+                id="closeCoursePreview"
+                type="button"
+                aria-label="Close"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="page-kicker">Course Preview</span>
+
+            <h2 id="previewTitle">
+                Course Title
+            </h2>
+
+            <p id="previewDescription">
+                Course description will appear here.
+            </p>
+
+            <div class="preview-details">
+
+                <div>
+                    <span>Category</span>
+                    <strong id="previewCategory">—</strong>
+                </div>
+
+                <div>
+                    <span>Level</span>
+                    <strong id="previewLevel">—</strong>
+                </div>
+
+                <div>
+                    <span>Lessons</span>
+                    <strong id="previewLessons">—</strong>
+                </div>
+
+                <div>
+                    <span>Duration</span>
+                    <strong id="previewDuration">—</strong>
+                </div>
+
+            </div>
+
+            <div class="prototype-note">
+                <i class="fa-solid fa-circle-info"></i>
+
+                <p>
+                    This preview is part of the Wassla prototype.
+                    No course is actually stored or published.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TOAST ================= -->
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite"
+    >
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">
+            Done
+        </span>
+    </div>
+
+
+    <!-- Teacher JavaScript -->
+    <script src="js/teacher.js"></script>
+
+</body>
+</html>
