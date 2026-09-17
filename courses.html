@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة وصلة - استكشاف الدورات والدروس</title>
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/courses.css">
+</head>
+<body>
+
+    <!-- ================= الشريط العلوي (Top Toolbar) ================= -->
+    <header class="navbar courses-navbar">
+        <div class="nav-container courses-nav-container">
+            
+            <!-- 1. الشعار واسم الصفحة -->
+            <a href="landing.html" class="brand-logo">
+                <img src="assets/images/logo.png" alt="شعار وصلة" class="nav-logo-img" draggable="false">
+                <div class="logo-text">
+                    <span data-i18n="logo_sub">تصفح الدورات والدروس</span>
+                </div>
+            </a>
+
+            <!-- 2. شريط البحث والتصنيفات في الوسط -->
+            <div class="toolbar-center">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="course-search-input" placeholder="ابحث عن دورة، درس، أستاذ أو مادة..." autocomplete="off">
+                    <button class="clear-search-btn" id="clear-search-btn" title="مسح البحث" style="display: none;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="category-select-wrapper">
+                    <i class="fa-solid fa-filter filter-icon"></i>
+                    <select id="top-category-select">
+                        <option value="all">جميع التصنيفات</option>
+                        <option value="bac">تعليم ثانوي (البكالوريا)</option>
+                        <option value="univ">تعليم جامعي (التخصصات)</option>
+                        <option value="grandes_ecoles">المدارس العليا</option>
+                        <option value="ai_tech">الذكاء الاصطناعي والبرمجة</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 3. الأدوات العلوية وزر القائمة العلوية الثلاثية (Hamburger) -->
+            <div class="nav-actions">
+                <div class="lang-selector">
+                    <i class="fa-solid fa-globe"></i>
+                    <select id="custom-lang-select">
+                        <option value="ar">العربية</option>
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+
+                <!-- زر القائمة الجانبية Hamburger (3 bars) في أعلى اليمين -->
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="فتح القائمة الجانبية" title="القائمة الجانبية">
+                    <i class="fa-solid fa-bars"></i>
+                    <span class="hamburger-label">القائمة</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- ================= اللوحة الجانبية (Side Panel / Drawer) ================= -->
+    <div class="side-panel-overlay" id="side-panel-overlay"></div>
+    
+    <aside class="side-panel" id="side-panel">
+        <div class="panel-header">
+            <div class="panel-brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h3>وصلة التعليمية</h3>
+            </div>
+            <button class="close-panel-btn" id="close-panel-btn" aria-label="إغلاق القائمة">&times;</button>
+        </div>
+
+        <!-- أزرار اختيار صفة المستخدم لتجربة القائمة الجانبية -->
+        <div class="role-selector-bar">
+            <span class="role-selector-title"><i class="fa-solid fa-user-gear"></i> وضع المعاينة:</span>
+            <div class="role-pills">
+                <button class="role-pill active" data-role="guest" onclick="switchSidePanelRole('guest')">زائر</button>
+                <button class="role-pill" data-role="student" onclick="switchSidePanelRole('student')">طالب</button>
+                <button class="role-pill" data-role="teacher" onclick="switchSidePanelRole('teacher')">أستاذ</button>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <!-- 1. محتوى حالة الزائر (غير مسجل) -->
+            <div class="panel-role-section panel-role-guest active-role-view">
+                <div class="guest-card">
+                    <div class="guest-icon"><i class="fa-solid fa-circle-user"></i></div>
+                    <h4>مرحباً بك في منصة وصلة</h4>
+                    <p>قم بتسجيل الدخول أو إنشاء حساب جديد للوصول إلى دوراتك، تتبع تقدمك أو إدارة دروسك كأستاذ.</p>
+                    <div class="guest-actions">
+                        <a href="index.html" class="panel-btn panel-btn-primary">
+                            <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
+                        </a>
+                        <a href="index.html" class="panel-btn panel-btn-secondary">
+                            <i class="fa-solid fa-user-plus"></i> إنشاء حساب جديد
+                        </a>
+                    </div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <ul class="panel-menu">
+                    <li><a href="landing.html"><i class="fa-solid fa-house"></i> الرئيسية</a></li>
+                    <li><a href="#" onclick="filterCoursesByCategory('all'); closeSidePanel();"><i class="fa-solid fa-book"></i> جميع الدورات والدروس</a></li>
+                    <li><a href="landing.html#pricingModal"><i class="fa-solid fa-gem"></i> خطط الاشتراكات</a></li>
+                </ul>
+            </div>
+
+            <!-- 2. محتوى خيارات الطالب (Student Options) -->
+            <div class="panel-role-section panel-role-student">
+                <div class="user-profile-badge">
+                    <div class="user-avatar"><i class="fa-solid fa-user-graduate"></i></div>
+                    <div class="user-info">
+                        <h4>أحمد بن محمد</h4>
+                        <span class="user-tag student-tag"><i class="fa-solid fa-check-circle"></i> حساب طالب (علوم تجريبية)</span>
+                    </div>
+                </div>
+
+                <div class="panel-section-title">خيارات الطالب</div>
+
+                <ul class="panel-menu student-menu">
+                    <li>
+                        <a href="#" onclick="openPanelFeature('student-courses')">
+                            <i class="fa-solid fa-book-open icon-accent"></i>
+                            <span>دوراتي</span>
+                            <span class="menu-badge">4 دورات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('student-progress')">
+                            <i class="fa-solid fa-chart-line icon-accent"></i>
+                            <span>تقدّمي الدراسي</span>
+                            <span class="menu-badge badge-green">78%</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('student-purchases')">
+                            <i class="fa-solid fa-bag-shopping icon-accent"></i>
+                            <span>مشترياتي</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('settings')">
+                            <i class="fa-solid fa-gear icon-accent"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('profile')">
+                            <i class="fa-solid fa-user icon-accent"></i>
+                            <span>ملفي الشخصي</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="panel-divider"></div>
+
+                <a href="index.html" class="panel-logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </a>
+            </div>
+
+            <!-- 3. محتوى خيارات الأستاذ (Teacher Options) -->
+            <div class="panel-role-section panel-role-teacher">
+                <div class="user-profile-badge teacher-badge-bg">
+                    <div class="user-avatar teacher-avatar"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="user-info">
+                        <h4>د. بلقاسم بن عيسى</h4>
+                        <span class="user-tag teacher-tag"><i class="fa-solid fa-award"></i> أستاذ معتمد (فيزياء ورياضيات)</span>
+                    </div>
+                </div>
+
+                <div class="panel-section-title">خيارات الأستاذ</div>
+
+                <ul class="panel-menu teacher-menu">
+                    <li>
+                        <a href="#" onclick="openPanelFeature('teacher-dashboard')">
+                            <i class="fa-solid fa-gauge-high icon-teacher"></i>
+                            <span>لوحة التحكم والإحصائيات</span>
+                            <span class="menu-badge badge-gold">التحليلات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('teacher-courses')">
+                            <i class="fa-solid fa-chalkboard-user icon-teacher"></i>
+                            <span>دوراتي</span>
+                            <span class="menu-badge">6 دورات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('profile')">
+                            <i class="fa-solid fa-user-tie icon-teacher"></i>
+                            <span>ملفي الشخصي</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="openPanelFeature('teacher-earnings')">
+                            <i class="fa-solid fa-sack-dollar icon-teacher"></i>
+                            <span>الأرباح والسحوبات</span>
+                            <span class="menu-badge badge-green">145,000 د.ج</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="panel-divider"></div>
+
+                <a href="index.html" class="panel-logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </a>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            <p>© 2026 منصة وصلة التعليمية</p>
+        </div>
+    </aside>
+
+
+    <!-- ================= قسم الهيرو والتصفح (Courses Hero Banner) ================= -->
+    <section class="courses-hero">
+        <div class="courses-hero-container">
+            <div class="hero-chip">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>مكتبة الدروس والدورات المباشرة والتفاعلية</span>
+            </div>
+            <h1>استكشف أحدث الدورات والدروس في الجزائر</h1>
+            <p>اختر مسارك التعليمي، تابع شروحات أساتذة النخبة، واحصل على تمارين ومراجعات شاملة في كل الشعب والتخصصات.</p>
+
+            <!-- شريط التصنيفات السريعة (Filter Chips) -->
+            <div class="filter-chips">
+                <button class="chip-btn active" data-filter="all" onclick="filterCoursesByCategory('all')">
+                    <i class="fa-solid fa-border-all"></i> جميع الدورات
+                </button>
+                <button class="chip-btn" data-filter="bac" onclick="filterCoursesByCategory('bac')">
+                    <i class="fa-solid fa-school"></i> شعب البكالوريا
+                </button>
+                <button class="chip-btn" data-filter="univ" onclick="filterCoursesByCategory('univ')">
+                    <i class="fa-solid fa-university"></i> التخصصات الجامعية
+                </button>
+                <button class="chip-btn" data-filter="grandes_ecoles" onclick="filterCoursesByCategory('grandes_ecoles')">
+                    <i class="fa-solid fa-building-columns"></i> المدارس العليا
+                </button>
+                <button class="chip-btn" data-filter="ai_tech" onclick="filterCoursesByCategory('ai_tech')">
+                    <i class="fa-solid fa-brain"></i> الذكاء الاصطناعي والتقنية
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= شريط الإحصائيات السريعة ================= -->
+    <section class="stats-bar-section">
+        <div class="stats-bar-container">
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div class="stat-text">
+                    <strong id="total-courses-count">128+</strong>
+                    <span>دورة ودرس تعليمي</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="stat-text">
+                    <strong>45+</strong>
+                    <span>أستاذ نخبة متميز</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="stat-text">
+                    <strong>25,000+</strong>
+                    <span>طالب وطالبة مسجلين</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fa-solid fa-video"></i></div>
+                <div class="stat-text">
+                    <strong>1,400+</strong>
+                    <span>ساعة بث وشروحات</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= معرض الدورات والدروس المتاحة (Courses Grid) ================= -->
+    <main class="main-courses-container">
+        
+        <div class="section-title-wrapper">
+            <div class="title-right">
+                <h2><i class="fa-solid fa-sparkles icon-emerald"></i> الدورات والدروس المتاحة</h2>
+                <p id="search-result-status">عرض جميع الدورات المتاحة في المنصة</p>
+            </div>
+            <div class="view-sort-actions">
+                <span class="sort-label"><i class="fa-solid fa-arrow-down-wide-short"></i> الترتيب حسب:</span>
+                <select id="sort-courses-select" onchange="sortCoursesList(this.value)">
+                    <option value="popular">الأكثر شعبية</option>
+                    <option value="rating">الأعلى تقييماً</option>
+                    <option value="newest">الأحدث إضافة</option>
+                    <option value="price-low">السعر: من الأقل للأعلى</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- شبكة الدورات -->
+        <div class="courses-grid" id="courses-grid">
+            
+            <!-- دورة 1: الفيزياء - بكالوريا -->
+            <article class="course-card" data-category="bac" data-price="3500" data-rating="4.9" data-popularity="98">
+                <div class="course-thumb thumb-phy">
+                    <span class="level-tag tag-bac"><i class="fa-solid fa-school"></i> 3 ثانوي (BAC)</span>
+                    <span class="price-badge">3,500 د.ج</span>
+                    <i class="fa-solid fa-atom course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-flask"></i> العلوم الفيزيائية</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 4.9 (142 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">المراجعة الشاملة في الفيزياء للبكالوريا (جميع الوحدات + تمارين نموذجية)</h3>
+                    <p class="course-desc">شرح دقيق ومفصل لكل وحدات الفيزياء والفيزياء النووية مع حلول البكالوريات المنهجية المرفقة بسلاسل تمارين متدرجة.</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev1.png" alt="أستاذ الفيزياء" class="teacher-img">
+                        <div>
+                            <strong>د. بلقاسم بن عيسى</strong>
+                            <small>أستاذ متميز في الفيزياء</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 42 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 38 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('phys_bac')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+            <!-- دورة 2: الرياضيات - بكالوريا -->
+            <article class="course-card" data-category="bac" data-price="4000" data-rating="4.8" data-popularity="95">
+                <div class="course-thumb thumb-math">
+                    <span class="level-tag tag-bac"><i class="fa-solid fa-school"></i> 3 ثانوي (BAC)</span>
+                    <span class="price-badge">4,000 د.ج</span>
+                    <i class="fa-solid fa-square-root-variable course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-calculator"></i> الرياضيات</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 4.8 (180 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">سلسلة التميز في الدوال والمتتاليات والاحتمالات للبكالوريا</h3>
+                    <p class="course-desc">استراتيجيات حل مسائل الدوال العددية والأسية واللوغاريتمية والمتتاليات بأسلوب مبسط ومنهجي يضمن العلامة الكاملة.</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev3.png" alt="أستاذ الرياضيات" class="teacher-img">
+                        <div>
+                            <strong>أ. أديب مدور</strong>
+                            <small>أستاذ مادة الرياضيات</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 50 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 45 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('math_bac')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+            <!-- دورة 3: الإعلام الآلي والخوارزميات - جامعة -->
+            <article class="course-card" data-category="univ" data-price="0" data-rating="5.0" data-popularity="100">
+                <div class="course-thumb thumb-cs">
+                    <span class="level-tag tag-univ"><i class="fa-solid fa-university"></i> تعليم جامعي (LMD)</span>
+                    <span class="price-badge free-badge">مجاناً 🔥</span>
+                    <i class="fa-solid fa-code course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-laptop-code"></i> Computer Science</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 5.0 (210 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">Algorithmique et Structure de Données (ASD1 & ASD2)</h3>
+                    <p class="course-desc">شرح كامل لمقياس الخوارزميات وهياكل البيانات لطلبة الإعلام الآلي والعلوم والتكنولوجيا باللغة الفرنسية والعربية مع التطبيق في C/C++.</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev1.png" alt="أستاذ الإعلام الآلي" class="teacher-img">
+                        <div>
+                            <strong>م. محمد أمين</strong>
+                            <small>Senior Software Engineer</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 36 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 30 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('cs_asd')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+            <!-- دورة 4: الذكاء الاصطناعي - المدارس العليا والتخصصات -->
+            <article class="course-card" data-category="ai_tech" data-price="5500" data-rating="4.9" data-popularity="92">
+                <div class="course-thumb thumb-ai">
+                    <span class="level-tag tag-ge"><i class="fa-solid fa-brain"></i> الذكاء الاصطناعي</span>
+                    <span class="price-badge">5,500 د.ج</span>
+                    <i class="fa-solid fa-robot course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-microchip"></i> Machine Learning</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 4.9 (95 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">أساسيات تعلم الآلة والشبكات العصبية باستخدام Python</h3>
+                    <p class="course-desc">دورة تطبيقية شاملة تتضمن معالجة البيانات، بناء النماذج الذكية باستخدام Scikit-Learn و PyTorch وتطبيقات عملية واقعية.</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev2.png" alt="أستاذة الذكاء الاصطناعي" class="teacher-img">
+                        <div>
+                            <strong>د. سعاد سايحي</strong>
+                            <small>AI & Data Science Specialist</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 28 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 26 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('ai_ml')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+            <!-- دورة 5: العلوم الطبية - طب وصيدلة -->
+            <article class="course-card" data-category="univ" data-price="6000" data-rating="4.9" data-popularity="89">
+                <div class="course-thumb thumb-med">
+                    <span class="level-tag tag-univ"><i class="fa-solid fa-user-doctor"></i> العلوم الطبية</span>
+                    <span class="price-badge">6,000 د.ج</span>
+                    <i class="fa-solid fa-heart-pulse course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-stethoscope"></i> Anatomy & Physiology</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 4.9 (115 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">Anatomie Humaine & Physiologie (السنة الأولى والأجهزة الطبية)</h3>
+                    <p class="course-desc">شروحات ثلاثية الأبعاد تفاعلية لأجهزة الجسم البشري ملائمة لطلبة السنة الأولى والثانية طب وصيدلة وطب أسنان.</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev2.png" alt="أستاذة الطب" class="teacher-img">
+                        <div>
+                            <strong>د. مريم القاسمي</strong>
+                            <small>أستاذة بكلية الطب</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 32 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 34 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('med_anat')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+            <!-- دورة 6: تحضير مسابقة المدارس العليا (ESI / ENSIA) -->
+            <article class="course-card" data-category="grandes_ecoles" data-price="4500" data-rating="4.8" data-popularity="87">
+                <div class="course-thumb thumb-ge">
+                    <span class="level-tag tag-ge"><i class="fa-solid fa-building-columns"></i> المدارس العليا (ESI/ENSIA)</span>
+                    <span class="price-badge">4,500 د.ج</span>
+                    <i class="fa-solid fa-graduation-cap course-bg-icon"></i>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta-top">
+                        <span class="subject-chip"><i class="fa-solid fa-square-root-variable"></i> Analyse & Algèbre</span>
+                        <span class="rating-stars"><i class="fa-solid fa-star"></i> 4.8 (88 تقييم)</span>
+                    </div>
+                    <h3 class="course-title">Analyse 1 & Algèbre 1 (التحضير للسنوات التحضيرية المدمجة)</h3>
+                    <p class="course-desc">سلسلة الشروحات المكثفة والتمارين التنافسية لطلبة المدارس العليا للمهندسين (ESI Algiers/SBA, ENSIA, Polytech).</p>
+                    <div class="teacher-info">
+                        <img src="assets/images/dev3.png" alt="أستاذ التحليل والرياضيات" class="teacher-img">
+                        <div>
+                            <strong>د. طارق الحكيم</strong>
+                            <small>استاذ المدارس العليا</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-details-pills">
+                        <span><i class="fa-solid fa-circle-play"></i> 40 درساً</span>
+                        <span><i class="fa-solid fa-clock"></i> 42 ساعة</span>
+                    </div>
+                    <button class="btn-view-course" onclick="openCoursePreview('ge_math')">
+                        <i class="fa-solid fa-eye"></i> استعراض الدروس
+                    </button>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= نافذة استعراض الدروس للدورة (Course Preview Modal) ================= -->
+    <div class="modal-overlay" id="coursePreviewModal">
+        <div class="modal-card course-modal-card">
+            <button class="modal-close" onclick="closeCoursePreview()">&times;</button>
+            <div class="modal-header modal-header-emerald">
+                <span class="modal-badge-chip" id="modal-course-badge">بكالوريا - علوم تجريبية</span>
+                <h2 id="modal-course-title">عنوان الدورة التعليمية</h2>
+                <p id="modal-course-teacher"><i class="fa-solid fa-chalkboard-user"></i> الأستاذ: د. بلقاسم بن عيسى</p>
+            </div>
+            <div class="modal-body-content">
+                <div class="course-modal-meta">
+                    <div><i class="fa-solid fa-film"></i> <span id="modal-lessons-count">42 درساً</span></div>
+                    <div><i class="fa-solid fa-clock"></i> <span id="modal-course-duration">38 ساعة فيديو</span></div>
+                    <div><i class="fa-solid fa-file-pdf"></i> ملخصات PDF متاحة للتحميل</div>
+                    <div><i class="fa-solid fa-certificate"></i> شهادة إتمام الدورة</div>
+                </div>
+
+                <div class="lessons-list-title"><i class="fa-solid fa-list-check"></i> قائمة محتوى الدورة والدروس:</div>
+                
+                <div class="lessons-accordion" id="modal-lessons-accordion">
+                    <!-- تتولى الجافاسكربت تعبئة الدروس حركياً -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-price-tag">
+                    <span>السعر النهائي:</span>
+                    <strong id="modal-course-price">3,500 د.ج</strong>
+                </div>
+                <a href="index.html" class="btn-primary modal-action-btn">
+                    <i class="fa-solid fa-rocket"></i> اشترك وابدأ التعلم الآن
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= نافذة عرض ميزات القائمة الجانبية (Feature Display Modal) ================= -->
+    <div class="modal-overlay" id="featureDisplayModal">
+        <div class="modal-card feature-modal-card">
+            <button class="modal-close" onclick="closeFeatureModal()">&times;</button>
+            <div class="modal-header modal-header-feature" id="feature-modal-header">
+                <h2 id="feature-modal-title"><i class="fa-solid fa-gauge-high"></i> لوحة التحكم والإحصائيات</h2>
+                <p id="feature-modal-subtitle">عرض تحليلات الأستاذ والبيانات المباشرة</p>
+            </div>
+            <div class="modal-body-content" id="feature-modal-body">
+                <!-- تعبئة حركية بحسب الخيار المختار -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeFeatureModal()">إغلاق Window</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= الفوتر السفلي ================= -->
+    <footer>
+        <div class="footer-container">
+            <p data-i18n="footer_text">© 2026 منصة وصلة التعليمية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+
+    <!-- ================= ملفات الجافاسكريفت ================= -->
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/courses.js"></script>
+
+</body>
+</html>
