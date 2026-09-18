@@ -1,6 +1,8 @@
+```javascript
 /* =========================================================
    WASSLA — TEACHER DASHBOARD
    teacher.js
+   Frontend Prototype
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,32 +17,74 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobileMenuBtn = document.getElementById("mobileMenuBtn");
 
     const pageTitle = document.getElementById("pageTitle");
-    const navItems = document.querySelectorAll(".nav-item[data-section]");
-    const pageSections = document.querySelectorAll(".page-section");
+
+    const navItems = document.querySelectorAll(
+        ".nav-item[data-section]"
+    );
+
+    const pageSections = document.querySelectorAll(
+        ".page-section"
+    );
 
     const courseForm = document.getElementById("courseForm");
 
     const studentSearch = document.getElementById("studentSearch");
 
+    const searchBtn = document.getElementById("searchBtn");
+
+    const notificationBtn =
+        document.getElementById("notificationBtn");
+
+    const languageSelect =
+        document.getElementById("languageSelect");
+
+    const createSessionBtn =
+        document.getElementById("createSessionBtn");
+
+    const uploadResourceBtn =
+        document.getElementById("uploadResourceBtn");
+
+    const compactSidebarToggle =
+        document.getElementById("compactSidebarToggle");
+
+    /* Preview */
+    const previewCourseBtn =
+        document.getElementById("previewCourseBtn");
+
     const coursePreviewModal =
         document.getElementById("coursePreviewModal");
 
-    const modalClose =
-        document.querySelector(".modal-close");
+    const closeCoursePreview =
+        document.getElementById("closeCoursePreview");
 
-    const toast = document.getElementById("toast");
+    const previewTitle =
+        document.getElementById("previewTitle");
+
+    const previewDescription =
+        document.getElementById("previewDescription");
+
+    const previewCategory =
+        document.getElementById("previewCategory");
+
+    const previewLevel =
+        document.getElementById("previewLevel");
+
+    const previewLessons =
+        document.getElementById("previewLessons");
+
+    const previewDuration =
+        document.getElementById("previewDuration");
+
+    /* Toast */
+    const toast =
+        document.getElementById("toast");
+
     const toastMessage =
         document.getElementById("toastMessage");
 
-    const notificationBtn =
-        document.querySelector(".notification-btn");
-
-    const languageSelect =
-        document.querySelector(".language-select");
-
 
     /* =====================================================
-       2. PAGE TITLES
+       2. SECTION TITLES
        ===================================================== */
 
     const sectionTitles = {
@@ -56,517 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       3. SIDEBAR
-       ===================================================== */
-
-    function openSidebar() {
-        if (!sidebar) return;
-
-        sidebar.classList.add("active");
-
-        if (overlay) {
-            overlay.classList.add("active");
-        }
-
-        document.body.style.overflow = "hidden";
-    }
-
-
-    function closeSidebar() {
-        if (!sidebar) return;
-
-        sidebar.classList.remove("active");
-        sidebar.classList.remove("open");
-        sidebar.classList.remove("show");
-
-        if (overlay) {
-            overlay.classList.remove("active");
-            overlay.classList.remove("show");
-        }
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", () => {
-            if (sidebar && sidebar.classList.contains("active")) {
-                closeSidebar();
-            } else {
-                openSidebar();
-            }
-        });
-    }
-
-
-    if (overlay) {
-        overlay.addEventListener("click", closeSidebar);
-    }
-
-
-    /* =====================================================
-       4. NAVIGATION
-       ===================================================== */
-
-    function showSection(sectionId) {
-        if (!sectionId) return;
-
-        let targetSection = document.getElementById(sectionId);
-
-        if (!targetSection) {
-            console.warn(
-                `Wassla: Section "${sectionId}" was not found.`
-            );
-            return;
-        }
-
-        /* Hide all sections */
-        pageSections.forEach((section) => {
-            section.classList.remove("active-section");
-        });
-
-        /* Show requested section */
-        targetSection.classList.add("active-section");
-
-        /* Update active nav item */
-        navItems.forEach((item) => {
-            item.classList.remove("active");
-
-            const itemSection = item.dataset.section;
-
-            if (itemSection === sectionId) {
-                item.classList.add("active");
-            }
-        });
-
-        /* Update title */
-        if (pageTitle && sectionTitles[sectionId]) {
-            pageTitle.textContent = sectionTitles[sectionId];
-        }
-
-        /* Close sidebar on mobile */
-        if (window.innerWidth <= 900) {
-            closeSidebar();
-        }
-
-        /* Scroll to top */
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-        /* Update URL hash */
-        history.replaceState(
-            null,
-            "",
-            `#${sectionId}`
-        );
-    }
-
-
-    navItems.forEach((item) => {
-        item.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const sectionId = item.dataset.section;
-
-            if (sectionId) {
-                showSection(sectionId);
-            }
-        });
-    });
-
-
-    /* =====================================================
-       5. INITIAL SECTION
-       ===================================================== */
-
-    function initializeSection() {
-        const hash = window.location.hash.replace("#", "");
-
-        if (hash && document.getElementById(hash)) {
-            showSection(hash);
-            return;
-        }
-
-        const activeSection =
-            document.querySelector(".page-section.active-section");
-
-        if (activeSection) {
-            showSection(activeSection.id);
-            return;
-        }
-
-        showSection("dashboard");
-    }
-
-
-    initializeSection();
-
-
-    /* =====================================================
-       6. WINDOW RESIZE
-       ===================================================== */
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 900) {
-            closeSidebar();
-        }
-    });
-
-
-    /* =====================================================
-       7. COURSE FORM
-       ===================================================== */
-
-    if (courseForm) {
-        courseForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(courseForm);
-
-            const courseName =
-                getFormValue(
-                    formData,
-                    "courseName",
-                    "title",
-                    "name"
-                );
-
-            if (!isFormValid(courseForm)) {
-                showToast(
-                    "Please complete the required fields."
-                );
-
-                return;
-            }
-
-            /*
-             * Prototype behavior:
-             * The course is not sent to a backend yet.
-             * This will be connected to the backend later.
-             */
-
-            console.log(
-                "Wassla — New course:",
-                Object.fromEntries(formData.entries())
-            );
-
-            showToast(
-                courseName
-                    ? `"${courseName}" has been created successfully.`
-                    : "Course created successfully."
-            );
-
-            courseForm.reset();
-
-            setTimeout(() => {
-                showSection("courses");
-            }, 700);
-        });
-    }
-
-
-    /* =====================================================
-       8. FORM HELPERS
-       ===================================================== */
-
-    function getFormValue(formData, ...possibleNames) {
-        for (const name of possibleNames) {
-            const value = formData.get(name);
-
-            if (value !== null && String(value).trim() !== "") {
-                return String(value).trim();
-            }
-        }
-
-        return "";
-    }
-
-
-    function isFormValid(form) {
-        const requiredFields =
-            form.querySelectorAll(
-                "input[required], select[required], textarea[required]"
-            );
-
-        let valid = true;
-
-        requiredFields.forEach((field) => {
-            const value = field.value.trim();
-
-            if (!value) {
-                field.style.borderColor = "#ef4444";
-                valid = false;
-            } else {
-                field.style.borderColor = "";
-            }
-        });
-
-        return valid;
-    }
-
-
-    /* =====================================================
-       9. REMOVE FORM ERROR WHEN USER TYPES
-       ===================================================== */
-
-    if (courseForm) {
-        const fields =
-            courseForm.querySelectorAll(
-                "input, select, textarea"
-            );
-
-        fields.forEach((field) => {
-            field.addEventListener("input", () => {
-                field.style.borderColor = "";
-            });
-
-            field.addEventListener("change", () => {
-                field.style.borderColor = "";
-            });
-        });
-    }
-
-
-    /* =====================================================
-       10. STUDENT SEARCH
-       ===================================================== */
-
-    if (studentSearch) {
-        studentSearch.addEventListener("input", () => {
-            const searchValue =
-                studentSearch.value
-                    .trim()
-                    .toLowerCase();
-
-            const table =
-                document.querySelector(".students-table");
-
-            if (!table) return;
-
-            const rows =
-                table.querySelectorAll("tbody tr");
-
-            rows.forEach((row) => {
-                const rowText =
-                    row.textContent.toLowerCase();
-
-                row.style.display =
-                    rowText.includes(searchValue)
-                        ? ""
-                        : "none";
-            });
-        });
-    }
-
-
-    /* =====================================================
-       11. COURSE PREVIEW MODAL
-       ===================================================== */
-
-    function openModal() {
-        if (!coursePreviewModal) return;
-
-        coursePreviewModal.classList.add("active");
-
-        document.body.style.overflow = "hidden";
-    }
-
-
-    function closeModal() {
-        if (!coursePreviewModal) return;
-
-        coursePreviewModal.classList.remove("active");
-        coursePreviewModal.classList.remove("show");
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (modalClose) {
-        modalClose.addEventListener("click", closeModal);
-    }
-
-
-    if (coursePreviewModal) {
-        coursePreviewModal.addEventListener(
-            "click",
-            (event) => {
-                if (
-                    event.target === coursePreviewModal
-                ) {
-                    closeModal();
-                }
-            }
-        );
-    }
-
-
-    /* =====================================================
-       12. PREVIEW BUTTONS
-       ===================================================== */
-
-    const previewButtons =
-        document.querySelectorAll(
-            "[data-preview-course]"
-        );
-
-    previewButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            openModal();
-        });
-    });
-
-
-    /* =====================================================
-       13. ESCAPE KEY
-       ===================================================== */
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key !== "Escape") return;
-
-        closeSidebar();
-        closeModal();
-
-        if (document.body.style.overflow === "hidden") {
-            document.body.style.overflow = "";
-        }
-    });
-
-
-    /* =====================================================
-       14. NOTIFICATIONS
-       ===================================================== */
-
-    if (notificationBtn) {
-        notificationBtn.addEventListener("click", () => {
-            showToast(
-                "You have new student activity."
-            );
-
-            const notificationDot =
-                notificationBtn.querySelector(
-                    ".notification-dot"
-                );
-
-            if (notificationDot) {
-                notificationDot.style.display = "none";
-            }
-        });
-    }
-
-
-    /* =====================================================
-       15. LANGUAGE SELECT
-       ===================================================== */
-
-    if (languageSelect) {
-        languageSelect.addEventListener("change", () => {
-            const selectedLanguage =
-                languageSelect.value;
-
-            if (!selectedLanguage) return;
-
-            if (
-                selectedLanguage.toLowerCase() === "english" ||
-                selectedLanguage.toLowerCase() === "en"
-            ) {
-                showToast("Language set to English.");
-            } else {
-                showToast(
-                    `Language changed to ${selectedLanguage}.`
-                );
-            }
-        });
-    }
-
-
-    /* =====================================================
-       16. TEXT BUTTONS
-       ===================================================== */
-
-    const textButtons =
-        document.querySelectorAll(".text-btn");
-
-    textButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const target =
-                button.dataset.target;
-
-            if (target && document.getElementById(target)) {
-                showSection(target);
-                return;
-            }
-
-            showToast(
-                "This section will be connected soon."
-            );
-        });
-    });
-
-
-    /* =====================================================
-       17. SECONDARY BUTTONS
-       ===================================================== */
-
-    const secondaryButtons =
-        document.querySelectorAll(".secondary-btn");
-
-    secondaryButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const target =
-                button.dataset.target;
-
-            if (target && document.getElementById(target)) {
-                showSection(target);
-                return;
-            }
-
-            showToast(
-                "This action is available in the prototype."
-            );
-        });
-    });
-
-
-    /* =====================================================
-       18. COURSE ACTION BUTTONS
-       ===================================================== */
-
-    const courseActionButtons =
-        document.querySelectorAll(".course-action");
-
-    courseActionButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const courseCard =
-                button.closest(".course-card");
-
-            if (!courseCard) {
-                showToast(
-                    "Course details are not available yet."
-                );
-
-                return;
-            }
-
-            const titleElement =
-                courseCard.querySelector("h3");
-
-            const courseTitle =
-                titleElement
-                    ? titleElement.textContent.trim()
-                    : "This course";
-
-            showToast(
-                `${courseTitle} is ready to manage.`
-            );
-        });
-    });
-
-
-    /* =====================================================
-       19. TOAST SYSTEM
+       3. TOAST
        ===================================================== */
 
     let toastTimer = null;
@@ -590,7 +124,845 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       20. PROGRESS BARS
+       4. SIDEBAR
+       ===================================================== */
+
+    function openSidebar() {
+        if (sidebar) {
+            sidebar.classList.add("active");
+            sidebar.classList.add("open");
+        }
+
+        if (overlay) {
+            overlay.classList.add("active");
+            overlay.classList.add("show");
+        }
+
+        if (window.innerWidth <= 900) {
+            document.body.style.overflow = "hidden";
+        }
+    }
+
+
+    function closeSidebar() {
+        if (sidebar) {
+            sidebar.classList.remove("active");
+            sidebar.classList.remove("open");
+            sidebar.classList.remove("show");
+        }
+
+        if (overlay) {
+            overlay.classList.remove("active");
+            overlay.classList.remove("show");
+        }
+
+        document.body.style.overflow = "";
+    }
+
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", () => {
+            if (
+                sidebar &&
+                (
+                    sidebar.classList.contains("active") ||
+                    sidebar.classList.contains("open")
+                )
+            ) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+    }
+
+
+    if (overlay) {
+        overlay.addEventListener("click", closeSidebar);
+    }
+
+
+    /* =====================================================
+       5. SHOW SECTION
+       ===================================================== */
+
+    function showSection(sectionId, updateHash = true) {
+        if (!sectionId) return;
+
+        const targetSection =
+            document.getElementById(sectionId);
+
+        if (!targetSection) {
+            console.warn(
+                `Wassla: section "${sectionId}" not found.`
+            );
+            return;
+        }
+
+        /* Hide every section */
+        pageSections.forEach((section) => {
+            section.classList.remove("active-section");
+        });
+
+        /* Show selected section */
+        targetSection.classList.add("active-section");
+
+        /* Update sidebar active item */
+        navItems.forEach((item) => {
+            item.classList.remove("active");
+
+            if (
+                item.dataset.section === sectionId
+            ) {
+                item.classList.add("active");
+            }
+        });
+
+        /* Update page title */
+        if (
+            pageTitle &&
+            sectionTitles[sectionId]
+        ) {
+            pageTitle.textContent =
+                sectionTitles[sectionId];
+        }
+
+        /* Close mobile sidebar */
+        if (window.innerWidth <= 900) {
+            closeSidebar();
+        }
+
+        /* Update URL */
+        if (updateHash) {
+            history.replaceState(
+                null,
+                "",
+                `#${sectionId}`
+            );
+        }
+
+        /* Scroll to top */
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    /* =====================================================
+       6. SIDEBAR NAVIGATION
+       ===================================================== */
+
+    navItems.forEach((item) => {
+        item.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const sectionId =
+                item.dataset.section;
+
+            if (sectionId) {
+                showSection(sectionId);
+            }
+        });
+    });
+
+
+    /* =====================================================
+       7. ALL DATA-SECTION-TARGET BUTTONS
+       ===================================================== */
+
+    const sectionTargetButtons =
+        document.querySelectorAll(
+            "[data-section-target]"
+        );
+
+    sectionTargetButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const target =
+                button.dataset.sectionTarget;
+
+            if (
+                target &&
+                document.getElementById(target)
+            ) {
+                showSection(target);
+            }
+        });
+    });
+
+
+    /* =====================================================
+       8. INITIAL SECTION
+       ===================================================== */
+
+    function initializeSection() {
+        const hash =
+            window.location.hash
+                .replace("#", "")
+                .trim();
+
+        if (
+            hash &&
+            document.getElementById(hash)
+        ) {
+            showSection(hash, false);
+            return;
+        }
+
+        const activeSection =
+            document.querySelector(
+                ".page-section.active-section"
+            );
+
+        if (activeSection) {
+            showSection(
+                activeSection.id,
+                false
+            );
+            return;
+        }
+
+        showSection("dashboard", false);
+    }
+
+
+    initializeSection();
+
+
+    /* =====================================================
+       9. HASH CHANGE
+       ===================================================== */
+
+    window.addEventListener(
+        "hashchange",
+        () => {
+            const sectionId =
+                window.location.hash
+                    .replace("#", "")
+                    .trim();
+
+            if (
+                sectionId &&
+                document.getElementById(sectionId)
+            ) {
+                showSection(
+                    sectionId,
+                    false
+                );
+            }
+        }
+    );
+
+
+    /* =====================================================
+       10. RESIZE
+       ===================================================== */
+
+    window.addEventListener(
+        "resize",
+        () => {
+            if (window.innerWidth > 900) {
+                closeSidebar();
+            }
+        }
+    );
+
+
+    /* =====================================================
+       11. COURSE FORM
+       ===================================================== */
+
+    if (courseForm) {
+        courseForm.addEventListener(
+            "submit",
+            (event) => {
+                event.preventDefault();
+
+                const title =
+                    document.getElementById(
+                        "courseTitle"
+                    );
+
+                const category =
+                    document.getElementById(
+                        "courseCategory"
+                    );
+
+                const level =
+                    document.getElementById(
+                        "courseLevel"
+                    );
+
+                const description =
+                    document.getElementById(
+                        "courseDescription"
+                    );
+
+                const lessons =
+                    document.getElementById(
+                        "lessonCount"
+                    );
+
+                const duration =
+                    document.getElementById(
+                        "courseDuration"
+                    );
+
+                const fields = [
+                    title,
+                    category,
+                    level,
+                    description,
+                    lessons,
+                    duration
+                ];
+
+                let valid = true;
+
+                fields.forEach((field) => {
+                    if (!field) return;
+
+                    if (
+                        !field.value.trim()
+                    ) {
+                        field.style.borderColor =
+                            "#ef4444";
+
+                        valid = false;
+                    } else {
+                        field.style.borderColor =
+                            "";
+                    }
+                });
+
+                if (!valid) {
+                    showToast(
+                        "Please complete all course fields."
+                    );
+                    return;
+                }
+
+                showToast(
+                    `"${title.value.trim()}" created successfully.`
+                );
+
+                console.log(
+                    "Wassla — Course created:",
+                    {
+                        title: title.value.trim(),
+                        category: category.value,
+                        level: level.value,
+                        description:
+                            description.value.trim(),
+                        lessons: lessons.value,
+                        duration:
+                            duration.value.trim()
+                    }
+                );
+
+                setTimeout(() => {
+                    courseForm.reset();
+
+                    fields.forEach((field) => {
+                        if (field) {
+                            field.style.borderColor = "";
+                        }
+                    });
+
+                    showSection("courses");
+                }, 900);
+            }
+        );
+    }
+
+
+    /* =====================================================
+       12. REMOVE FORM ERRORS
+       ===================================================== */
+
+    if (courseForm) {
+        courseForm
+            .querySelectorAll(
+                "input, select, textarea"
+            )
+            .forEach((field) => {
+                field.addEventListener(
+                    "input",
+                    () => {
+                        field.style.borderColor = "";
+                    }
+                );
+
+                field.addEventListener(
+                    "change",
+                    () => {
+                        field.style.borderColor = "";
+                    }
+                );
+            });
+    }
+
+
+    /* =====================================================
+       13. COURSE PREVIEW
+       ===================================================== */
+
+    function openCoursePreview() {
+        if (!coursePreviewModal) return;
+
+        const title =
+            document.getElementById(
+                "courseTitle"
+            );
+
+        const category =
+            document.getElementById(
+                "courseCategory"
+            );
+
+        const level =
+            document.getElementById(
+                "courseLevel"
+            );
+
+        const description =
+            document.getElementById(
+                "courseDescription"
+            );
+
+        const lessons =
+            document.getElementById(
+                "lessonCount"
+            );
+
+        const duration =
+            document.getElementById(
+                "courseDuration"
+            );
+
+        if (previewTitle) {
+            previewTitle.textContent =
+                title && title.value.trim()
+                    ? title.value.trim()
+                    : "Course Title";
+        }
+
+        if (previewDescription) {
+            previewDescription.textContent =
+                description &&
+                description.value.trim()
+                    ? description.value.trim()
+                    : "Course description will appear here.";
+        }
+
+        if (previewCategory) {
+            previewCategory.textContent =
+                category && category.value
+                    ? category.value
+                    : "—";
+        }
+
+        if (previewLevel) {
+            previewLevel.textContent =
+                level && level.value
+                    ? level.value
+                    : "—";
+        }
+
+        if (previewLessons) {
+            previewLessons.textContent =
+                lessons && lessons.value
+                    ? lessons.value
+                    : "—";
+        }
+
+        if (previewDuration) {
+            previewDuration.textContent =
+                duration &&
+                duration.value.trim()
+                    ? duration.value.trim()
+                    : "—";
+        }
+
+        coursePreviewModal.classList.add(
+            "active"
+        );
+
+        coursePreviewModal.classList.add(
+            "show"
+        );
+
+        coursePreviewModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+    }
+
+
+    function closeCoursePreviewModal() {
+        if (!coursePreviewModal) return;
+
+        coursePreviewModal.classList.remove(
+            "active"
+        );
+
+        coursePreviewModal.classList.remove(
+            "show"
+        );
+
+        coursePreviewModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+    }
+
+
+    if (previewCourseBtn) {
+        previewCourseBtn.addEventListener(
+            "click",
+            openCoursePreview
+        );
+    }
+
+
+    if (closeCoursePreview) {
+        closeCoursePreview.addEventListener(
+            "click",
+            closeCoursePreviewModal
+        );
+    }
+
+
+    if (coursePreviewModal) {
+        coursePreviewModal.addEventListener(
+            "click",
+            (event) => {
+                if (
+                    event.target ===
+                    coursePreviewModal
+                ) {
+                    closeCoursePreviewModal();
+                }
+            }
+        );
+    }
+
+
+    /* =====================================================
+       14. ESCAPE KEY
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+            if (event.key !== "Escape") return;
+
+            closeSidebar();
+            closeCoursePreviewModal();
+        }
+    );
+
+
+    /* =====================================================
+       15. STUDENT SEARCH
+       ===================================================== */
+
+    if (studentSearch) {
+        studentSearch.addEventListener(
+            "input",
+            () => {
+                const value =
+                    studentSearch.value
+                        .trim()
+                        .toLowerCase();
+
+                const table =
+                    document.querySelector(
+                        ".students-table"
+                    );
+
+                if (!table) return;
+
+                const rows =
+                    table.querySelectorAll(
+                        "tbody tr"
+                    );
+
+                rows.forEach((row) => {
+                    const text =
+                        row.textContent
+                            .toLowerCase();
+
+                    row.style.display =
+                        text.includes(value)
+                            ? ""
+                            : "none";
+                });
+            }
+        );
+    }
+
+
+    /* =====================================================
+       16. SEARCH BUTTON
+       ===================================================== */
+
+    if (searchBtn) {
+        searchBtn.addEventListener(
+            "click",
+            () => {
+                showSection("students");
+
+                setTimeout(() => {
+                    if (studentSearch) {
+                        studentSearch.focus();
+                    }
+                }, 250);
+            }
+        );
+    }
+
+
+    /* =====================================================
+       17. NOTIFICATIONS
+       ===================================================== */
+
+    if (notificationBtn) {
+        notificationBtn.addEventListener(
+            "click",
+            () => {
+                showToast(
+                    "You have new student activity."
+                );
+
+                const dot =
+                    notificationBtn.querySelector(
+                        ".notification-dot"
+                    );
+
+                if (dot) {
+                    dot.style.display = "none";
+                }
+            }
+        );
+    }
+
+
+    /* =====================================================
+       18. LANGUAGE
+       ===================================================== */
+
+    if (languageSelect) {
+        languageSelect.addEventListener(
+            "change",
+            () => {
+                const language =
+                    languageSelect.value;
+
+                const messages = {
+                    en: "Language set to English.",
+                    fr: "Language set to French.",
+                    ar: "Language set to Arabic."
+                };
+
+                showToast(
+                    messages[language] ||
+                    "Language changed."
+                );
+            }
+        );
+    }
+
+
+    /* =====================================================
+       19. COURSE ACTION BUTTONS
+       ===================================================== */
+
+    const courseActionButtons =
+        document.querySelectorAll(
+            ".course-action"
+        );
+
+    courseActionButtons.forEach((button) => {
+        button.addEventListener(
+            "click",
+            (event) => {
+                event.preventDefault();
+
+                const card =
+                    button.closest(
+                        ".course-card"
+                    );
+
+                if (!card) return;
+
+                const title =
+                    card.querySelector("h3");
+
+                const courseName =
+                    title
+                        ? title.textContent.trim()
+                        : "Course";
+
+                showToast(
+                    `${courseName} is ready to manage.`
+                );
+            }
+        );
+    });
+
+
+    /* =====================================================
+       20. LIVE SESSION BUTTON
+       ===================================================== */
+
+    if (createSessionBtn) {
+        createSessionBtn.addEventListener(
+            "click",
+            () => {
+                showToast(
+                    "Live session creation will be connected soon."
+                );
+            }
+        );
+    }
+
+
+    /* =====================================================
+       21. LIVE SESSION VIEW BUTTONS
+       ===================================================== */
+
+    const sessionViewButtons =
+        document.querySelectorAll(
+            ".session-card .secondary-btn"
+        );
+
+    sessionViewButtons.forEach((button) => {
+        button.addEventListener(
+            "click",
+            () => {
+                const card =
+                    button.closest(
+                        ".session-card"
+                    );
+
+                const title =
+                    card
+                        ? card.querySelector("h3")
+                        : null;
+
+                showToast(
+                    title
+                        ? `${title.textContent.trim()} details are available in the prototype.`
+                        : "Session details are available in the prototype."
+                );
+            }
+        );
+    });
+
+
+    /* =====================================================
+       22. RESOURCES
+       ===================================================== */
+
+    if (uploadResourceBtn) {
+        uploadResourceBtn.addEventListener(
+            "click",
+            () => {
+                showToast(
+                    "Resource upload will be connected soon."
+                );
+            }
+        );
+    }
+
+
+    const resourceButtons =
+        document.querySelectorAll(
+            ".resource-card button"
+        );
+
+    resourceButtons.forEach((button) => {
+        button.addEventListener(
+            "click",
+            () => {
+                const card =
+                    button.closest(
+                        ".resource-card"
+                    );
+
+                const title =
+                    card
+                        ? card.querySelector("strong")
+                        : null;
+
+                showToast(
+                    title
+                        ? `${title.textContent.trim()} selected.`
+                        : "Resource selected."
+                );
+            }
+        );
+    });
+
+
+    /* =====================================================
+       23. SETTINGS TOGGLES
+       ===================================================== */
+
+    const toggles =
+        document.querySelectorAll(
+            ".toggle input"
+        );
+
+    toggles.forEach((toggle) => {
+        toggle.addEventListener(
+            "change",
+            () => {
+                showToast(
+                    toggle.checked
+                        ? "Setting enabled."
+                        : "Setting disabled."
+                );
+            }
+        );
+    });
+
+
+    /* =====================================================
+       24. COMPACT SIDEBAR
+       ===================================================== */
+
+    if (compactSidebarToggle) {
+        compactSidebarToggle.addEventListener(
+            "change",
+            () => {
+                if (!sidebar) return;
+
+                sidebar.classList.toggle(
+                    "compact",
+                    compactSidebarToggle.checked
+                );
+
+                showToast(
+                    compactSidebarToggle.checked
+                        ? "Compact sidebar enabled."
+                        : "Compact sidebar disabled."
+                );
+            }
+        );
+    }
+
+
+    /* =====================================================
+       25. PROGRESS BARS
        ===================================================== */
 
     function initializeProgressBars() {
@@ -600,49 +972,29 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         progressBars.forEach((bar) => {
-            let percentage =
-                bar.dataset.progress;
+            const inlineWidth =
+                bar.style.width;
 
-            if (!percentage) {
-                const parent =
-                    bar.closest(
-                        ".performance-progress, .progress-course-item, .progress-main-card"
-                    );
-
-                if (parent) {
-                    const percentageElement =
-                        parent.querySelector(
-                            "[data-percentage]"
-                        );
-
-                    if (percentageElement) {
-                        percentage =
-                            percentageElement.dataset.percentage;
-                    }
-                }
-            }
-
-            if (percentage) {
-                let numericValue =
+            if (inlineWidth) {
+                const value =
                     parseFloat(
-                        String(percentage).replace("%", "")
+                        inlineWidth
                     );
 
-                if (
-                    !Number.isNaN(numericValue)
-                ) {
-                    numericValue =
-                        Math.max(
-                            0,
-                            Math.min(
-                                100,
-                                numericValue
-                            )
-                        );
+                if (!Number.isNaN(value)) {
+                    bar.style.width = "0%";
 
                     requestAnimationFrame(() => {
-                        bar.style.width =
-                            `${numericValue}%`;
+                        requestAnimationFrame(() => {
+                            bar.style.width =
+                                `${Math.max(
+                                    0,
+                                    Math.min(
+                                        100,
+                                        value
+                                    )
+                                )}%`;
+                        });
                     });
                 }
             }
@@ -654,95 +1006,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       21. SETTINGS TOGGLES
-       ===================================================== */
-
-    const toggles =
-        document.querySelectorAll(
-            ".toggle input"
-        );
-
-    toggles.forEach((toggle) => {
-        toggle.addEventListener("change", () => {
-            if (toggle.checked) {
-                showToast("Setting enabled.");
-            } else {
-                showToast("Setting disabled.");
-            }
-        });
-    });
-
-
-    /* =====================================================
-       22. LOGOUT
+       26. BACK TO LOGIN
        ===================================================== */
 
     const logoutButton =
-        document.querySelector(".logout-item");
+        document.querySelector(
+            ".logout-item"
+        );
 
     if (logoutButton) {
         logoutButton.addEventListener(
             "click",
-            (event) => {
-                event.preventDefault();
-
-                const confirmed =
-                    window.confirm(
-                        "Are you sure you want to log out?"
-                    );
-
-                if (!confirmed) {
-                    return;
-                }
-
-                showToast(
-                    "Logging out..."
-                );
+            () => {
+                closeSidebar();
 
                 /*
-                 * Backend authentication will be
-                 * connected here later.
+                 * The HTML href already points to:
+                 * index.html
+                 *
+                 * We intentionally do not prevent
+                 * the default navigation.
                  */
-
-                setTimeout(() => {
-                    console.log(
-                        "Wassla — Logout requested."
-                    );
-                }, 500);
             }
         );
     }
 
 
     /* =====================================================
-       23. ACTIVE NAVIGATION FROM HASH
-       ===================================================== */
-
-    window.addEventListener(
-        "hashchange",
-        () => {
-            const sectionId =
-                window.location.hash.replace(
-                    "#",
-                    ""
-                );
-
-            if (
-                sectionId &&
-                document.getElementById(sectionId)
-            ) {
-                showSection(sectionId);
-            }
-        }
-    );
-
-
-    /* =====================================================
-       24. PREVENT EMPTY ANCHOR JUMPS
+       27. PREVENT EMPTY # LINKS
        ===================================================== */
 
     document
-        .querySelectorAll('a[href="#"]')
+        .querySelectorAll(
+            'a[href="#"]'
+        )
         .forEach((link) => {
             link.addEventListener(
                 "click",
@@ -754,10 +1051,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       25. DEBUG MESSAGE
+       28. DEBUG
        ===================================================== */
 
     console.log(
         "Wassla Teacher Dashboard initialized successfully."
     );
+
 });
+```
+
+   
