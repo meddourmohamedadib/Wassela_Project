@@ -501,4 +501,5 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log(
     "Wassla Teacher Dashboard initialized successfully."
   );
+   alert("TEACHER JS WORKING");
 });
