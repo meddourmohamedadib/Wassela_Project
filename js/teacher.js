@@ -1,720 +1,630 @@
 /* =========================================================
-   WASSLA — TEACHER DASHBOARD
-   FIXED VERSION
-   - EN / FR / AR language switching
-   - RTL for Arabic
-   - Edit teacher-created courses
-   - No delete
+   LANGUAGE SWITCHING — FIXED
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-    "use strict";
+const languageData = {
+
+    en: {
+        "Dashboard": "Dashboard",
+        "My Courses": "My Courses",
+        "Create Course": "Create Course",
+        "Students": "Students",
+        "Student Progress": "Student Progress",
+        "Live Sessions": "Live Sessions",
+        "Resources": "Resources",
+        "Settings": "Settings",
+        "Teacher Dashboard": "Teacher Dashboard",
+
+        "Student progress": "Student progress",
+        "0 students": "0 students",
+        "Course options": "Course options",
+        "lessons": "lessons",
+
+        "Edit Course": "Edit Course",
+        "Save Changes": "Save Changes",
+        "Preview": "Preview",
+        "Cancel": "Cancel",
+
+        "Course Title": "Course Title",
+        "Category": "Category",
+        "Level": "Level",
+        "Description": "Description",
+        "Number of Lessons": "Number of Lessons",
+        "Duration": "Duration",
 
-    const $ = (selector, parent = document) =>
-        parent.querySelector(selector);
+        "Programming": "Programming",
+        "Beginner": "Beginner",
+        "Intermediate": "Intermediate",
+        "Advanced": "Advanced",
 
-    const $$ = (selector, parent = document) =>
-        Array.from(parent.querySelectorAll(selector));
+        "Create Session": "Create Session",
+        "Add Resource": "Add Resource",
+        "Profile": "Profile",
+        "Notifications": "Notifications",
+        "Language": "Language",
+        "Logout": "Logout",
 
-    const showToast = (message) => {
-        const toast = $("#toast");
-        const toastMessage = $("#toastMessage");
+        "Course created successfully!":
+            "Course created successfully!",
 
-        if (!toast || !toastMessage) return;
+        "Course updated successfully!":
+            "Course updated successfully!",
 
-        toastMessage.textContent = message;
-        toast.classList.add("show");
+        "You have new notifications.":
+            "You have new notifications.",
 
-        clearTimeout(window.wasslaToastTimer);
+        "New session creation is ready.":
+            "New session creation is ready.",
 
-        window.wasslaToastTimer = setTimeout(() => {
-            toast.classList.remove("show");
-        }, 2500);
-    };
+        "Add Resource selected.":
+            "Add Resource selected.",
 
-    /* =========================================================
-       ELEMENTS
-       ========================================================= */
+        "Compact sidebar enabled.":
+            "Compact sidebar enabled.",
 
-    const sidebar = $("#teacherSidebar");
-    const overlay = $("#sidebarOverlay");
-    const mobileMenuBtn = $("#mobileMenuBtn");
-    const pageTitle = $("#pageTitle");
+        "Compact sidebar disabled.":
+            "Compact sidebar disabled.",
 
-    const navItems = $$(".nav-item[data-section]");
-    const sectionButtons = $$("[data-section-target]");
-    const sections = $$("section.page-section");
+        "Please enter a course title.":
+            "Please enter a course title.",
 
-    const searchBtn = $("#searchBtn");
-    const notificationBtn = $("#notificationBtn");
-    const languageSelect = $("#languageSelect");
+        "Please select a category.":
+            "Please select a category.",
 
-    const studentSearch = $("#studentSearch");
+        "Please select a level.":
+            "Please select a level.",
 
-    const courseForm = $("#courseForm");
-    const previewCourseBtn = $("#previewCourseBtn");
+        "Please enter a course description.":
+            "Please enter a course description.",
 
-    const previewModal = $("#coursePreviewModal");
-    const closePreviewBtn = $("#closeCoursePreview");
+        "Please enter the number of lessons.":
+            "Please enter the number of lessons.",
 
-    const compactSidebarToggle =
-        $("#compactSidebarToggle");
+        "Please enter the estimated duration.":
+            "Please enter the estimated duration.",
 
-    const courseGrid = $(".course-grid");
+        "No description provided.":
+            "No description provided."
+    },
 
-    /* =========================================================
-       SETTINGS
-       ========================================================= */
+    fr: {
+        "Dashboard": "Tableau de bord",
+        "My Courses": "Mes cours",
+        "Create Course": "Créer un cours",
+        "Students": "Étudiants",
+        "Student Progress": "Progression des étudiants",
+        "Live Sessions": "Sessions en direct",
+        "Resources": "Ressources",
+        "Settings": "Paramètres",
+        "Teacher Dashboard": "Espace enseignant",
 
-    const STORAGE_KEY = "wassla_teacher_courses";
-    const LANGUAGE_KEY = "wassla_teacher_language";
+        "Student progress":
+            "Progression des étudiants",
 
-    let editingCourseId = null;
+        "0 students":
+            "0 étudiants",
 
-    let currentLanguage =
-        localStorage.getItem(LANGUAGE_KEY) || "en";
+        "Course options":
+            "Options du cours",
 
-    /* =========================================================
-       SECTION TITLES
-       ========================================================= */
+        "lessons":
+            "leçons",
 
-    const sectionTitles = {
-        dashboard: "Dashboard",
-        courses: "My Courses",
-        "create-course": "Create Course",
-        students: "Students",
-        progress: "Student Progress",
-        "live-sessions": "Live Sessions",
-        resources: "Resources",
-        settings: "Settings"
-    };
+        "Edit Course":
+            "Modifier le cours",
 
-    /* =========================================================
-       TRANSLATIONS
-       ========================================================= */
+        "Save Changes":
+            "Enregistrer les modifications",
 
-    const translations = {
+        "Preview":
+            "Aperçu",
 
-        en: {
-            "Dashboard": "Dashboard",
-            "My Courses": "My Courses",
-            "Create Course": "Create Course",
-            "Students": "Students",
-            "Student Progress": "Student Progress",
-            "Live Sessions": "Live Sessions",
-            "Resources": "Resources",
-            "Settings": "Settings",
-            "Teacher Dashboard": "Teacher Dashboard",
+        "Cancel":
+            "Annuler",
 
-            "Student progress": "Student progress",
-            "0 students": "0 students",
-            "Course options": "Course options",
-            "lessons": "lessons",
+        "Course Title":
+            "Titre du cours",
 
-            "Edit Course": "Edit Course",
-            "Save Changes": "Save Changes",
+        "Category":
+            "Catégorie",
 
-            "Course created successfully!":
-                "Course created successfully!",
+        "Level":
+            "Niveau",
 
-            "Course updated successfully!":
-                "Course updated successfully!",
+        "Description":
+            "Description",
 
-            "You have new notifications.":
-                "You have new notifications.",
+        "Number of Lessons":
+            "Nombre de leçons",
 
-            "New session creation is ready.":
-                "New session creation is ready.",
+        "Duration":
+            "Durée",
 
-            "Add Resource selected.":
-                "Add Resource selected.",
+        "Programming":
+            "Programmation",
 
-            "Compact sidebar enabled.":
-                "Compact sidebar enabled.",
+        "Beginner":
+            "Débutant",
 
-            "Compact sidebar disabled.":
-                "Compact sidebar disabled.",
+        "Intermediate":
+            "Intermédiaire",
 
-            "Please enter a course title.":
-                "Please enter a course title.",
+        "Advanced":
+            "Avancé",
 
-            "Please select a category.":
-                "Please select a category.",
+        "Create Session":
+            "Créer une session",
 
-            "Please select a level.":
-                "Please select a level.",
+        "Add Resource":
+            "Ajouter une ressource",
 
-            "Please enter a course description.":
-                "Please enter a course description.",
+        "Profile":
+            "Profil",
 
-            "Please enter the number of lessons.":
-                "Please enter the number of lessons.",
+        "Notifications":
+            "Notifications",
 
-            "Please enter the estimated duration.":
-                "Please enter the estimated duration.",
+        "Language":
+            "Langue",
 
-            "No description provided.":
-                "No description provided."
-        },
+        "Logout":
+            "Déconnexion",
 
-        fr: {
-            "Dashboard": "Tableau de bord",
-            "My Courses": "Mes cours",
-            "Create Course": "Créer un cours",
-            "Students": "Étudiants",
-            "Student Progress": "Progression des étudiants",
-            "Live Sessions": "Sessions en direct",
-            "Resources": "Ressources",
-            "Settings": "Paramètres",
-            "Teacher Dashboard": "Espace enseignant",
+        "Course created successfully!":
+            "Cours créé avec succès !",
 
-            "Student progress":
-                "Progression des étudiants",
+        "Course updated successfully!":
+            "Cours mis à jour avec succès !",
 
-            "0 students":
-                "0 étudiants",
+        "You have new notifications.":
+            "Vous avez de nouvelles notifications.",
 
-            "Course options":
-                "Options du cours",
+        "New session creation is ready.":
+            "La création d'une nouvelle session est prête.",
 
-            "lessons":
-                "leçons",
+        "Add Resource selected.":
+            "Ajout de ressource sélectionné.",
 
-            "Edit Course":
-                "Modifier le cours",
+        "Compact sidebar enabled.":
+            "Barre latérale compacte activée.",
 
-            "Save Changes":
-                "Enregistrer les modifications",
+        "Compact sidebar disabled.":
+            "Barre latérale compacte désactivée.",
 
-            "Course created successfully!":
-                "Cours créé avec succès !",
+        "Please enter a course title.":
+            "Veuillez saisir le titre du cours.",
 
-            "Course updated successfully!":
-                "Cours mis à jour avec succès !",
+        "Please select a category.":
+            "Veuillez sélectionner la catégorie.",
 
-            "You have new notifications.":
-                "Vous avez de nouvelles notifications.",
+        "Please select a level.":
+            "Veuillez sélectionner le niveau.",
 
-            "New session creation is ready.":
-                "La création d'une nouvelle session est prête.",
+        "Please enter a course description.":
+            "Veuillez saisir une description du cours.",
 
-            "Add Resource selected.":
-                "Ajout de ressource sélectionné.",
+        "Please enter the number of lessons.":
+            "Veuillez saisir le nombre de leçons.",
 
-            "Compact sidebar enabled.":
-                "Barre latérale compacte activée.",
+        "Please enter the estimated duration.":
+            "Veuillez saisir la durée estimée.",
 
-            "Compact sidebar disabled.":
-                "Barre latérale compacte désactivée.",
+        "No description provided.":
+            "Aucune description fournie."
+    },
 
-            "Please enter a course title.":
-                "Veuillez saisir le titre du cours.",
+    ar: {
+        "Dashboard":
+            "لوحة التحكم",
 
-            "Please select a category.":
-                "Veuillez sélectionner une catégorie.",
+        "My Courses":
+            "دوراتي",
 
-            "Please select a level.":
-                "Veuillez sélectionner le niveau.",
+        "Create Course":
+            "إنشاء دورة",
 
-            "Please enter a course description.":
-                "Veuillez saisir une description du cours.",
+        "Students":
+            "الطلاب",
 
-            "Please enter the number of lessons.":
-                "Veuillez saisir le nombre de leçons.",
+        "Student Progress":
+            "تقدم الطلاب",
 
-            "Please enter the estimated duration.":
-                "Veuillez saisir la durée estimée.",
+        "Live Sessions":
+            "الجلسات المباشرة",
 
-            "No description provided.":
-                "Aucune description fournie."
-        },
+        "Resources":
+            "الموارد",
 
-        ar: {
-            "Dashboard": "لوحة التحكم",
-            "My Courses": "دوراتي",
-            "Create Course": "إنشاء دورة",
-            "Students": "الطلاب",
-            "Student Progress": "تقدم الطلاب",
-            "Live Sessions": "الجلسات المباشرة",
-            "Resources": "الموارد",
-            "Settings": "الإعدادات",
-            "Teacher Dashboard": "لوحة المعلم",
+        "Settings":
+            "الإعدادات",
 
-            "Student progress":
-                "تقدم الطلاب",
+        "Teacher Dashboard":
+            "لوحة المعلم",
 
-            "0 students":
-                "0 طالب",
+        "Student progress":
+            "تقدم الطلاب",
 
-            "Course options":
-                "خيارات الدورة",
+        "0 students":
+            "0 طالب",
 
-            "lessons":
-                "دروس",
+        "Course options":
+            "خيارات الدورة",
 
-            "Edit Course":
-                "تعديل الدورة",
+        "lessons":
+            "دروس",
 
-            "Save Changes":
-                "حفظ التغييرات",
+        "Edit Course":
+            "تعديل الدورة",
 
-            "Course created successfully!":
-                "تم إنشاء الدورة بنجاح!",
+        "Save Changes":
+            "حفظ التغييرات",
 
-            "Course updated successfully!":
-                "تم تحديث الدورة بنجاح!",
+        "Preview":
+            "معاينة",
 
-            "You have new notifications.":
-                "لديك إشعارات جديدة.",
+        "Cancel":
+            "إلغاء",
 
-            "New session creation is ready.":
-                "إنشاء جلسة جديدة جاهز.",
+        "Course Title":
+            "عنوان الدورة",
 
-            "Add Resource selected.":
-                "تم اختيار إضافة مورد.",
+        "Category":
+            "الفئة",
 
-            "Compact sidebar enabled.":
-                "تم تفعيل الشريط الجانبي المصغر.",
+        "Level":
+            "المستوى",
 
-            "Compact sidebar disabled.":
-                "تم تعطيل الشريط الجانبي المصغر.",
+        "Description":
+            "الوصف",
 
-            "Please enter a course title.":
-                "يرجى إدخال عنوان الدورة.",
+        "Number of Lessons":
+            "عدد الدروس",
 
-            "Please select a category.":
-                "يرجى اختيار الفئة.",
+        "Duration":
+            "المدة",
 
-            "Please select a level.":
-                "يرجى اختيار المستوى.",
+        "Programming":
+            "البرمجة",
 
-            "Please enter a course description.":
-                "يرجى إدخال وصف الدورة.",
+        "Beginner":
+            "مبتدئ",
 
-            "Please enter the number of lessons.":
-                "يرجى إدخال عدد الدروس.",
+        "Intermediate":
+            "متوسط",
 
-            "Please enter the estimated duration.":
-                "يرجى إدخال المدة المتوقعة.",
+        "Advanced":
+            "متقدم",
 
-            "No description provided.":
-                "لم يتم تقديم وصف."
-        }
-    };
+        "Create Session":
+            "إنشاء جلسة",
 
-    const t = (text) =>
-        translations[currentLanguage]?.[text] || text;
+        "Add Resource":
+            "إضافة مورد",
 
-    /* =========================================================
-       SIDEBAR
-       ========================================================= */
+        "Profile":
+            "الملف الشخصي",
 
-    function closeSidebar() {
+        "Notifications":
+            "الإشعارات",
 
-        if (sidebar) {
-            sidebar.classList.remove("open");
-        }
+        "Language":
+            "اللغة",
 
-        if (overlay) {
-            overlay.classList.remove("show");
-            overlay.classList.remove("active");
-        }
+        "Logout":
+            "تسجيل الخروج",
+
+        "Course created successfully!":
+            "تم إنشاء الدورة بنجاح!",
+
+        "Course updated successfully!":
+            "تم تحديث الدورة بنجاح!",
+
+        "You have new notifications.":
+            "لديك إشعارات جديدة.",
+
+        "New session creation is ready.":
+            "إنشاء جلسة جديدة جاهز.",
+
+        "Add Resource selected.":
+            "تم اختيار إضافة مورد.",
+
+        "Compact sidebar enabled.":
+            "تم تفعيل الشريط الجانبي المصغر.",
+
+        "Compact sidebar disabled.":
+            "تم تعطيل الشريط الجانبي المصغر.",
+
+        "Please enter a course title.":
+            "يرجى إدخال عنوان الدورة.",
+
+        "Please select a category.":
+            "يرجى اختيار الفئة.",
+
+        "Please select a level.":
+            "يرجى اختيار المستوى.",
+
+        "Please enter a course description.":
+            "يرجى إدخال وصف الدورة.",
+
+        "Please enter the number of lessons.":
+            "يرجى إدخال عدد الدروس.",
+
+        "Please enter the estimated duration.":
+            "يرجى إدخال المدة المتوقعة.",
+
+        "No description provided.":
+            "لم يتم تقديم وصف."
     }
+};
 
-    if (mobileMenuBtn) {
 
-        mobileMenuBtn.addEventListener("click", () => {
+/* =========================================================
+   TRANSLATION HELPER
+   ========================================================= */
 
-            if (!sidebar) return;
+function t(text) {
 
-            sidebar.classList.toggle("open");
-
-            if (overlay) {
-                overlay.classList.toggle("show");
-                overlay.classList.toggle("active");
-            }
-        });
-    }
-
-    if (overlay) {
-        overlay.addEventListener(
-            "click",
-            closeSidebar
-        );
-    }
-
-    /* =========================================================
-       SECTION NAVIGATION
-       ========================================================= */
-
-    function showSection(sectionId) {
-
-        if (!sectionId) return;
-
-        const target =
-            document.getElementById(sectionId);
-
-        if (!target) {
-
-            console.warn(
-                "Wassla: section not found:",
-                sectionId
-            );
-
-            return;
-        }
-
-        sections.forEach((section) => {
-
-            section.classList.remove(
-                "active-section"
-            );
-
-            section.style.display = "none";
-        });
-
-        target.classList.add(
-            "active-section"
-        );
-
-        target.style.display = "block";
-
-        navItems.forEach((item) => {
-
-            item.classList.toggle(
-                "active",
-                item.dataset.section === sectionId
-            );
-        });
-
-        if (pageTitle) {
-
-            pageTitle.textContent =
-                t(
-                    sectionTitles[sectionId] ||
-                    "Teacher Dashboard"
-                );
-        }
-
-        closeSidebar();
-
-        if (
-            window.location.hash !==
-            `#${sectionId}`
-        ) {
-
-            history.replaceState(
-                null,
-                "",
-                `#${sectionId}`
-            );
-        }
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-
-    navItems.forEach((item) => {
-
-        item.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                showSection(
-                    item.getAttribute(
-                        "data-section"
-                    )
-                );
-            }
-        );
-    });
-
-    sectionButtons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                showSection(
-                    button.getAttribute(
-                        "data-section-target"
-                    )
-                );
-            }
-        );
-    });
-
-    function loadInitialSection() {
-
-        const hash =
-            window.location.hash.replace(
-                "#",
-                ""
-            );
-
-        if (
-            hash &&
-            document.getElementById(hash)
-        ) {
-
-            showSection(hash);
-
-        } else {
-
-            showSection("dashboard");
-        }
-    }
-
-    window.addEventListener(
-        "hashchange",
-        loadInitialSection
+    return (
+        languageData[currentLanguage]?.[text] ||
+        languageData.en[text] ||
+        text
     );
+}
 
-    /* =========================================================
-       SEARCH
-       ========================================================= */
 
-    if (searchBtn) {
+/* =========================================================
+   SAVE ORIGINAL TEXT
+   ========================================================= */
 
-        searchBtn.addEventListener(
-            "click",
-            () => {
+function prepareTranslations() {
 
-                showSection("students");
-
-                setTimeout(() => {
-
-                    if (studentSearch) {
-                        studentSearch.focus();
-                    }
-
-                }, 200);
-            }
-        );
-    }
-
-    if (studentSearch) {
-
-        studentSearch.addEventListener(
-            "input",
-            () => {
-
-                const value =
-                    studentSearch.value
-                        .trim()
-                        .toLowerCase();
-
-                const rows =
-                    $$(".students-table tbody tr");
-
-                rows.forEach((row) => {
-
-                    const text =
-                        row.textContent.toLowerCase();
-
-                    row.style.display =
-                        text.includes(value)
-                            ? ""
-                            : "none";
-                });
-            }
-        );
-    }
-
-    /* =========================================================
-       NOTIFICATIONS
-       ========================================================= */
-
-    if (notificationBtn) {
-
-        notificationBtn.addEventListener(
-            "click",
-            () => {
-
-                showToast(
-                    t(
-                        "You have new notifications."
-                    )
-                );
-            }
-        );
-    }
-
-    /* =========================================================
-       LANGUAGE SWITCHING
-       ========================================================= */
-
-    function translateTextNodes() {
-
-        const walker =
-            document.createTreeWalker(
-                document.body,
-                NodeFilter.SHOW_TEXT
-            );
-
-        const nodes = [];
-
-        let node;
-
-        while (
-            (node = walker.nextNode())
-        ) {
-
-            nodes.push(node);
-        }
-
-        nodes.forEach((textNode) => {
-
-            const value =
-                textNode.nodeValue || "";
-
-            const trimmed =
-                value.trim();
-
-            if (!trimmed) return;
-
-            const translated =
-                t(trimmed);
+    document
+        .querySelectorAll(
+            "body *:not(script):not(style)"
+        )
+        .forEach((element) => {
 
             if (
-                translated !== trimmed
+                element.children.length === 0 &&
+                element.textContent.trim()
             ) {
 
-                textNode.nodeValue =
-                    value.replace(
-                        trimmed,
-                        translated
-                    );
+                if (
+                    !element.dataset.originalText
+                ) {
+
+                    element.dataset.originalText =
+                        element.textContent.trim();
+                }
             }
         });
+}
+
+
+/* =========================================================
+   TRANSLATE PAGE
+   ========================================================= */
+
+function translatePage() {
+
+    prepareTranslations();
+
+    document
+        .querySelectorAll(
+            "[data-original-text]"
+        )
+        .forEach((element) => {
+
+            const original =
+                element.dataset.originalText;
+
+            element.textContent =
+                t(original);
+        });
+
+
+    /* =====================================================
+       PLACEHOLDERS
+       ===================================================== */
+
+    const placeholders = {
+
+        "#studentSearch": {
+            en: "Search students...",
+            fr: "Rechercher des étudiants...",
+            ar: "ابحث عن الطلاب..."
+        },
+
+        "#courseTitle": {
+            en: "Enter course title",
+            fr: "Saisissez le titre du cours",
+            ar: "أدخل عنوان الدورة"
+        },
+
+        "#courseDescription": {
+            en: "Describe your course...",
+            fr: "Décrivez votre cours...",
+            ar: "صف دورتك..."
+        },
+
+        "#courseDuration": {
+            en: "e.g. 6 weeks",
+            fr: "ex. 6 semaines",
+            ar: "مثال: 6 أسابيع"
+        }
+    };
+
+
+    Object.entries(placeholders)
+        .forEach(([selector, values]) => {
+
+            const element =
+                document.querySelector(selector);
+
+            if (!element) return;
+
+            element.placeholder =
+                values[currentLanguage] ||
+                values.en;
+        });
+
+
+    /* =====================================================
+       CATEGORY OPTIONS
+       ===================================================== */
+
+    const category =
+        document.querySelector("#courseCategory");
+
+    if (category) {
+
+        Array.from(category.options)
+            .forEach((option) => {
+
+                if (!option.dataset.originalText) {
+
+                    option.dataset.originalText =
+                        option.textContent.trim();
+                }
+
+                option.textContent =
+                    t(
+                        option.dataset.originalText
+                    );
+            });
     }
 
-    function applyLanguage(language) {
 
-        if (!translations[language]) {
-            language = "en";
-        }
+    /* =====================================================
+       LEVEL OPTIONS
+       ===================================================== */
 
-        currentLanguage =
-            language;
+    const level =
+        document.querySelector("#courseLevel");
 
-        localStorage.setItem(
-            LANGUAGE_KEY,
-            currentLanguage
-        );
+    if (level) {
 
-        document.documentElement.lang =
-            currentLanguage;
+        Array.from(level.options)
+            .forEach((option) => {
 
-        document.documentElement.dir =
-            currentLanguage === "ar"
-                ? "rtl"
-                : "ltr";
+                if (!option.dataset.originalText) {
 
-        if (languageSelect) {
+                    option.dataset.originalText =
+                        option.textContent.trim();
+                }
 
-            languageSelect.value =
-                currentLanguage;
-        }
-
-        translateTextNodes();
-
-        const activeSection =
-            sections.find(
-                (section) =>
-                    section.classList.contains(
-                        "active-section"
-                    )
-            );
-
-        if (
-            pageTitle &&
-            activeSection
-        ) {
-
-            pageTitle.textContent =
-                t(
-                    sectionTitles[
-                        activeSection.id
-                    ] ||
-                    "Teacher Dashboard"
-                );
-        }
-
-        /* Placeholders */
-
-        if (studentSearch) {
-
-            studentSearch.placeholder = {
-
-                en: "Search students...",
-                fr: "Rechercher des étudiants...",
-                ar: "ابحث عن الطلاب..."
-
-            }[currentLanguage];
-        }
-
-        const courseTitle =
-            $("#courseTitle");
-
-        if (courseTitle) {
-
-            courseTitle.placeholder = {
-
-                en: "Enter course title",
-                fr: "Saisissez le titre du cours",
-                ar: "أدخل عنوان الدورة"
-
-            }[currentLanguage];
-        }
-
-        const courseDescription =
-            $("#courseDescription");
-
-        if (courseDescription) {
-
-            courseDescription.placeholder = {
-
-                en: "Describe your course...",
-                fr: "Décrivez votre cours...",
-                ar: "صف دورتك..."
-
-            }[currentLanguage];
-        }
-
-        const courseDuration =
-            $("#courseDuration");
-
-        if (courseDuration) {
-
-            courseDuration.placeholder = {
-
-                en: "e.g. 6 weeks",
-                fr: "ex. 6 semaines",
-                ar: "مثال: 6 أسابيع"
-
-            }[currentLanguage];
-        }
+                option.textContent =
+                    t(
+                        option.dataset.originalText
+                    );
+            });
     }
+
+
+    /* =====================================================
+       RTL / LTR
+       ===================================================== */
+
+    document.documentElement.lang =
+        currentLanguage;
+
+    document.documentElement.dir =
+        currentLanguage === "ar"
+            ? "rtl"
+            : "ltr";
+
+
+    /* =====================================================
+       LANGUAGE SELECT
+       ===================================================== */
 
     if (languageSelect) {
 
-        languageSelect.addEventListener(
-            "change",
-            () => {
-
-                applyLanguage(
-                    languageSelect.value
-                );
-            }
-        );
+        languageSelect.value =
+            currentLanguage;
     }
+
+
+    /* =====================================================
+       PAGE TITLE
+       ===================================================== */
+
+    const activeSection =
+        sections.find(
+            (section) =>
+                section.classList.contains(
+                    "active-section"
+                )
+        );
+
+    if (
+        pageTitle &&
+        activeSection
+    ) {
+
+        const title =
+            sectionTitles[
+                activeSection.id
+            ] || "Teacher Dashboard";
+
+        pageTitle.textContent =
+            t(title);
+    }
+}
+
+
+/* =========================================================
+   LANGUAGE SELECT EVENT
+   ========================================================= */
+
+if (languageSelect) {
+
+    languageSelect.addEventListener(
+        "change",
+        () => {
+
+            const selected =
+                languageSelect.value;
+
+            if (
+                !languageData[selected]
+            ) {
+                return;
+            }
+
+            currentLanguage =
+                selected;
+
+            localStorage.setItem(
+                LANGUAGE_KEY,
+                currentLanguage
+            );
+
+            translatePage();
+
+            /*
+             * Reload dynamic course cards
+             * if the function exists.
+             */
+
+            if (
+                typeof loadSavedCourses ===
+                "function"
+            ) {
+
+                loadSavedCourses();
+            }
+
+            if (
+                typeof updateCourseCount ===
+                "function"
+            ) {
+
+                updateCourseCount();
+            }
+        }
+    );
+}
 
     /* =========================================================
        COURSE STORAGE
@@ -1593,9 +1503,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadInitialSection();
 
-    applyLanguage(
-        currentLanguage
-    );
+  translatePage();  
 
     console.log(
         "Wassla Teacher Dashboard initialized successfully."
