@@ -1,1064 +1,504 @@
-```javascript
 /* =========================================================
    WASSLA — TEACHER DASHBOARD
-   teacher.js
-   Frontend Prototype
+   Teacher dashboard interactions
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-    "use strict";
+  "use strict";
 
-    /* =====================================================
-       1. ELEMENTS
-       ===================================================== */
+  /* =========================================================
+     HELPERS
+     ========================================================= */
 
-    const sidebar = document.getElementById("teacherSidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+  const $$ = (selector, parent = document) =>
+    Array.from(parent.querySelectorAll(selector));
 
-    const pageTitle = document.getElementById("pageTitle");
+  const toast = $("#toast");
+  const toastMessage = $("#toastMessage");
 
-    const navItems = document.querySelectorAll(
-        ".nav-item[data-section]"
-    );
+  function showToast(message) {
+    if (!toast || !toastMessage) return;
 
-    const pageSections = document.querySelectorAll(
-        ".page-section"
-    );
+    toastMessage.textContent = message;
+    toast.classList.add("show");
 
-    const courseForm = document.getElementById("courseForm");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2500);
+  }
 
-    const studentSearch = document.getElementById("studentSearch");
+  function closeSidebar() {
+    teacherSidebar?.classList.remove("open");
+    sidebarOverlay?.classList.remove("show");
+  }
 
-    const searchBtn = document.getElementById("searchBtn");
+  /* =========================================================
+     ELEMENTS
+     ========================================================= */
 
-    const notificationBtn =
-        document.getElementById("notificationBtn");
+  const teacherSidebar = $("#teacherSidebar");
+  const sidebarOverlay = $("#sidebarOverlay");
+  const mobileMenuBtn = $("#mobileMenuBtn");
 
-    const languageSelect =
-        document.getElementById("languageSelect");
+  const navItems = $$(".nav-item");
+  const sectionTargets = $$("[data-section-target]");
+  const sections = $$("main section[id]");
 
-    const createSessionBtn =
-        document.getElementById("createSessionBtn");
+  const pageTitle = $("#pageTitle");
 
-    const uploadResourceBtn =
-        document.getElementById("uploadResourceBtn");
+  const searchBtn = $("#searchBtn");
+  const notificationBtn = $("#notificationBtn");
+  const languageSelect = $("#languageSelect");
 
-    const compactSidebarToggle =
-        document.getElementById("compactSidebarToggle");
+  const courseForm = $("#courseForm");
+  const previewCourseBtn = $("#previewCourseBtn");
 
-    /* Preview */
-    const previewCourseBtn =
-        document.getElementById("previewCourseBtn");
+  const coursePreviewModal = $("#coursePreviewModal");
+  const closeCoursePreview = $("#closeCoursePreview");
 
-    const coursePreviewModal =
-        document.getElementById("coursePreviewModal");
+  const studentSearch = $("#studentSearch");
 
-    const closeCoursePreview =
-        document.getElementById("closeCoursePreview");
+  const createSessionBtn = $("#createSessionBtn");
+  const uploadResourceBtn = $("#uploadResourceBtn");
 
-    const previewTitle =
-        document.getElementById("previewTitle");
+  const compactSidebarToggle = $("#compactSidebarToggle");
 
-    const previewDescription =
-        document.getElementById("previewDescription");
+  /* =========================================================
+     SECTION TITLES
+     ========================================================= */
 
-    const previewCategory =
-        document.getElementById("previewCategory");
+  const sectionTitles = {
+    dashboard: "Dashboard",
+    courses: "My Courses",
+    "create-course": "Create Course",
+    students: "Students",
+    progress: "Student Progress",
+    "live-sessions": "Live Sessions",
+    resources: "Resources",
+    settings: "Settings"
+  };
 
-    const previewLevel =
-        document.getElementById("previewLevel");
+  /* =========================================================
+     SHOW SECTION
+     ========================================================= */
 
-    const previewLessons =
-        document.getElementById("previewLessons");
+  function showSection(sectionId) {
+    if (!sectionId) return;
 
-    const previewDuration =
-        document.getElementById("previewDuration");
+    let targetSection = document.getElementById(sectionId);
 
-    /* Toast */
-    const toast =
-        document.getElementById("toast");
-
-    const toastMessage =
-        document.getElementById("toastMessage");
-
-
-    /* =====================================================
-       2. SECTION TITLES
-       ===================================================== */
-
-    const sectionTitles = {
-        dashboard: "Dashboard",
-        courses: "My Courses",
-        "create-course": "Create Course",
-        students: "Students",
-        progress: "Student Progress",
-        "live-sessions": "Live Sessions",
-        resources: "Resources",
-        settings: "Settings"
-    };
-
-
-    /* =====================================================
-       3. TOAST
-       ===================================================== */
-
-    let toastTimer = null;
-
-    function showToast(message) {
-        if (!toast) return;
-
-        if (toastMessage) {
-            toastMessage.textContent = message;
-        }
-
-        toast.classList.add("show");
-
-        clearTimeout(toastTimer);
-
-        toastTimer = setTimeout(() => {
-            toast.classList.remove("show");
-            toast.classList.remove("active");
-        }, 3000);
+    if (!targetSection) {
+      console.warn(`Section "${sectionId}" was not found.`);
+      return;
     }
 
+    sections.forEach((section) => {
+      section.classList.remove("active");
 
-    /* =====================================================
-       4. SIDEBAR
-       ===================================================== */
-
-    function openSidebar() {
-        if (sidebar) {
-            sidebar.classList.add("active");
-            sidebar.classList.add("open");
-        }
-
-        if (overlay) {
-            overlay.classList.add("active");
-            overlay.classList.add("show");
-        }
-
-        if (window.innerWidth <= 900) {
-            document.body.style.overflow = "hidden";
-        }
-    }
-
-
-    function closeSidebar() {
-        if (sidebar) {
-            sidebar.classList.remove("active");
-            sidebar.classList.remove("open");
-            sidebar.classList.remove("show");
-        }
-
-        if (overlay) {
-            overlay.classList.remove("active");
-            overlay.classList.remove("show");
-        }
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", () => {
-            if (
-                sidebar &&
-                (
-                    sidebar.classList.contains("active") ||
-                    sidebar.classList.contains("open")
-                )
-            ) {
-                closeSidebar();
-            } else {
-                openSidebar();
-            }
-        });
-    }
-
-
-    if (overlay) {
-        overlay.addEventListener("click", closeSidebar);
-    }
-
-
-    /* =====================================================
-       5. SHOW SECTION
-       ===================================================== */
-
-    function showSection(sectionId, updateHash = true) {
-        if (!sectionId) return;
-
-        const targetSection =
-            document.getElementById(sectionId);
-
-        if (!targetSection) {
-            console.warn(
-                `Wassla: section "${sectionId}" not found.`
-            );
-            return;
-        }
-
-        /* Hide every section */
-        pageSections.forEach((section) => {
-            section.classList.remove("active-section");
-        });
-
-        /* Show selected section */
-        targetSection.classList.add("active-section");
-
-        /* Update sidebar active item */
-        navItems.forEach((item) => {
-            item.classList.remove("active");
-
-            if (
-                item.dataset.section === sectionId
-            ) {
-                item.classList.add("active");
-            }
-        });
-
-        /* Update page title */
-        if (
-            pageTitle &&
-            sectionTitles[sectionId]
-        ) {
-            pageTitle.textContent =
-                sectionTitles[sectionId];
-        }
-
-        /* Close mobile sidebar */
-        if (window.innerWidth <= 900) {
-            closeSidebar();
-        }
-
-        /* Update URL */
-        if (updateHash) {
-            history.replaceState(
-                null,
-                "",
-                `#${sectionId}`
-            );
-        }
-
-        /* Scroll to top */
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-
-
-    /* =====================================================
-       6. SIDEBAR NAVIGATION
-       ===================================================== */
+      if (section.id === sectionId) {
+        section.classList.add("active");
+      }
+    });
 
     navItems.forEach((item) => {
-        item.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const sectionId =
-                item.dataset.section;
-
-            if (sectionId) {
-                showSection(sectionId);
-            }
-        });
+      item.classList.toggle(
+        "active",
+        item.dataset.section === sectionId
+      );
     });
 
-
-    /* =====================================================
-       7. ALL DATA-SECTION-TARGET BUTTONS
-       ===================================================== */
-
-    const sectionTargetButtons =
-        document.querySelectorAll(
-            "[data-section-target]"
-        );
-
-    sectionTargetButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const target =
-                button.dataset.sectionTarget;
-
-            if (
-                target &&
-                document.getElementById(target)
-            ) {
-                showSection(target);
-            }
-        });
-    });
-
-
-    /* =====================================================
-       8. INITIAL SECTION
-       ===================================================== */
-
-    function initializeSection() {
-        const hash =
-            window.location.hash
-                .replace("#", "")
-                .trim();
-
-        if (
-            hash &&
-            document.getElementById(hash)
-        ) {
-            showSection(hash, false);
-            return;
-        }
-
-        const activeSection =
-            document.querySelector(
-                ".page-section.active-section"
-            );
-
-        if (activeSection) {
-            showSection(
-                activeSection.id,
-                false
-            );
-            return;
-        }
-
-        showSection("dashboard", false);
+    if (pageTitle) {
+      pageTitle.textContent =
+        sectionTitles[sectionId] || "Teacher Dashboard";
     }
 
+    closeSidebar();
 
-    initializeSection();
+    if (window.location.hash !== `#${sectionId}`) {
+      history.replaceState(null, "", `#${sectionId}`);
+    }
 
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
 
-    /* =====================================================
-       9. HASH CHANGE
-       ===================================================== */
+  /* =========================================================
+     SIDEBAR NAVIGATION
+     ========================================================= */
 
-    window.addEventListener(
-        "hashchange",
-        () => {
-            const sectionId =
-                window.location.hash
-                    .replace("#", "")
-                    .trim();
+  navItems.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      event.preventDefault();
 
-            if (
-                sectionId &&
-                document.getElementById(sectionId)
-            ) {
-                showSection(
-                    sectionId,
-                    false
-                );
-            }
-        }
+      const sectionId = item.dataset.section;
+
+      if (sectionId) {
+        showSection(sectionId);
+      }
+    });
+  });
+
+  /* =========================================================
+     DASHBOARD BUTTONS
+     ========================================================= */
+
+  sectionTargets.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const sectionId = button.dataset.sectionTarget;
+
+      if (sectionId) {
+        showSection(sectionId);
+      }
+    });
+  });
+
+  /* =========================================================
+     MOBILE MENU
+     ========================================================= */
+
+  if (mobileMenuBtn && teacherSidebar) {
+    mobileMenuBtn.addEventListener("click", () => {
+      teacherSidebar.classList.toggle("open");
+      sidebarOverlay?.classList.toggle("show");
+    });
+  }
+
+  sidebarOverlay?.addEventListener("click", closeSidebar);
+
+  /* =========================================================
+     HASH NAVIGATION
+     ========================================================= */
+
+  function loadHashSection() {
+    const hash = window.location.hash.replace("#", "");
+
+    if (hash && document.getElementById(hash)) {
+      showSection(hash);
+    } else if (document.getElementById("dashboard")) {
+      showSection("dashboard");
+    }
+  }
+
+  window.addEventListener("hashchange", loadHashSection);
+
+  /* =========================================================
+     SEARCH
+     ========================================================= */
+
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      showSection("students");
+
+      setTimeout(() => {
+        studentSearch?.focus();
+      }, 300);
+    });
+  }
+
+  /* =========================================================
+     STUDENT SEARCH
+     ========================================================= */
+
+  if (studentSearch) {
+    studentSearch.addEventListener("input", () => {
+      const searchValue = studentSearch.value
+        .trim()
+        .toLowerCase();
+
+      const rows = $$(".students-table tbody tr");
+
+      rows.forEach((row) => {
+        const text = row.textContent.toLowerCase();
+
+        row.style.display =
+          text.includes(searchValue) ? "" : "none";
+      });
+    });
+  }
+
+  /* =========================================================
+     NOTIFICATIONS
+     ========================================================= */
+
+  if (notificationBtn) {
+    notificationBtn.addEventListener("click", () => {
+      showToast("You have new notifications.");
+    });
+  }
+
+  /* =========================================================
+     LANGUAGE
+     ========================================================= */
+
+  if (languageSelect) {
+    languageSelect.addEventListener("change", () => {
+      const selectedLanguage =
+        languageSelect.options[
+          languageSelect.selectedIndex
+        ]?.text || "Language";
+
+      showToast(`Language changed to ${selectedLanguage}.`);
+    });
+  }
+
+  /* =========================================================
+     COURSE FORM
+     ========================================================= */
+
+  if (courseForm) {
+    courseForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const title = $("#courseTitle")?.value.trim();
+      const category = $("#courseCategory")?.value;
+      const level = $("#courseLevel")?.value;
+      const description = $("#courseDescription")?.value.trim();
+      const lessons = $("#lessonCount")?.value;
+      const duration = $("#courseDuration")?.value;
+
+      if (!title) {
+        showToast("Please enter a course title.");
+        $("#courseTitle")?.focus();
+        return;
+      }
+
+      if (!category) {
+        showToast("Please select a category.");
+        $("#courseCategory")?.focus();
+        return;
+      }
+
+      if (!level) {
+        showToast("Please select a level.");
+        $("#courseLevel")?.focus();
+        return;
+      }
+
+      if (!description) {
+        showToast("Please enter a course description.");
+        $("#courseDescription")?.focus();
+        return;
+      }
+
+      showToast("Course created successfully!");
+
+      courseForm.reset();
+
+      setTimeout(() => {
+        showSection("courses");
+      }, 700);
+    });
+  }
+
+  /* =========================================================
+     COURSE PREVIEW
+     ========================================================= */
+
+  function openCoursePreview() {
+    if (!coursePreviewModal) return;
+
+    const title =
+      $("#courseTitle")?.value.trim() || "Course Title";
+
+    const description =
+      $("#courseDescription")?.value.trim() ||
+      "Course description will appear here.";
+
+    const category =
+      $("#courseCategory")?.selectedOptions?.[0]?.text ||
+      "—";
+
+    const level =
+      $("#courseLevel")?.selectedOptions?.[0]?.text ||
+      "—";
+
+    const lessons =
+      $("#lessonCount")?.value || "—";
+
+    const duration =
+      $("#courseDuration")?.value || "—";
+
+    if ($("#previewTitle")) {
+      $("#previewTitle").textContent = title;
+    }
+
+    if ($("#previewDescription")) {
+      $("#previewDescription").textContent = description;
+    }
+
+    if ($("#previewCategory")) {
+      $("#previewCategory").textContent = category;
+    }
+
+    if ($("#previewLevel")) {
+      $("#previewLevel").textContent = level;
+    }
+
+    if ($("#previewLessons")) {
+      $("#previewLessons").textContent = lessons;
+    }
+
+    if ($("#previewDuration")) {
+      $("#previewDuration").textContent = duration;
+    }
+
+    coursePreviewModal.classList.add("show");
+    coursePreviewModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeCoursePreviewModal() {
+    if (!coursePreviewModal) return;
+
+    coursePreviewModal.classList.remove("show");
+    coursePreviewModal.setAttribute("aria-hidden", "true");
+  }
+
+  previewCourseBtn?.addEventListener(
+    "click",
+    openCoursePreview
+  );
+
+  closeCoursePreview?.addEventListener(
+    "click",
+    closeCoursePreviewModal
+  );
+
+  coursePreviewModal?.addEventListener("click", (event) => {
+    if (event.target === coursePreviewModal) {
+      closeCoursePreviewModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeCoursePreviewModal();
+      closeSidebar();
+    }
+  });
+
+  /* =========================================================
+     COURSE ACTION BUTTONS
+     ========================================================= */
+
+  $$(".course-action").forEach((button) => {
+    button.addEventListener("click", () => {
+      const courseCard = button.closest(".course-card");
+
+      if (!courseCard) {
+        showToast("Course action selected.");
+        return;
+      }
+
+      const courseName =
+        $(".course-title", courseCard)?.textContent ||
+        "Course";
+
+      showToast(`${courseName} action selected.`);
+    });
+  });
+
+  /* =========================================================
+     LIVE SESSIONS
+     ========================================================= */
+
+  createSessionBtn?.addEventListener("click", () => {
+    showToast("New session creation is ready.");
+  });
+
+  $$("#live-sessions .secondary-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      showToast("Session details opened.");
+    });
+  });
+
+  /* =========================================================
+     RESOURCES
+     ========================================================= */
+
+  uploadResourceBtn?.addEventListener("click", () => {
+    showToast("Add Resource selected.");
+  });
+
+  $$("#resources .resource-card button").forEach((button) => {
+    button.addEventListener("click", () => {
+      showToast("Resource action selected.");
+    });
+  });
+
+  /* =========================================================
+     SETTINGS
+     ========================================================= */
+
+  $$("#settings input[type='checkbox']").forEach((checkbox) => {
+    if (checkbox === compactSidebarToggle) return;
+
+    checkbox.addEventListener("change", () => {
+      const label =
+        checkbox.closest("label")?.textContent.trim() ||
+        "Setting";
+
+      showToast(
+        `${label}: ${checkbox.checked ? "On" : "Off"}`
+      );
+    });
+  });
+
+  /* =========================================================
+     COMPACT SIDEBAR
+     ========================================================= */
+
+  compactSidebarToggle?.addEventListener("change", () => {
+    if (!teacherSidebar) return;
+
+    teacherSidebar.classList.toggle(
+      "compact",
+      compactSidebarToggle.checked
     );
 
-
-    /* =====================================================
-       10. RESIZE
-       ===================================================== */
-
-    window.addEventListener(
-        "resize",
-        () => {
-            if (window.innerWidth > 900) {
-                closeSidebar();
-            }
-        }
+    showToast(
+      compactSidebarToggle.checked
+        ? "Compact sidebar enabled."
+        : "Compact sidebar disabled."
     );
+  });
 
+  /* =========================================================
+     PROGRESS BARS
+     ========================================================= */
 
-    /* =====================================================
-       11. COURSE FORM
-       ===================================================== */
+  $$(".progress-bar").forEach((bar) => {
+    const value =
+      bar.dataset.progress ||
+      bar.getAttribute("aria-valuenow");
 
-    if (courseForm) {
-        courseForm.addEventListener(
-            "submit",
-            (event) => {
-                event.preventDefault();
+    if (value !== null && value !== undefined) {
+      const progress = Math.min(
+        100,
+        Math.max(0, Number(value))
+      );
 
-                const title =
-                    document.getElementById(
-                        "courseTitle"
-                    );
+      const fill =
+        $(".progress-fill", bar) ||
+        $(".progress-bar-fill", bar);
 
-                const category =
-                    document.getElementById(
-                        "courseCategory"
-                    );
-
-                const level =
-                    document.getElementById(
-                        "courseLevel"
-                    );
-
-                const description =
-                    document.getElementById(
-                        "courseDescription"
-                    );
-
-                const lessons =
-                    document.getElementById(
-                        "lessonCount"
-                    );
-
-                const duration =
-                    document.getElementById(
-                        "courseDuration"
-                    );
-
-                const fields = [
-                    title,
-                    category,
-                    level,
-                    description,
-                    lessons,
-                    duration
-                ];
-
-                let valid = true;
-
-                fields.forEach((field) => {
-                    if (!field) return;
-
-                    if (
-                        !field.value.trim()
-                    ) {
-                        field.style.borderColor =
-                            "#ef4444";
-
-                        valid = false;
-                    } else {
-                        field.style.borderColor =
-                            "";
-                    }
-                });
-
-                if (!valid) {
-                    showToast(
-                        "Please complete all course fields."
-                    );
-                    return;
-                }
-
-                showToast(
-                    `"${title.value.trim()}" created successfully.`
-                );
-
-                console.log(
-                    "Wassla — Course created:",
-                    {
-                        title: title.value.trim(),
-                        category: category.value,
-                        level: level.value,
-                        description:
-                            description.value.trim(),
-                        lessons: lessons.value,
-                        duration:
-                            duration.value.trim()
-                    }
-                );
-
-                setTimeout(() => {
-                    courseForm.reset();
-
-                    fields.forEach((field) => {
-                        if (field) {
-                            field.style.borderColor = "";
-                        }
-                    });
-
-                    showSection("courses");
-                }, 900);
-            }
-        );
+      if (fill) {
+        fill.style.width = `${progress}%`;
+      }
     }
+  });
 
+  /* =========================================================
+     INITIAL STATE
+     ========================================================= */
 
-    /* =====================================================
-       12. REMOVE FORM ERRORS
-       ===================================================== */
+  loadHashSection();
 
-    if (courseForm) {
-        courseForm
-            .querySelectorAll(
-                "input, select, textarea"
-            )
-            .forEach((field) => {
-                field.addEventListener(
-                    "input",
-                    () => {
-                        field.style.borderColor = "";
-                    }
-                );
-
-                field.addEventListener(
-                    "change",
-                    () => {
-                        field.style.borderColor = "";
-                    }
-                );
-            });
-    }
-
-
-    /* =====================================================
-       13. COURSE PREVIEW
-       ===================================================== */
-
-    function openCoursePreview() {
-        if (!coursePreviewModal) return;
-
-        const title =
-            document.getElementById(
-                "courseTitle"
-            );
-
-        const category =
-            document.getElementById(
-                "courseCategory"
-            );
-
-        const level =
-            document.getElementById(
-                "courseLevel"
-            );
-
-        const description =
-            document.getElementById(
-                "courseDescription"
-            );
-
-        const lessons =
-            document.getElementById(
-                "lessonCount"
-            );
-
-        const duration =
-            document.getElementById(
-                "courseDuration"
-            );
-
-        if (previewTitle) {
-            previewTitle.textContent =
-                title && title.value.trim()
-                    ? title.value.trim()
-                    : "Course Title";
-        }
-
-        if (previewDescription) {
-            previewDescription.textContent =
-                description &&
-                description.value.trim()
-                    ? description.value.trim()
-                    : "Course description will appear here.";
-        }
-
-        if (previewCategory) {
-            previewCategory.textContent =
-                category && category.value
-                    ? category.value
-                    : "—";
-        }
-
-        if (previewLevel) {
-            previewLevel.textContent =
-                level && level.value
-                    ? level.value
-                    : "—";
-        }
-
-        if (previewLessons) {
-            previewLessons.textContent =
-                lessons && lessons.value
-                    ? lessons.value
-                    : "—";
-        }
-
-        if (previewDuration) {
-            previewDuration.textContent =
-                duration &&
-                duration.value.trim()
-                    ? duration.value.trim()
-                    : "—";
-        }
-
-        coursePreviewModal.classList.add(
-            "active"
-        );
-
-        coursePreviewModal.classList.add(
-            "show"
-        );
-
-        coursePreviewModal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow =
-            "hidden";
-    }
-
-
-    function closeCoursePreviewModal() {
-        if (!coursePreviewModal) return;
-
-        coursePreviewModal.classList.remove(
-            "active"
-        );
-
-        coursePreviewModal.classList.remove(
-            "show"
-        );
-
-        coursePreviewModal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (previewCourseBtn) {
-        previewCourseBtn.addEventListener(
-            "click",
-            openCoursePreview
-        );
-    }
-
-
-    if (closeCoursePreview) {
-        closeCoursePreview.addEventListener(
-            "click",
-            closeCoursePreviewModal
-        );
-    }
-
-
-    if (coursePreviewModal) {
-        coursePreviewModal.addEventListener(
-            "click",
-            (event) => {
-                if (
-                    event.target ===
-                    coursePreviewModal
-                ) {
-                    closeCoursePreviewModal();
-                }
-            }
-        );
-    }
-
-
-    /* =====================================================
-       14. ESCAPE KEY
-       ===================================================== */
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-            if (event.key !== "Escape") return;
-
-            closeSidebar();
-            closeCoursePreviewModal();
-        }
-    );
-
-
-    /* =====================================================
-       15. STUDENT SEARCH
-       ===================================================== */
-
-    if (studentSearch) {
-        studentSearch.addEventListener(
-            "input",
-            () => {
-                const value =
-                    studentSearch.value
-                        .trim()
-                        .toLowerCase();
-
-                const table =
-                    document.querySelector(
-                        ".students-table"
-                    );
-
-                if (!table) return;
-
-                const rows =
-                    table.querySelectorAll(
-                        "tbody tr"
-                    );
-
-                rows.forEach((row) => {
-                    const text =
-                        row.textContent
-                            .toLowerCase();
-
-                    row.style.display =
-                        text.includes(value)
-                            ? ""
-                            : "none";
-                });
-            }
-        );
-    }
-
-
-    /* =====================================================
-       16. SEARCH BUTTON
-       ===================================================== */
-
-    if (searchBtn) {
-        searchBtn.addEventListener(
-            "click",
-            () => {
-                showSection("students");
-
-                setTimeout(() => {
-                    if (studentSearch) {
-                        studentSearch.focus();
-                    }
-                }, 250);
-            }
-        );
-    }
-
-
-    /* =====================================================
-       17. NOTIFICATIONS
-       ===================================================== */
-
-    if (notificationBtn) {
-        notificationBtn.addEventListener(
-            "click",
-            () => {
-                showToast(
-                    "You have new student activity."
-                );
-
-                const dot =
-                    notificationBtn.querySelector(
-                        ".notification-dot"
-                    );
-
-                if (dot) {
-                    dot.style.display = "none";
-                }
-            }
-        );
-    }
-
-
-    /* =====================================================
-       18. LANGUAGE
-       ===================================================== */
-
-    if (languageSelect) {
-        languageSelect.addEventListener(
-            "change",
-            () => {
-                const language =
-                    languageSelect.value;
-
-                const messages = {
-                    en: "Language set to English.",
-                    fr: "Language set to French.",
-                    ar: "Language set to Arabic."
-                };
-
-                showToast(
-                    messages[language] ||
-                    "Language changed."
-                );
-            }
-        );
-    }
-
-
-    /* =====================================================
-       19. COURSE ACTION BUTTONS
-       ===================================================== */
-
-    const courseActionButtons =
-        document.querySelectorAll(
-            ".course-action"
-        );
-
-    courseActionButtons.forEach((button) => {
-        button.addEventListener(
-            "click",
-            (event) => {
-                event.preventDefault();
-
-                const card =
-                    button.closest(
-                        ".course-card"
-                    );
-
-                if (!card) return;
-
-                const title =
-                    card.querySelector("h3");
-
-                const courseName =
-                    title
-                        ? title.textContent.trim()
-                        : "Course";
-
-                showToast(
-                    `${courseName} is ready to manage.`
-                );
-            }
-        );
-    });
-
-
-    /* =====================================================
-       20. LIVE SESSION BUTTON
-       ===================================================== */
-
-    if (createSessionBtn) {
-        createSessionBtn.addEventListener(
-            "click",
-            () => {
-                showToast(
-                    "Live session creation will be connected soon."
-                );
-            }
-        );
-    }
-
-
-    /* =====================================================
-       21. LIVE SESSION VIEW BUTTONS
-       ===================================================== */
-
-    const sessionViewButtons =
-        document.querySelectorAll(
-            ".session-card .secondary-btn"
-        );
-
-    sessionViewButtons.forEach((button) => {
-        button.addEventListener(
-            "click",
-            () => {
-                const card =
-                    button.closest(
-                        ".session-card"
-                    );
-
-                const title =
-                    card
-                        ? card.querySelector("h3")
-                        : null;
-
-                showToast(
-                    title
-                        ? `${title.textContent.trim()} details are available in the prototype.`
-                        : "Session details are available in the prototype."
-                );
-            }
-        );
-    });
-
-
-    /* =====================================================
-       22. RESOURCES
-       ===================================================== */
-
-    if (uploadResourceBtn) {
-        uploadResourceBtn.addEventListener(
-            "click",
-            () => {
-                showToast(
-                    "Resource upload will be connected soon."
-                );
-            }
-        );
-    }
-
-
-    const resourceButtons =
-        document.querySelectorAll(
-            ".resource-card button"
-        );
-
-    resourceButtons.forEach((button) => {
-        button.addEventListener(
-            "click",
-            () => {
-                const card =
-                    button.closest(
-                        ".resource-card"
-                    );
-
-                const title =
-                    card
-                        ? card.querySelector("strong")
-                        : null;
-
-                showToast(
-                    title
-                        ? `${title.textContent.trim()} selected.`
-                        : "Resource selected."
-                );
-            }
-        );
-    });
-
-
-    /* =====================================================
-       23. SETTINGS TOGGLES
-       ===================================================== */
-
-    const toggles =
-        document.querySelectorAll(
-            ".toggle input"
-        );
-
-    toggles.forEach((toggle) => {
-        toggle.addEventListener(
-            "change",
-            () => {
-                showToast(
-                    toggle.checked
-                        ? "Setting enabled."
-                        : "Setting disabled."
-                );
-            }
-        );
-    });
-
-
-    /* =====================================================
-       24. COMPACT SIDEBAR
-       ===================================================== */
-
-    if (compactSidebarToggle) {
-        compactSidebarToggle.addEventListener(
-            "change",
-            () => {
-                if (!sidebar) return;
-
-                sidebar.classList.toggle(
-                    "compact",
-                    compactSidebarToggle.checked
-                );
-
-                showToast(
-                    compactSidebarToggle.checked
-                        ? "Compact sidebar enabled."
-                        : "Compact sidebar disabled."
-                );
-            }
-        );
-    }
-
-
-    /* =====================================================
-       25. PROGRESS BARS
-       ===================================================== */
-
-    function initializeProgressBars() {
-        const progressBars =
-            document.querySelectorAll(
-                ".progress-bar span, .large-progress-bar span"
-            );
-
-        progressBars.forEach((bar) => {
-            const inlineWidth =
-                bar.style.width;
-
-            if (inlineWidth) {
-                const value =
-                    parseFloat(
-                        inlineWidth
-                    );
-
-                if (!Number.isNaN(value)) {
-                    bar.style.width = "0%";
-
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            bar.style.width =
-                                `${Math.max(
-                                    0,
-                                    Math.min(
-                                        100,
-                                        value
-                                    )
-                                )}%`;
-                        });
-                    });
-                }
-            }
-        });
-    }
-
-
-    initializeProgressBars();
-
-
-    /* =====================================================
-       26. BACK TO LOGIN
-       ===================================================== */
-
-    const logoutButton =
-        document.querySelector(
-            ".logout-item"
-        );
-
-    if (logoutButton) {
-        logoutButton.addEventListener(
-            "click",
-            () => {
-                closeSidebar();
-
-                /*
-                 * The HTML href already points to:
-                 * index.html
-                 *
-                 * We intentionally do not prevent
-                 * the default navigation.
-                 */
-            }
-        );
-    }
-
-
-    /* =====================================================
-       27. PREVENT EMPTY # LINKS
-       ===================================================== */
-
-    document
-        .querySelectorAll(
-            'a[href="#"]'
-        )
-        .forEach((link) => {
-            link.addEventListener(
-                "click",
-                (event) => {
-                    event.preventDefault();
-                }
-            );
-        });
-
-
-    /* =====================================================
-       28. DEBUG
-       ===================================================== */
-
-    console.log(
-        "Wassla Teacher Dashboard initialized successfully."
-    );
-
+  console.log(
+    "Wassla Teacher Dashboard initialized successfully."
+  );
 });
-```
-
-   
