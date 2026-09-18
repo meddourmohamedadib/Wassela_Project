@@ -1,76 +1,72 @@
-
 /* =========================================================
-   WASSLA - TEACHER DASHBOARD
+   WASSLA — TEACHER DASHBOARD
    Frontend Prototype
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
-    /* =====================================================
+    /* =========================================================
        HELPERS
-       ===================================================== */
+       ========================================================= */
 
-    function $(selector, parent) {
-        return (parent || document).querySelector(selector);
-    }
+    const $ = (selector, parent = document) =>
+        parent.querySelector(selector);
 
-    function $$(selector, parent) {
-        return Array.prototype.slice.call(
-            (parent || document).querySelectorAll(selector)
-        );
-    }
+    const $$ = (selector, parent = document) =>
+        Array.from(parent.querySelectorAll(selector));
 
-    function showToast(message) {
-        var toast = $("#toast");
-        var toastMessage = $("#toastMessage");
+    const showToast = (message) => {
+        const toast = $("#toast");
+        const toastMessage = $("#toastMessage");
 
-        if (!toast || !toastMessage) {
-            return;
-        }
+        if (!toast || !toastMessage) return;
 
         toastMessage.textContent = message;
         toast.classList.add("show");
 
         clearTimeout(window.wasslaToastTimer);
 
-        window.wasslaToastTimer = setTimeout(function () {
+        window.wasslaToastTimer = setTimeout(() => {
             toast.classList.remove("show");
         }, 2500);
-    }
+    };
 
-    /* =====================================================
+    /* =========================================================
        ELEMENTS
-       ===================================================== */
+       ========================================================= */
 
-    var sidebar = $("#teacherSidebar");
-    var overlay = $("#sidebarOverlay");
-    var mobileMenuBtn = $("#mobileMenuBtn");
-    var pageTitle = $("#pageTitle");
+    const sidebar = $("#teacherSidebar");
+    const overlay = $("#sidebarOverlay");
+    const mobileMenuBtn = $("#mobileMenuBtn");
+    const pageTitle = $("#pageTitle");
 
-    var navItems = $$(".nav-item[data-section]");
-    var sectionButtons = $$("[data-section-target]");
-    var sections = $$("section.page-section");
+    const navItems = $$(".nav-item[data-section]");
+    const sectionButtons = $$("[data-section-target]");
+    const sections = $$("section.page-section");
 
-    var searchBtn = $("#searchBtn");
-    var notificationBtn = $("#notificationBtn");
-    var languageSelect = $("#languageSelect");
-    var studentSearch = $("#studentSearch");
+    const searchBtn = $("#searchBtn");
+    const notificationBtn = $("#notificationBtn");
+    const languageSelect = $("#languageSelect");
 
-    var courseForm = $("#courseForm");
-    var previewCourseBtn = $("#previewCourseBtn");
+    const studentSearch = $("#studentSearch");
 
-    var previewModal = $("#coursePreviewModal");
-    var closePreviewBtn = $("#closeCoursePreview");
+    const courseForm = $("#courseForm");
+    const previewCourseBtn = $("#previewCourseBtn");
 
-    var compactSidebarToggle = $("#compactSidebarToggle");
-    var courseGrid = $(".course-grid");
+    const previewModal = $("#coursePreviewModal");
+    const closePreviewBtn = $("#closeCoursePreview");
 
-    /* =====================================================
+    const compactSidebarToggle =
+        $("#compactSidebarToggle");
+
+    const courseGrid = $(".course-grid");
+
+    /* =========================================================
        SECTION TITLES
-       ===================================================== */
+       ========================================================= */
 
-    var sectionTitles = {
+    const sectionTitles = {
         dashboard: "Dashboard",
         courses: "My Courses",
         "create-course": "Create Course",
@@ -81,9 +77,9 @@ document.addEventListener("DOMContentLoaded", function () {
         settings: "Settings"
     };
 
-    /* =====================================================
+    /* =========================================================
        SIDEBAR
-       ===================================================== */
+       ========================================================= */
 
     function closeSidebar() {
         if (sidebar) {
@@ -97,10 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", function () {
-            if (!sidebar) {
-                return;
-            }
+        mobileMenuBtn.addEventListener("click", () => {
+            if (!sidebar) return;
 
             sidebar.classList.toggle("open");
 
@@ -115,26 +109,21 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.addEventListener("click", closeSidebar);
     }
 
-    /* =====================================================
-       NAVIGATION
-       ===================================================== */
+    /* =========================================================
+       SECTION NAVIGATION
+       ========================================================= */
 
     function showSection(sectionId) {
-        if (!sectionId) {
-            return;
-        }
+        if (!sectionId) return;
 
-        var target = document.getElementById(sectionId);
+        const target = document.getElementById(sectionId);
 
         if (!target) {
-            console.warn(
-                "Wassla: section not found:",
-                sectionId
-            );
+            console.warn("Wassla: section not found:", sectionId);
             return;
         }
 
-        sections.forEach(function (section) {
+        sections.forEach((section) => {
             section.classList.remove("active-section");
             section.style.display = "none";
         });
@@ -142,52 +131,84 @@ document.addEventListener("DOMContentLoaded", function () {
         target.classList.add("active-section");
         target.style.display = "block";
 
-        navItems.forEach(function (item) {
+        navItems.forEach((item) => {
             item.classList.toggle(
                 "active",
-                item.getAttribute("data-section") === sectionId
+                item.dataset.section === sectionId
             );
         });
 
         if (pageTitle) {
             pageTitle.textContent =
-                sectionTitles[sectionId] ||
-                "Teacher Dashboard";
+                sectionTitles[sectionId] || "Teacher Dashboard";
         }
 
         closeSidebar();
-        window.scrollTo(0, 0);
+
+        if (window.location.hash !== `#${sectionId}`) {
+            history.replaceState(
+                null,
+                "",
+                `#${sectionId}`
+            );
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
-    navItems.forEach(function (item) {
-        item.addEventListener("click", function (event) {
+    navItems.forEach((item) => {
+        item.addEventListener("click", (event) => {
             event.preventDefault();
 
-            showSection(
-                item.getAttribute("data-section")
-            );
+            const sectionId =
+                item.getAttribute("data-section");
+
+            showSection(sectionId);
         });
     });
 
-    sectionButtons.forEach(function (button) {
-        button.addEventListener("click", function (event) {
+    sectionButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
             event.preventDefault();
 
-            showSection(
-                button.getAttribute("data-section-target")
-            );
+            const sectionId =
+                button.getAttribute("data-section-target");
+
+            showSection(sectionId);
         });
     });
 
-    /* =====================================================
+    function loadInitialSection() {
+        const hash =
+            window.location.hash.replace("#", "");
+
+        if (
+            hash &&
+            document.getElementById(hash)
+        ) {
+            showSection(hash);
+        } else {
+            showSection("dashboard");
+        }
+    }
+
+    window.addEventListener(
+        "hashchange",
+        loadInitialSection
+    );
+
+    /* =========================================================
        SEARCH
-       ===================================================== */
+       ========================================================= */
 
     if (searchBtn) {
-        searchBtn.addEventListener("click", function () {
+        searchBtn.addEventListener("click", () => {
             showSection("students");
 
-            setTimeout(function () {
+            setTimeout(() => {
                 if (studentSearch) {
                     studentSearch.focus();
                 }
@@ -196,73 +217,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (studentSearch) {
-        studentSearch.addEventListener("input", function () {
-            var value = studentSearch.value
-                .trim()
-                .toLowerCase();
+        studentSearch.addEventListener("input", () => {
+            const value =
+                studentSearch.value
+                    .trim()
+                    .toLowerCase();
 
-            var rows = $$(".students-table tbody tr");
+            const rows =
+                $$(".students-table tbody tr");
 
-            rows.forEach(function (row) {
-                var text = row.textContent.toLowerCase();
+            rows.forEach((row) => {
+                const text =
+                    row.textContent.toLowerCase();
 
                 row.style.display =
-                    text.indexOf(value) !== -1
+                    text.includes(value)
                         ? ""
                         : "none";
             });
         });
     }
 
-    /* =====================================================
+    /* =========================================================
        NOTIFICATIONS
-       ===================================================== */
+       ========================================================= */
 
     if (notificationBtn) {
-        notificationBtn.addEventListener("click", function () {
+        notificationBtn.addEventListener("click", () => {
             showToast("You have new notifications.");
         });
     }
 
-    /* =====================================================
+    /* =========================================================
        LANGUAGE
-       ===================================================== */
+       ========================================================= */
 
     if (languageSelect) {
-        languageSelect.addEventListener("change", function () {
-            var option =
+        languageSelect.addEventListener("change", () => {
+            const selected =
                 languageSelect.options[
                     languageSelect.selectedIndex
-                ];
+                ]?.text || "Language";
 
             showToast(
-                "Language changed to " +
-                (option ? option.text : "Language") +
-                "."
+                `Language changed to ${selected}.`
             );
         });
     }
 
-    /* =====================================================
+    /* =========================================================
        COURSE STORAGE
-       ===================================================== */
+       ========================================================= */
 
-    var STORAGE_KEY = "wassla_teacher_courses";
+    const STORAGE_KEY = "wassla_teacher_courses";
 
     function getCourses() {
         try {
-            var saved =
+            const saved =
                 localStorage.getItem(STORAGE_KEY);
 
-            if (!saved) {
-                return [];
-            }
-
-            var courses = JSON.parse(saved);
-
-            return Array.isArray(courses)
-                ? courses
-                : [];
+            return saved ? JSON.parse(saved) : [];
         } catch (error) {
             console.error(
                 "Wassla: could not load courses.",
@@ -287,290 +301,243 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    /* =====================================================
+    /* =========================================================
        COURSE ICON
-       ===================================================== */
+       ========================================================= */
 
     function getCourseIcon(category) {
-        var value =
+        const value =
             String(category || "").toLowerCase();
 
-        if (value.indexOf("artificial") !== -1) {
+        if (value.includes("artificial")) {
             return "fa-brain";
         }
 
-        if (value.indexOf("program") !== -1) {
+        if (value.includes("program")) {
             return "fa-code";
         }
 
-        if (value.indexOf("math") !== -1) {
+        if (value.includes("math")) {
             return "fa-calculator";
         }
 
-        if (value.indexOf("computer") !== -1) {
+        if (value.includes("computer")) {
             return "fa-laptop-code";
         }
 
         return "fa-book-open";
     }
 
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
-
-    function escapeHTML(value) {
-        var div = document.createElement("div");
-
-        div.textContent =
-            value === null || value === undefined
-                ? ""
-                : String(value);
-
-        return div.innerHTML;
-    }
-
-    /* =====================================================
-       UPDATE COURSE COUNT
-       ===================================================== */
-
-    function updateCourseCount() {
-        var element =
-            document.querySelector(
-                ".stats-grid .stat-card:first-child .stat-info strong"
-            );
-
-        if (!element) {
-            return;
-        }
-
-        element.textContent =
-            3 + getCourses().length;
-    }
-
-    /* =====================================================
+    /* =========================================================
        CREATE COURSE CARD
-       ===================================================== */
+       ========================================================= */
 
     function createCourseCard(course) {
-        var article =
+        const article =
             document.createElement("article");
 
         article.className = "course-card";
 
-        article.innerHTML =
-            '<div class="course-card-icon">' +
-                '<i class="fa-solid ' +
-                getCourseIcon(course.category) +
-                '"></i>' +
-            '</div>' +
+        const icon =
+            getCourseIcon(course.category);
 
-            '<div class="course-card-body">' +
+        const lessons =
+            course.lessons || "—";
 
-                '<span class="course-category">' +
-                    escapeHTML(course.category) +
-                '</span>' +
+        const duration =
+            course.duration || "—";
 
-                '<h3>' +
-                    escapeHTML(course.title) +
-                '</h3>' +
+        article.innerHTML = `
+            <div class="course-card-icon">
+                <i class="fa-solid ${icon}"></i>
+            </div>
 
-                '<p>' +
-                    escapeHTML(course.description) +
-                '</p>' +
+            <div class="course-card-body">
 
-                '<div class="course-meta">' +
+                <span class="course-category">
+                    ${escapeHTML(course.category)}
+                </span>
 
-                    '<span>' +
-                        '<i class="fa-solid fa-users"></i>' +
-                        ' 0 students' +
-                    '</span>' +
+                <h3>
+                    ${escapeHTML(course.title)}
+                </h3>
 
-                    '<span>' +
-                        '<i class="fa-solid fa-layer-group"></i>' +
-                        ' ' +
-                        escapeHTML(
-                            String(course.lessons || "—")
-                        ) +
-                        ' lessons' +
-                    '</span>' +
+                <p>
+                    ${escapeHTML(course.description)}
+                </p>
 
-                '</div>' +
+                <div class="course-meta">
 
-                '<div class="course-progress">' +
+                    <span>
+                        <i class="fa-solid fa-users"></i>
+                        0 students
+                    </span>
 
-                    '<div>' +
-                        '<span>Student progress</span>' +
-                        '<strong>0%</strong>' +
-                    '</div>' +
+                    <span>
+                        <i class="fa-solid fa-layer-group"></i>
+                        ${escapeHTML(String(lessons))} lessons
+                    </span>
 
-                    '<div class="progress-bar">' +
-                        '<span style="width:0%;"></span>' +
-                    '</div>' +
+                </div>
 
-                '</div>' +
+                <div class="course-progress">
 
-                '<small class="course-duration">' +
-                    '<i class="fa-regular fa-clock"></i>' +
-                    ' ' +
-                    escapeHTML(
-                        String(course.duration || "—")
-                    ) +
-                '</small>' +
+                    <div>
+                        <span>Student progress</span>
+                        <strong>0%</strong>
+                    </div>
 
-            '</div>' +
+                    <div class="progress-bar">
+                        <span style="width:0%;"></span>
+                    </div>
 
-            '<button ' +
-                'class="course-action" ' +
-                'type="button">' +
-                '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-            '</button>';
+                </div>
 
-        var actionButton =
+                <small class="course-duration">
+                    <i class="fa-regular fa-clock"></i>
+                    ${escapeHTML(String(duration))}
+                </small>
+
+            </div>
+
+            <button
+                class="course-action"
+                type="button"
+                aria-label="Course options"
+            >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+        `;
+
+        const actionButton =
             $(".course-action", article);
 
         if (actionButton) {
-            actionButton.addEventListener(
-                "click",
-                function () {
-                    showToast(
-                        "Course options selected."
-                    );
-                }
-            );
+            actionButton.addEventListener("click", () => {
+                showToast(
+                    `${course.title} is ready to manage.`
+                );
+            });
         }
 
         return article;
     }
 
-    /* =====================================================
-       LOAD COURSES
-       ===================================================== */
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeHTML(value) {
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value == null ? "" : String(value);
+
+        return div.innerHTML;
+    }
+
+    /* =========================================================
+       LOAD SAVED COURSES
+       ========================================================= */
 
     function loadSavedCourses() {
-        if (!courseGrid) {
-            return;
-        }
+        if (!courseGrid) return;
 
-        var courses = getCourses();
+        const courses = getCourses();
 
-        courses.forEach(function (course) {
+        courses.forEach((course) => {
             courseGrid.appendChild(
                 createCourseCard(course)
             );
         });
     }
 
-    /* =====================================================
-       COURSE FORM DATA
-       ===================================================== */
+    /* =========================================================
+       UPDATE COURSE COUNT
+       ========================================================= */
+
+    function updateCourseCount() {
+        const savedCourses =
+            getCourses();
+
+        const defaultCourses = 3;
+
+        const total =
+            defaultCourses +
+            savedCourses.length;
+
+        const totalCoursesElement =
+            document.querySelector(
+                ".stats-grid .stat-card:first-child .stat-info strong"
+            );
+
+        if (totalCoursesElement) {
+            totalCoursesElement.textContent =
+                total;
+        }
+    }
+
+    /* =========================================================
+       COURSE PREVIEW
+       ========================================================= */
 
     function getCourseFormData() {
-        var titleInput = $("#courseTitle");
-        var categoryInput = $("#courseCategory");
-        var levelInput = $("#courseLevel");
-        var descriptionInput = $("#courseDescription");
-        var lessonInput = $("#lessonCount");
-        var durationInput = $("#courseDuration");
-
         return {
-            title: titleInput
-                ? titleInput.value.trim()
-                : "",
+            title:
+                $("#courseTitle")?.value.trim() || "",
 
-            category: categoryInput
-                ? categoryInput.value
-                : "",
+            category:
+                $("#courseCategory")?.value || "",
 
-            level: levelInput
-                ? levelInput.value
-                : "",
+            level:
+                $("#courseLevel")?.value || "",
 
-            description: descriptionInput
-                ? descriptionInput.value.trim()
-                : "",
+            description:
+                $("#courseDescription")?.value.trim() || "",
 
-            lessons: lessonInput
-                ? lessonInput.value
-                : "",
+            lessons:
+                $("#lessonCount")?.value || "",
 
-            duration: durationInput
-                ? durationInput.value.trim()
-                : ""
+            duration:
+                $("#courseDuration")?.value.trim() || ""
         };
     }
 
-    /* =====================================================
-       PREVIEW
-       ===================================================== */
-
     function openPreview() {
-        if (!previewModal) {
-            return;
-        }
+        if (!previewModal) return;
 
-        var course = getCourseFormData();
+        const course =
+            getCourseFormData();
 
         if (!course.title) {
-            showToast(
-                "Please enter a course title."
-            );
-
-            var titleInput = $("#courseTitle");
-
-            if (titleInput) {
-                titleInput.focus();
-            }
-
+            showToast("Please enter a course title.");
+            $("#courseTitle")?.focus();
             return;
         }
 
-        var previewTitle = $("#previewTitle");
-        var previewDescription =
-            $("#previewDescription");
-        var previewCategory =
-            $("#previewCategory");
-        var previewLevel =
-            $("#previewLevel");
-        var previewLessons =
-            $("#previewLessons");
-        var previewDuration =
-            $("#previewDuration");
+        $("#previewTitle").textContent =
+            course.title;
 
-        if (previewTitle) {
-            previewTitle.textContent =
-                course.title;
-        }
+        $("#previewDescription").textContent =
+            course.description ||
+            "No description provided.";
 
-        if (previewDescription) {
-            previewDescription.textContent =
-                course.description ||
-                "No description provided.";
-        }
+        $("#previewCategory").textContent =
+            course.category || "—";
 
-        if (previewCategory) {
-            previewCategory.textContent =
-                course.category || "—";
-        }
+        $("#previewLevel").textContent =
+            course.level || "—";
 
-        if (previewLevel) {
-            previewLevel.textContent =
-                course.level || "—";
-        }
+        $("#previewLessons").textContent =
+            course.lessons
+                ? `${course.lessons} lessons`
+                : "—";
 
-        if (previewLessons) {
-            previewLessons.textContent =
-                course.lessons
-                    ? course.lessons + " lessons"
-                    : "—";
-        }
+        $("#previewDuration").textContent =
+            course.duration || "—";
 
-        if (previewDuration) {
-            previewDuration.textContent =
-                course.duration || "—";
-        }
-
-        previewModal.classList.add("active");
-
+        previewModal.classList.add("show");
         previewModal.setAttribute(
             "aria-hidden",
             "false"
@@ -578,12 +545,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function closePreview() {
-        if (!previewModal) {
-            return;
-        }
+        if (!previewModal) return;
 
-        previewModal.classList.remove("active");
-
+        previewModal.classList.remove("show");
         previewModal.setAttribute(
             "aria-hidden",
             "true"
@@ -607,31 +571,36 @@ document.addEventListener("DOMContentLoaded", function () {
     if (previewModal) {
         previewModal.addEventListener(
             "click",
-            function (event) {
-                if (event.target === previewModal) {
+            (event) => {
+                if (
+                    event.target === previewModal
+                ) {
                     closePreview();
                 }
             }
         );
     }
 
-    /* =====================================================
+    /* =========================================================
        CREATE COURSE
-       ===================================================== */
+       ========================================================= */
 
     if (courseForm) {
         courseForm.addEventListener(
             "submit",
-            function (event) {
+            (event) => {
                 event.preventDefault();
 
-                var course =
+                const course =
                     getCourseFormData();
 
                 if (!course.title) {
                     showToast(
                         "Please enter a course title."
                     );
+
+                    $("#courseTitle")?.focus();
+
                     return;
                 }
 
@@ -639,6 +608,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please select a category."
                     );
+
+                    $("#courseCategory")?.focus();
+
                     return;
                 }
 
@@ -646,6 +618,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please select a level."
                     );
+
+                    $("#courseLevel")?.focus();
+
                     return;
                 }
 
@@ -653,6 +628,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter a course description."
                     );
+
+                    $("#courseDescription")?.focus();
+
                     return;
                 }
 
@@ -660,6 +638,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter the number of lessons."
                     );
+
+                    $("#lessonCount")?.focus();
+
                     return;
                 }
 
@@ -667,22 +648,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter the estimated duration."
                     );
+
+                    $("#courseDuration")?.focus();
+
                     return;
                 }
 
-                var courses = getCourses();
+                const courses =
+                    getCourses();
 
-                var newCourse = {
+                const newCourse = {
                     id: Date.now(),
-                    title: course.title,
-                    category: course.category,
-                    level: course.level,
-                    description: course.description,
-                    lessons: course.lessons,
-                    duration: course.duration
+                    ...course,
+                    createdAt:
+                        new Date().toISOString()
                 };
 
                 courses.push(newCourse);
+
                 saveCourses(courses);
 
                 if (courseGrid) {
@@ -692,31 +675,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 updateCourseCount();
+
                 courseForm.reset();
+
                 closePreview();
 
                 showToast(
                     "Course created successfully!"
                 );
 
-                setTimeout(function () {
+                setTimeout(() => {
                     showSection("courses");
-                }, 500);
+                }, 600);
             }
         );
     }
 
-    /* =====================================================
-       LIVE SESSIONS
-       ===================================================== */
+    /* =========================================================
+       EXISTING COURSE ACTIONS
+       ========================================================= */
 
-    var createSessionBtn =
+    $$(".course-action").forEach(
+        (button) => {
+            button.addEventListener(
+                "click",
+                () => {
+                    showToast(
+                        "Course options selected."
+                    );
+                }
+            );
+        }
+    );
+
+    /* =========================================================
+       LIVE SESSIONS
+       ========================================================= */
+
+    const createSessionBtn =
         $("#createSessionBtn");
 
     if (createSessionBtn) {
         createSessionBtn.addEventListener(
             "click",
-            function () {
+            () => {
                 showToast(
                     "New session creation is ready."
                 );
@@ -724,17 +726,17 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =====================================================
-       RESOURCES
-       ===================================================== */
+    /* =========================================================
+       RESOURCE
+       ========================================================= */
 
-    var uploadResourceBtn =
+    const uploadResourceBtn =
         $("#uploadResourceBtn");
 
     if (uploadResourceBtn) {
         uploadResourceBtn.addEventListener(
             "click",
-            function () {
+            () => {
                 showToast(
                     "Add Resource selected."
                 );
@@ -742,14 +744,14 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =====================================================
+    /* =========================================================
        COMPACT SIDEBAR
-       ===================================================== */
+       ========================================================= */
 
     if (compactSidebarToggle) {
         compactSidebarToggle.addEventListener(
             "change",
-            function () {
+            () => {
                 if (sidebar) {
                     sidebar.classList.toggle(
                         "compact",
@@ -766,13 +768,13 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =====================================================
-       ESCAPE KEY
-       ===================================================== */
+    /* =========================================================
+       KEYBOARD
+       ========================================================= */
 
     document.addEventListener(
         "keydown",
-        function (event) {
+        (event) => {
             if (event.key === "Escape") {
                 closeSidebar();
                 closePreview();
@@ -780,16 +782,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-    /* =====================================================
-       START
-       ===================================================== */
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
 
     loadSavedCourses();
     updateCourseCount();
-    showSection("dashboard");
+    loadInitialSection();
 
     console.log(
         "Wassla Teacher Dashboard initialized successfully."
     );
 });
-```
+    
