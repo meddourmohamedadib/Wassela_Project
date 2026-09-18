@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const navItems = $$(".nav-item");
   const sectionTargets = $$("[data-section-target]");
-  const sections = $$("main section[id]");
+  const sections = $$("section[id]");
 
   const pageTitle = $("#pageTitle");
 
