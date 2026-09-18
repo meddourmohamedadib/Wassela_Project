@@ -1,3 +1,4 @@
+```js
 /* =========================================================
    WASSLA — TEACHER DASHBOARD
    Frontend Prototype
@@ -119,7 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const target = document.getElementById(sectionId);
 
         if (!target) {
-            console.warn("Wassla: section not found:", sectionId);
+            console.warn(
+                "Wassla: section not found:",
+                sectionId
+            );
             return;
         }
 
@@ -140,7 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (pageTitle) {
             pageTitle.textContent =
-                sectionTitles[sectionId] || "Teacher Dashboard";
+                sectionTitles[sectionId] ||
+                "Teacher Dashboard";
         }
 
         closeSidebar();
@@ -175,7 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
 
             const sectionId =
-                button.getAttribute("data-section-target");
+                button.getAttribute(
+                    "data-section-target"
+                );
 
             showSection(sectionId);
         });
@@ -244,7 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (notificationBtn) {
         notificationBtn.addEventListener("click", () => {
-            showToast("You have new notifications.");
+            showToast(
+                "You have new notifications."
+            );
         });
     }
 
@@ -269,14 +278,17 @@ document.addEventListener("DOMContentLoaded", () => {
        COURSE STORAGE
        ========================================================= */
 
-    const STORAGE_KEY = "wassla_teacher_courses";
+    const STORAGE_KEY =
+        "wassla_teacher_courses";
 
     function getCourses() {
         try {
             const saved =
                 localStorage.getItem(STORAGE_KEY);
 
-            return saved ? JSON.parse(saved) : [];
+            return saved
+                ? JSON.parse(saved)
+                : [];
         } catch (error) {
             console.error(
                 "Wassla: could not load courses.",
@@ -329,6 +341,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeHTML(value) {
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value == null
+                ? ""
+                : String(value);
+
+        return div.innerHTML;
+    }
+
+    /* =========================================================
        CREATE COURSE CARD
        ========================================================= */
 
@@ -375,7 +403,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <span>
                         <i class="fa-solid fa-layer-group"></i>
-                        ${escapeHTML(String(lessons))} lessons
+                        ${escapeHTML(
+                            String(lessons)
+                        )} lessons
                     </span>
 
                 </div>
@@ -383,7 +413,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="course-progress">
 
                     <div>
-                        <span>Student progress</span>
+                        <span>
+                            Student progress
+                        </span>
+
                         <strong>0%</strong>
                     </div>
 
@@ -395,8 +428,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <small class="course-duration">
                     <i class="fa-regular fa-clock"></i>
-                    ${escapeHTML(String(duration))}
+                    ${escapeHTML(
+                        String(duration)
+                    )}
                 </small>
+
+                <button
+                    class="delete-course-btn"
+                    type="button"
+                >
+                    <i class="fa-solid fa-trash"></i>
+                    Delete Course
+                </button>
 
             </div>
 
@@ -413,28 +456,49 @@ document.addEventListener("DOMContentLoaded", () => {
             $(".course-action", article);
 
         if (actionButton) {
-            actionButton.addEventListener("click", () => {
-                showToast(
-                    `${course.title} is ready to manage.`
-                );
-            });
+            actionButton.addEventListener(
+                "click",
+                () => {
+                    showToast(
+                        `${course.title} is ready to manage.`
+                    );
+                }
+            );
+        }
+
+        const deleteButton =
+            $(".delete-course-btn", article);
+
+        if (deleteButton) {
+            deleteButton.addEventListener(
+                "click",
+                () => {
+                    const courses =
+                        getCourses();
+
+                    const updatedCourses =
+                        courses.filter(
+                            (savedCourse) =>
+                                savedCourse.id !==
+                                course.id
+                        );
+
+                    saveCourses(
+                        updatedCourses
+                    );
+
+                    article.remove();
+
+                    updateCourseCount();
+
+                    showToast(
+                        `"${course.title}" deleted successfully.`
+                    );
+                }
+            );
         }
 
         return article;
-    }
-
-    /* =========================================================
-       ESCAPE HTML
-       ========================================================= */
-
-    function escapeHTML(value) {
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            value == null ? "" : String(value);
-
-        return div.innerHTML;
     }
 
     /* =========================================================
@@ -444,7 +508,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadSavedCourses() {
         if (!courseGrid) return;
 
-        const courses = getCourses();
+        const courses =
+            getCourses();
 
         courses.forEach((course) => {
             courseGrid.appendChild(
@@ -485,22 +550,30 @@ document.addEventListener("DOMContentLoaded", () => {
     function getCourseFormData() {
         return {
             title:
-                $("#courseTitle")?.value.trim() || "",
+                $("#courseTitle")?.value.trim() ||
+                "",
 
             category:
-                $("#courseCategory")?.value || "",
+                $("#courseCategory")?.value ||
+                "",
 
             level:
-                $("#courseLevel")?.value || "",
+                $("#courseLevel")?.value ||
+                "",
 
             description:
-                $("#courseDescription")?.value.trim() || "",
+                $("#courseDescription")
+                    ?.value.trim() ||
+                "",
 
             lessons:
-                $("#lessonCount")?.value || "",
+                $("#lessonCount")?.value ||
+                "",
 
             duration:
-                $("#courseDuration")?.value.trim() || ""
+                $("#courseDuration")
+                    ?.value.trim() ||
+                ""
         };
     }
 
@@ -511,33 +584,45 @@ document.addEventListener("DOMContentLoaded", () => {
             getCourseFormData();
 
         if (!course.title) {
-            showToast("Please enter a course title.");
+            showToast(
+                "Please enter a course title."
+            );
+
             $("#courseTitle")?.focus();
+
             return;
         }
 
         $("#previewTitle").textContent =
             course.title;
 
-        $("#previewDescription").textContent =
+        $("#previewDescription")
+            .textContent =
             course.description ||
             "No description provided.";
 
-        $("#previewCategory").textContent =
+        $("#previewCategory")
+            .textContent =
             course.category || "—";
 
-        $("#previewLevel").textContent =
+        $("#previewLevel")
+            .textContent =
             course.level || "—";
 
-        $("#previewLessons").textContent =
+        $("#previewLessons")
+            .textContent =
             course.lessons
                 ? `${course.lessons} lessons`
                 : "—";
 
-        $("#previewDuration").textContent =
+        $("#previewDuration")
+            .textContent =
             course.duration || "—";
 
-        previewModal.classList.add("show");
+        previewModal.classList.add(
+            "active"
+        );
+
         previewModal.setAttribute(
             "aria-hidden",
             "false"
@@ -547,7 +632,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function closePreview() {
         if (!previewModal) return;
 
-        previewModal.classList.remove("show");
+        previewModal.classList.remove(
+            "active"
+        );
+
         previewModal.setAttribute(
             "aria-hidden",
             "true"
@@ -573,7 +661,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             (event) => {
                 if (
-                    event.target === previewModal
+                    event.target ===
+                    previewModal
                 ) {
                     closePreview();
                 }
@@ -629,7 +718,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a course description."
                     );
 
-                    $("#courseDescription")?.focus();
+                    $("#courseDescription")
+                        ?.focus();
 
                     return;
                 }
@@ -649,7 +739,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter the estimated duration."
                     );
 
-                    $("#courseDuration")?.focus();
+                    $("#courseDuration")
+                        ?.focus();
 
                     return;
                 }
@@ -670,7 +761,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (courseGrid) {
                     courseGrid.appendChild(
-                        createCourseCard(newCourse)
+                        createCourseCard(
+                            newCourse
+                        )
                     );
                 }
 
@@ -794,4 +887,4 @@ document.addEventListener("DOMContentLoaded", () => {
         "Wassla Teacher Dashboard initialized successfully."
     );
 });
-    
+```
