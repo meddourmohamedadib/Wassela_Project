@@ -1,24 +1,24 @@
-
+```javascript
 /* =========================================================
-   WASSLA — TEACHER DASHBOARD
-   Frontend Prototype
+   WASSLA - TEACHER DASHBOARD
+   Simple Frontend Prototype
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
-    /* =========================================================
+    /* =====================================================
        HELPERS
-       ========================================================= */
+       ===================================================== */
 
     function $(selector, parent) {
-        parent = parent || document;
-        return parent.querySelector(selector);
+        return (parent || document).querySelector(selector);
     }
 
     function $$(selector, parent) {
-        parent = parent || document;
-        return Array.from(parent.querySelectorAll(selector));
+        return Array.prototype.slice.call(
+            (parent || document).querySelectorAll(selector)
+        );
     }
 
     function showToast(message) {
@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 2500);
     }
 
-    /* =========================================================
+    /* =====================================================
        ELEMENTS
-       ========================================================= */
+       ===================================================== */
 
     var sidebar = $("#teacherSidebar");
     var overlay = $("#sidebarOverlay");
@@ -69,9 +69,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var courseGrid = $(".course-grid");
 
-    /* =========================================================
+    /* =====================================================
        SECTION TITLES
-       ========================================================= */
+       ===================================================== */
 
     var sectionTitles = {
         dashboard: "Dashboard",
@@ -84,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
         settings: "Settings"
     };
 
-    /* =========================================================
+    /* =====================================================
        SIDEBAR
-       ========================================================= */
+       ===================================================== */
 
     function closeSidebar() {
         if (sidebar) {
@@ -118,9 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.addEventListener("click", closeSidebar);
     }
 
-    /* =========================================================
-       SECTION NAVIGATION
-       ========================================================= */
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
 
     function showSection(sectionId) {
         if (!sectionId) {
@@ -160,28 +160,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         closeSidebar();
 
-        history.replaceState(
-            null,
-            "",
-            window.location.pathname +
-            "?section=" +
-            encodeURIComponent(sectionId)
-        );
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo(0, 0);
     }
 
     navItems.forEach(function (item) {
         item.addEventListener("click", function (event) {
             event.preventDefault();
 
-            var sectionId =
-                item.getAttribute("data-section");
-
-            showSection(sectionId);
+            showSection(
+                item.getAttribute("data-section")
+            );
         });
     });
 
@@ -189,35 +177,15 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function (event) {
             event.preventDefault();
 
-            var sectionId =
-                button.getAttribute(
-                    "data-section-target"
-                );
-
-            showSection(sectionId);
+            showSection(
+                button.getAttribute("data-section-target")
+            );
         });
     });
 
-    function loadInitialSection() {
-        var params =
-            new URLSearchParams(window.location.search);
-
-        var sectionId =
-            params.get("section");
-
-        if (
-            sectionId &&
-            document.getElementById(sectionId)
-        ) {
-            showSection(sectionId);
-        } else {
-            showSection("dashboard");
-        }
-    }
-
-    /* =========================================================
+    /* =====================================================
        SEARCH
-       ========================================================= */
+       ===================================================== */
 
     if (searchBtn) {
         searchBtn.addEventListener("click", function () {
@@ -253,9 +221,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* =========================================================
+    /* =====================================================
        NOTIFICATIONS
-       ========================================================= */
+       ===================================================== */
 
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function () {
@@ -265,33 +233,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* =========================================================
+    /* =====================================================
        LANGUAGE
-       ========================================================= */
+       ===================================================== */
 
     if (languageSelect) {
         languageSelect.addEventListener("change", function () {
-            var selected =
+            var option =
                 languageSelect.options[
                     languageSelect.selectedIndex
                 ];
 
-            var selectedText =
-                selected
-                    ? selected.text
-                    : "Language";
-
             showToast(
                 "Language changed to " +
-                selectedText +
+                (option ? option.text : "Language") +
                 "."
             );
         });
     }
 
-    /* =========================================================
+    /* =====================================================
        COURSE STORAGE
-       ========================================================= */
+       ===================================================== */
 
     var STORAGE_KEY =
         "wassla_teacher_courses";
@@ -301,8 +264,14 @@ document.addEventListener("DOMContentLoaded", function () {
             var saved =
                 localStorage.getItem(STORAGE_KEY);
 
-            return saved
-                ? JSON.parse(saved)
+            if (!saved) {
+                return [];
+            }
+
+            var courses = JSON.parse(saved);
+
+            return Array.isArray(courses)
+                ? courses
                 : [];
         } catch (error) {
             console.error(
@@ -328,9 +297,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    /* =========================================================
+    /* =====================================================
        COURSE ICON
-       ========================================================= */
+       ===================================================== */
 
     function getCourseIcon(category) {
         var value =
@@ -355,9 +324,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return "fa-book-open";
     }
 
-    /* =========================================================
+    /* =====================================================
        ESCAPE HTML
-       ========================================================= */
+       ===================================================== */
 
     function escapeHTML(value) {
         var div =
@@ -371,9 +340,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return div.innerHTML;
     }
 
-    /* =========================================================
+    /* =====================================================
        CREATE COURSE CARD
-       ========================================================= */
+       ===================================================== */
 
     function createCourseCard(course) {
         var article =
@@ -381,19 +350,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         article.className = "course-card";
 
-        var icon =
-            getCourseIcon(course.category);
-
-        var lessons =
-            course.lessons || "—";
-
-        var duration =
-            course.duration || "—";
-
         article.innerHTML =
             '<div class="course-card-icon">' +
                 '<i class="fa-solid ' +
-                icon +
+                getCourseIcon(course.category) +
                 '"></i>' +
             '</div>' +
 
@@ -412,7 +372,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 '</p>' +
 
                 '<div class="course-meta">' +
-
                     '<span>' +
                         '<i class="fa-solid fa-users"></i>' +
                         ' 0 students' +
@@ -421,14 +380,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     '<span>' +
                         '<i class="fa-solid fa-layer-group"></i>' +
                         ' ' +
-                        escapeHTML(String(lessons)) +
+                        escapeHTML(
+                            String(course.lessons || "—")
+                        ) +
                         ' lessons' +
                     '</span>' +
-
                 '</div>' +
 
                 '<div class="course-progress">' +
-
                     '<div>' +
                         '<span>Student progress</span>' +
                         '<strong>0%</strong>' +
@@ -437,13 +396,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     '<div class="progress-bar">' +
                         '<span style="width:0%;"></span>' +
                     '</div>' +
-
                 '</div>' +
 
                 '<small class="course-duration">' +
                     '<i class="fa-regular fa-clock"></i>' +
                     ' ' +
-                    escapeHTML(String(duration)) +
+                    escapeHTML(
+                        String(course.duration || "—")
+                    ) +
                 '</small>' +
 
                 '<button ' +
@@ -457,8 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             '<button ' +
                 'class="course-action" ' +
-                'type="button" ' +
-                'aria-label="Course options">' +
+                'type="button">' +
                 '<i class="fa-solid fa-ellipsis-vertical"></i>' +
             '</button>';
 
@@ -470,8 +429,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "click",
                 function () {
                     showToast(
-                        course.title +
-                        " is ready to manage."
+                        "Course options selected."
                     );
                 }
             );
@@ -504,9 +462,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     updateCourseCount();
 
                     showToast(
-                        '"' +
-                        course.title +
-                        '" deleted successfully.'
+                        "Course deleted successfully."
                     );
                 }
             );
@@ -515,9 +471,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return article;
     }
 
-    /* =========================================================
-       LOAD SAVED COURSES
-       ========================================================= */
+    /* =====================================================
+       LOAD COURSES
+       ===================================================== */
 
     function loadSavedCourses() {
         if (!courseGrid) {
@@ -534,34 +490,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* =========================================================
-       UPDATE COURSE COUNT
-       ========================================================= */
+    /* =====================================================
+       COURSE COUNT
+       ===================================================== */
 
     function updateCourseCount() {
-        var savedCourses =
-            getCourses();
-
-        var defaultCourses = 3;
-
-        var total =
-            defaultCourses +
-            savedCourses.length;
-
-        var totalCoursesElement =
+        var element =
             document.querySelector(
                 ".stats-grid .stat-card:first-child .stat-info strong"
             );
 
-        if (totalCoursesElement) {
-            totalCoursesElement.textContent =
-                total;
+        if (!element) {
+            return;
         }
+
+        element.textContent =
+            3 + getCourses().length;
     }
 
-    /* =========================================================
-       COURSE FORM DATA
-       ========================================================= */
+    /* =====================================================
+       COURSE FORM
+       ===================================================== */
 
     function getCourseFormData() {
         return {
@@ -597,9 +546,9 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    /* =========================================================
-       COURSE PREVIEW
-       ========================================================= */
+    /* =====================================================
+       PREVIEW
+       ===================================================== */
 
     function openPreview() {
         if (!previewModal) {
@@ -693,19 +642,16 @@ document.addEventListener("DOMContentLoaded", function () {
         previewModal.addEventListener(
             "click",
             function (event) {
-                if (
-                    event.target ===
-                    previewModal
-                ) {
+                if (event.target === previewModal) {
                     closePreview();
                 }
             }
         );
     }
 
-    /* =========================================================
+    /* =====================================================
        CREATE COURSE
-       ========================================================= */
+       ===================================================== */
 
     if (courseForm) {
         courseForm.addEventListener(
@@ -720,11 +666,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter a course title."
                     );
-
-                    if ($("#courseTitle")) {
-                        $("#courseTitle").focus();
-                    }
-
                     return;
                 }
 
@@ -732,11 +673,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please select a category."
                     );
-
-                    if ($("#courseCategory")) {
-                        $("#courseCategory").focus();
-                    }
-
                     return;
                 }
 
@@ -744,11 +680,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please select a level."
                     );
-
-                    if ($("#courseLevel")) {
-                        $("#courseLevel").focus();
-                    }
-
                     return;
                 }
 
@@ -756,11 +687,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter a course description."
                     );
-
-                    if ($("#courseDescription")) {
-                        $("#courseDescription").focus();
-                    }
-
                     return;
                 }
 
@@ -768,11 +694,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter the number of lessons."
                     );
-
-                    if ($("#lessonCount")) {
-                        $("#lessonCount").focus();
-                    }
-
                     return;
                 }
 
@@ -780,11 +701,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showToast(
                         "Please enter the estimated duration."
                     );
-
-                    if ($("#courseDuration")) {
-                        $("#courseDuration").focus();
-                    }
-
                     return;
                 }
 
@@ -798,9 +714,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     level: course.level,
                     description: course.description,
                     lessons: course.lessons,
-                    duration: course.duration,
-                    createdAt:
-                        new Date().toISOString()
+                    duration: course.duration
                 };
 
                 courses.push(newCourse);
@@ -825,31 +739,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 setTimeout(function () {
                     showSection("courses");
-                }, 600);
+                }, 500);
             }
         );
     }
 
-    /* =========================================================
-       EXISTING COURSE ACTIONS
-       ========================================================= */
-
-    $$(".course-action").forEach(
-        function (button) {
-            button.addEventListener(
-                "click",
-                function () {
-                    showToast(
-                        "Course options selected."
-                    );
-                }
-            );
-        }
-    );
-
-    /* =========================================================
+    /* =====================================================
        LIVE SESSIONS
-       ========================================================= */
+       ===================================================== */
 
     var createSessionBtn =
         $("#createSessionBtn");
@@ -865,9 +762,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =========================================================
+    /* =====================================================
        RESOURCES
-       ========================================================= */
+       ===================================================== */
 
     var uploadResourceBtn =
         $("#uploadResourceBtn");
@@ -883,9 +780,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =========================================================
+    /* =====================================================
        COMPACT SIDEBAR
-       ========================================================= */
+       ===================================================== */
 
     if (compactSidebarToggle) {
         compactSidebarToggle.addEventListener(
@@ -907,9 +804,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    /* =========================================================
-       KEYBOARD
-       ========================================================= */
+    /* =====================================================
+       ESCAPE KEY
+       ===================================================== */
 
     document.addEventListener(
         "keydown",
@@ -921,16 +818,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-    /* =========================================================
-       INITIALIZE
-       ========================================================= */
+    /* =====================================================
+       START
+       ===================================================== */
 
     loadSavedCourses();
     updateCourseCount();
-    loadInitialSection();
+    showSection("dashboard");
 
     console.log(
         "Wassla Teacher Dashboard initialized successfully."
     );
 });
 ```
+
