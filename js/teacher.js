@@ -417,13 +417,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     ) +
                 '</small>' +
 
-                '<button ' +
-                    'class="delete-course-btn" ' +
-                    'type="button">' +
-                    '<i class="fa-solid fa-trash"></i>' +
-                    ' Delete Course' +
-                '</button>' +
-
             '</div>' +
 
             '<button ' +
@@ -441,36 +434,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 function () {
                     showToast(
                         "Course options selected."
-                    );
-                }
-            );
-        }
-
-        var deleteButton =
-            $(".delete-course-btn", article);
-
-        if (deleteButton) {
-            deleteButton.addEventListener(
-                "click",
-                function () {
-                    var courses = getCourses();
-
-                    var updatedCourses =
-                        courses.filter(
-                            function (savedCourse) {
-                                return (
-                                    savedCourse.id !==
-                                    course.id
-                                );
-                            }
-                        );
-
-                    saveCourses(updatedCourses);
-                    article.remove();
-                    updateCourseCount();
-
-                    showToast(
-                        "Course deleted successfully."
                     );
                 }
             );
