@@ -1,4 +1,4 @@
-```js
+```javascript
 /* =========================================================
    WASSLA — TEACHER DASHBOARD
    Frontend Prototype
@@ -403,9 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <span>
                         <i class="fa-solid fa-layer-group"></i>
-                        ${escapeHTML(
-                            String(lessons)
-                        )} lessons
+                        ${escapeHTML(String(lessons))}
+                        lessons
                     </span>
 
                 </div>
@@ -428,9 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <small class="course-duration">
                     <i class="fa-regular fa-clock"></i>
-                    ${escapeHTML(
-                        String(duration)
-                    )}
+                    ${escapeHTML(String(duration))}
                 </small>
 
                 <button
@@ -483,9 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 course.id
                         );
 
-                    saveCourses(
-                        updatedCourses
-                    );
+                    saveCourses(updatedCourses);
 
                     article.remove();
 
@@ -562,8 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
 
             description:
-                $("#courseDescription")
-                    ?.value.trim() ||
+                $("#courseDescription")?.value.trim() ||
                 "",
 
             lessons:
@@ -571,8 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
 
             duration:
-                $("#courseDuration")
-                    ?.value.trim() ||
+                $("#courseDuration")?.value.trim() ||
                 ""
         };
     }
@@ -596,32 +589,25 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#previewTitle").textContent =
             course.title;
 
-        $("#previewDescription")
-            .textContent =
+        $("#previewDescription").textContent =
             course.description ||
             "No description provided.";
 
-        $("#previewCategory")
-            .textContent =
+        $("#previewCategory").textContent =
             course.category || "—";
 
-        $("#previewLevel")
-            .textContent =
+        $("#previewLevel").textContent =
             course.level || "—";
 
-        $("#previewLessons")
-            .textContent =
+        $("#previewLessons").textContent =
             course.lessons
                 ? `${course.lessons} lessons`
                 : "—";
 
-        $("#previewDuration")
-            .textContent =
+        $("#previewDuration").textContent =
             course.duration || "—";
 
-        previewModal.classList.add(
-            "active"
-        );
+        previewModal.classList.add("active");
 
         previewModal.setAttribute(
             "aria-hidden",
@@ -632,9 +618,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function closePreview() {
         if (!previewModal) return;
 
-        previewModal.classList.remove(
-            "active"
-        );
+        previewModal.classList.remove("active");
 
         previewModal.setAttribute(
             "aria-hidden",
@@ -718,8 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a course description."
                     );
 
-                    $("#courseDescription")
-                        ?.focus();
+                    $("#courseDescription")?.focus();
 
                     return;
                 }
@@ -739,8 +722,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter the estimated duration."
                     );
 
-                    $("#courseDuration")
-                        ?.focus();
+                    $("#courseDuration")?.focus();
 
                     return;
                 }
@@ -761,9 +743,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (courseGrid) {
                     courseGrid.appendChild(
-                        createCourseCard(
-                            newCourse
-                        )
+                        createCourseCard(newCourse)
                     );
                 }
 
@@ -820,7 +800,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================================
-       RESOURCE
+       RESOURCES
        ========================================================= */
 
     const uploadResourceBtn =
@@ -888,3 +868,5 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 });
 ```
+
+    
