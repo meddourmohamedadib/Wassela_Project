@@ -4,70 +4,76 @@
    Frontend Prototype
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
     /* =========================================================
        HELPERS
        ========================================================= */
 
-    const $ = (selector, parent = document) =>
-        parent.querySelector(selector);
+    function $(selector, parent) {
+        parent = parent || document;
+        return parent.querySelector(selector);
+    }
 
-    const $$ = (selector, parent = document) =>
-        Array.from(parent.querySelectorAll(selector));
+    function $$(selector, parent) {
+        parent = parent || document;
+        return Array.from(parent.querySelectorAll(selector));
+    }
 
-    const showToast = (message) => {
-        const toast = $("#toast");
-        const toastMessage = $("#toastMessage");
+    function showToast(message) {
+        var toast = $("#toast");
+        var toastMessage = $("#toastMessage");
 
-        if (!toast || !toastMessage) return;
+        if (!toast || !toastMessage) {
+            return;
+        }
 
         toastMessage.textContent = message;
         toast.classList.add("show");
 
         clearTimeout(window.wasslaToastTimer);
 
-        window.wasslaToastTimer = setTimeout(() => {
+        window.wasslaToastTimer = setTimeout(function () {
             toast.classList.remove("show");
         }, 2500);
-    };
+    }
 
     /* =========================================================
        ELEMENTS
        ========================================================= */
 
-    const sidebar = $("#teacherSidebar");
-    const overlay = $("#sidebarOverlay");
-    const mobileMenuBtn = $("#mobileMenuBtn");
-    const pageTitle = $("#pageTitle");
+    var sidebar = $("#teacherSidebar");
+    var overlay = $("#sidebarOverlay");
+    var mobileMenuBtn = $("#mobileMenuBtn");
+    var pageTitle = $("#pageTitle");
 
-    const navItems = $$(".nav-item[data-section]");
-    const sectionButtons = $$("[data-section-target]");
-    const sections = $$("section.page-section");
+    var navItems = $$(".nav-item[data-section]");
+    var sectionButtons = $$("[data-section-target]");
+    var sections = $$("section.page-section");
 
-    const searchBtn = $("#searchBtn");
-    const notificationBtn = $("#notificationBtn");
-    const languageSelect = $("#languageSelect");
+    var searchBtn = $("#searchBtn");
+    var notificationBtn = $("#notificationBtn");
+    var languageSelect = $("#languageSelect");
 
-    const studentSearch = $("#studentSearch");
+    var studentSearch = $("#studentSearch");
 
-    const courseForm = $("#courseForm");
-    const previewCourseBtn = $("#previewCourseBtn");
+    var courseForm = $("#courseForm");
+    var previewCourseBtn = $("#previewCourseBtn");
 
-    const previewModal = $("#coursePreviewModal");
-    const closePreviewBtn = $("#closeCoursePreview");
+    var previewModal = $("#coursePreviewModal");
+    var closePreviewBtn = $("#closeCoursePreview");
 
-    const compactSidebarToggle =
+    var compactSidebarToggle =
         $("#compactSidebarToggle");
 
-    const courseGrid = $(".course-grid");
+    var courseGrid = $(".course-grid");
 
     /* =========================================================
        SECTION TITLES
        ========================================================= */
 
-    const sectionTitles = {
+    var sectionTitles = {
         dashboard: "Dashboard",
         courses: "My Courses",
         "create-course": "Create Course",
@@ -94,8 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", () => {
-            if (!sidebar) return;
+        mobileMenuBtn.addEventListener("click", function () {
+            if (!sidebar) {
+                return;
+            }
 
             sidebar.classList.toggle("open");
 
@@ -115,9 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function showSection(sectionId) {
-        if (!sectionId) return;
+        if (!sectionId) {
+            return;
+        }
 
-        const target = document.getElementById(sectionId);
+        var target = document.getElementById(sectionId);
 
         if (!target) {
             console.warn(
@@ -127,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        sections.forEach((section) => {
+        sections.forEach(function (section) {
             section.classList.remove("active-section");
             section.style.display = "none";
         });
@@ -135,10 +145,10 @@ document.addEventListener("DOMContentLoaded", () => {
         target.classList.add("active-section");
         target.style.display = "block";
 
-        navItems.forEach((item) => {
+        navItems.forEach(function (item) {
             item.classList.toggle(
                 "active",
-                item.dataset.section === sectionId
+                item.getAttribute("data-section") === sectionId
             );
         });
 
@@ -150,13 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         closeSidebar();
 
-        if (window.location.hash !== `#${sectionId}`) {
-            history.replaceState(
-                null,
-                "",
-                `#${sectionId}`
-            );
-        }
+        history.replaceState(
+            null,
+            "",
+            window.location.pathname +
+            "?section=" +
+            encodeURIComponent(sectionId)
+        );
 
         window.scrollTo({
             top: 0,
@@ -164,22 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    navItems.forEach((item) => {
-        item.addEventListener("click", (event) => {
+    navItems.forEach(function (item) {
+        item.addEventListener("click", function (event) {
             event.preventDefault();
 
-            const sectionId =
+            var sectionId =
                 item.getAttribute("data-section");
 
             showSection(sectionId);
         });
     });
 
-    sectionButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
+    sectionButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
             event.preventDefault();
 
-            const sectionId =
+            var sectionId =
                 button.getAttribute(
                     "data-section-target"
                 );
@@ -189,33 +199,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function loadInitialSection() {
-        const hash =
-            window.location.hash.replace("#", "");
+        var params =
+            new URLSearchParams(window.location.search);
+
+        var sectionId =
+            params.get("section");
 
         if (
-            hash &&
-            document.getElementById(hash)
+            sectionId &&
+            document.getElementById(sectionId)
         ) {
-            showSection(hash);
+            showSection(sectionId);
         } else {
             showSection("dashboard");
         }
     }
-
-    window.addEventListener(
-        "hashchange",
-        loadInitialSection
-    );
 
     /* =========================================================
        SEARCH
        ========================================================= */
 
     if (searchBtn) {
-        searchBtn.addEventListener("click", () => {
+        searchBtn.addEventListener("click", function () {
             showSection("students");
 
-            setTimeout(() => {
+            setTimeout(function () {
                 if (studentSearch) {
                     studentSearch.focus();
                 }
@@ -224,21 +232,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (studentSearch) {
-        studentSearch.addEventListener("input", () => {
-            const value =
+        studentSearch.addEventListener("input", function () {
+            var value =
                 studentSearch.value
                     .trim()
                     .toLowerCase();
 
-            const rows =
+            var rows =
                 $$(".students-table tbody tr");
 
-            rows.forEach((row) => {
-                const text =
+            rows.forEach(function (row) {
+                var text =
                     row.textContent.toLowerCase();
 
                 row.style.display =
-                    text.includes(value)
+                    text.indexOf(value) !== -1
                         ? ""
                         : "none";
             });
@@ -250,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     if (notificationBtn) {
-        notificationBtn.addEventListener("click", () => {
+        notificationBtn.addEventListener("click", function () {
             showToast(
                 "You have new notifications."
             );
@@ -262,14 +270,21 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     if (languageSelect) {
-        languageSelect.addEventListener("change", () => {
-            const selected =
+        languageSelect.addEventListener("change", function () {
+            var selected =
                 languageSelect.options[
                     languageSelect.selectedIndex
-                ]?.text || "Language";
+                ];
+
+            var selectedText =
+                selected
+                    ? selected.text
+                    : "Language";
 
             showToast(
-                `Language changed to ${selected}.`
+                "Language changed to " +
+                selectedText +
+                "."
             );
         });
     }
@@ -278,12 +293,12 @@ document.addEventListener("DOMContentLoaded", () => {
        COURSE STORAGE
        ========================================================= */
 
-    const STORAGE_KEY =
+    var STORAGE_KEY =
         "wassla_teacher_courses";
 
     function getCourses() {
         try {
-            const saved =
+            var saved =
                 localStorage.getItem(STORAGE_KEY);
 
             return saved
@@ -318,22 +333,22 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function getCourseIcon(category) {
-        const value =
+        var value =
             String(category || "").toLowerCase();
 
-        if (value.includes("artificial")) {
+        if (value.indexOf("artificial") !== -1) {
             return "fa-brain";
         }
 
-        if (value.includes("program")) {
+        if (value.indexOf("program") !== -1) {
             return "fa-code";
         }
 
-        if (value.includes("math")) {
+        if (value.indexOf("math") !== -1) {
             return "fa-calculator";
         }
 
-        if (value.includes("computer")) {
+        if (value.indexOf("computer") !== -1) {
             return "fa-laptop-code";
         }
 
@@ -345,11 +360,11 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function escapeHTML(value) {
-        const div =
+        var div =
             document.createElement("div");
 
         div.textContent =
-            value == null
+            value === null || value === undefined
                 ? ""
                 : String(value);
 
@@ -361,123 +376,125 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function createCourseCard(course) {
-        const article =
+        var article =
             document.createElement("article");
 
         article.className = "course-card";
 
-        const icon =
+        var icon =
             getCourseIcon(course.category);
 
-        const lessons =
+        var lessons =
             course.lessons || "—";
 
-        const duration =
+        var duration =
             course.duration || "—";
 
-        article.innerHTML = `
-            <div class="course-card-icon">
-                <i class="fa-solid ${icon}"></i>
-            </div>
+        article.innerHTML =
+            '<div class="course-card-icon">' +
+                '<i class="fa-solid ' +
+                icon +
+                '"></i>' +
+            '</div>' +
 
-            <div class="course-card-body">
+            '<div class="course-card-body">' +
 
-                <span class="course-category">
-                    ${escapeHTML(course.category)}
-                </span>
+                '<span class="course-category">' +
+                    escapeHTML(course.category) +
+                '</span>' +
 
-                <h3>
-                    ${escapeHTML(course.title)}
-                </h3>
+                '<h3>' +
+                    escapeHTML(course.title) +
+                '</h3>' +
 
-                <p>
-                    ${escapeHTML(course.description)}
-                </p>
+                '<p>' +
+                    escapeHTML(course.description) +
+                '</p>' +
 
-                <div class="course-meta">
+                '<div class="course-meta">' +
 
-                    <span>
-                        <i class="fa-solid fa-users"></i>
-                        0 students
-                    </span>
+                    '<span>' +
+                        '<i class="fa-solid fa-users"></i>' +
+                        ' 0 students' +
+                    '</span>' +
 
-                    <span>
-                        <i class="fa-solid fa-layer-group"></i>
-                        ${escapeHTML(String(lessons))}
-                        lessons
-                    </span>
+                    '<span>' +
+                        '<i class="fa-solid fa-layer-group"></i>' +
+                        ' ' +
+                        escapeHTML(String(lessons)) +
+                        ' lessons' +
+                    '</span>' +
 
-                </div>
+                '</div>' +
 
-                <div class="course-progress">
+                '<div class="course-progress">' +
 
-                    <div>
-                        <span>
-                            Student progress
-                        </span>
+                    '<div>' +
+                        '<span>Student progress</span>' +
+                        '<strong>0%</strong>' +
+                    '</div>' +
 
-                        <strong>0%</strong>
-                    </div>
+                    '<div class="progress-bar">' +
+                        '<span style="width:0%;"></span>' +
+                    '</div>' +
 
-                    <div class="progress-bar">
-                        <span style="width:0%;"></span>
-                    </div>
+                '</div>' +
 
-                </div>
+                '<small class="course-duration">' +
+                    '<i class="fa-regular fa-clock"></i>' +
+                    ' ' +
+                    escapeHTML(String(duration)) +
+                '</small>' +
 
-                <small class="course-duration">
-                    <i class="fa-regular fa-clock"></i>
-                    ${escapeHTML(String(duration))}
-                </small>
+                '<button ' +
+                    'class="delete-course-btn" ' +
+                    'type="button">' +
+                    '<i class="fa-solid fa-trash"></i>' +
+                    ' Delete Course' +
+                '</button>' +
 
-                <button
-                    class="delete-course-btn"
-                    type="button"
-                >
-                    <i class="fa-solid fa-trash"></i>
-                    Delete Course
-                </button>
+            '</div>' +
 
-            </div>
+            '<button ' +
+                'class="course-action" ' +
+                'type="button" ' +
+                'aria-label="Course options">' +
+                '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+            '</button>';
 
-            <button
-                class="course-action"
-                type="button"
-                aria-label="Course options"
-            >
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-        `;
-
-        const actionButton =
+        var actionButton =
             $(".course-action", article);
 
         if (actionButton) {
             actionButton.addEventListener(
                 "click",
-                () => {
+                function () {
                     showToast(
-                        `${course.title} is ready to manage.`
+                        course.title +
+                        " is ready to manage."
                     );
                 }
             );
         }
 
-        const deleteButton =
+        var deleteButton =
             $(".delete-course-btn", article);
 
         if (deleteButton) {
             deleteButton.addEventListener(
                 "click",
-                () => {
-                    const courses =
+                function () {
+                    var courses =
                         getCourses();
 
-                    const updatedCourses =
+                    var updatedCourses =
                         courses.filter(
-                            (savedCourse) =>
-                                savedCourse.id !==
-                                course.id
+                            function (savedCourse) {
+                                return (
+                                    savedCourse.id !==
+                                    course.id
+                                );
+                            }
                         );
 
                     saveCourses(updatedCourses);
@@ -487,7 +504,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateCourseCount();
 
                     showToast(
-                        `"${course.title}" deleted successfully.`
+                        '"' +
+                        course.title +
+                        '" deleted successfully.'
                     );
                 }
             );
@@ -501,12 +520,14 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function loadSavedCourses() {
-        if (!courseGrid) return;
+        if (!courseGrid) {
+            return;
+        }
 
-        const courses =
+        var courses =
             getCourses();
 
-        courses.forEach((course) => {
+        courses.forEach(function (course) {
             courseGrid.appendChild(
                 createCourseCard(course)
             );
@@ -518,16 +539,16 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     function updateCourseCount() {
-        const savedCourses =
+        var savedCourses =
             getCourses();
 
-        const defaultCourses = 3;
+        var defaultCourses = 3;
 
-        const total =
+        var total =
             defaultCourses +
             savedCourses.length;
 
-        const totalCoursesElement =
+        var totalCoursesElement =
             document.querySelector(
                 ".stats-grid .stat-card:first-child .stat-info strong"
             );
@@ -539,41 +560,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================================
-       COURSE PREVIEW
+       COURSE FORM DATA
        ========================================================= */
 
     function getCourseFormData() {
         return {
             title:
-                $("#courseTitle")?.value.trim() ||
-                "",
+                $("#courseTitle")
+                    ? $("#courseTitle").value.trim()
+                    : "",
 
             category:
-                $("#courseCategory")?.value ||
-                "",
+                $("#courseCategory")
+                    ? $("#courseCategory").value
+                    : "",
 
             level:
-                $("#courseLevel")?.value ||
-                "",
+                $("#courseLevel")
+                    ? $("#courseLevel").value
+                    : "",
 
             description:
-                $("#courseDescription")?.value.trim() ||
-                "",
+                $("#courseDescription")
+                    ? $("#courseDescription").value.trim()
+                    : "",
 
             lessons:
-                $("#lessonCount")?.value ||
-                "",
+                $("#lessonCount")
+                    ? $("#lessonCount").value
+                    : "",
 
             duration:
-                $("#courseDuration")?.value.trim() ||
-                ""
+                $("#courseDuration")
+                    ? $("#courseDuration").value.trim()
+                    : ""
         };
     }
 
-    function openPreview() {
-        if (!previewModal) return;
+    /* =========================================================
+       COURSE PREVIEW
+       ========================================================= */
 
-        const course =
+    function openPreview() {
+        if (!previewModal) {
+            return;
+        }
+
+        var course =
             getCourseFormData();
 
         if (!course.title) {
@@ -581,31 +614,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Please enter a course title."
             );
 
-            $("#courseTitle")?.focus();
+            if ($("#courseTitle")) {
+                $("#courseTitle").focus();
+            }
 
             return;
         }
 
-        $("#previewTitle").textContent =
-            course.title;
+        if ($("#previewTitle")) {
+            $("#previewTitle").textContent =
+                course.title;
+        }
 
-        $("#previewDescription").textContent =
-            course.description ||
-            "No description provided.";
+        if ($("#previewDescription")) {
+            $("#previewDescription").textContent =
+                course.description ||
+                "No description provided.";
+        }
 
-        $("#previewCategory").textContent =
-            course.category || "—";
+        if ($("#previewCategory")) {
+            $("#previewCategory").textContent =
+                course.category || "—";
+        }
 
-        $("#previewLevel").textContent =
-            course.level || "—";
+        if ($("#previewLevel")) {
+            $("#previewLevel").textContent =
+                course.level || "—";
+        }
 
-        $("#previewLessons").textContent =
-            course.lessons
-                ? `${course.lessons} lessons`
-                : "—";
+        if ($("#previewLessons")) {
+            $("#previewLessons").textContent =
+                course.lessons
+                    ? course.lessons + " lessons"
+                    : "—";
+        }
 
-        $("#previewDuration").textContent =
-            course.duration || "—";
+        if ($("#previewDuration")) {
+            $("#previewDuration").textContent =
+                course.duration || "—";
+        }
 
         previewModal.classList.add("active");
 
@@ -616,7 +663,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function closePreview() {
-        if (!previewModal) return;
+        if (!previewModal) {
+            return;
+        }
 
         previewModal.classList.remove("active");
 
@@ -643,7 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (previewModal) {
         previewModal.addEventListener(
             "click",
-            (event) => {
+            function (event) {
                 if (
                     event.target ===
                     previewModal
@@ -661,10 +710,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (courseForm) {
         courseForm.addEventListener(
             "submit",
-            (event) => {
+            function (event) {
                 event.preventDefault();
 
-                const course =
+                var course =
                     getCourseFormData();
 
                 if (!course.title) {
@@ -672,7 +721,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a course title."
                     );
 
-                    $("#courseTitle")?.focus();
+                    if ($("#courseTitle")) {
+                        $("#courseTitle").focus();
+                    }
 
                     return;
                 }
@@ -682,7 +733,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please select a category."
                     );
 
-                    $("#courseCategory")?.focus();
+                    if ($("#courseCategory")) {
+                        $("#courseCategory").focus();
+                    }
 
                     return;
                 }
@@ -692,7 +745,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please select a level."
                     );
 
-                    $("#courseLevel")?.focus();
+                    if ($("#courseLevel")) {
+                        $("#courseLevel").focus();
+                    }
 
                     return;
                 }
@@ -702,7 +757,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a course description."
                     );
 
-                    $("#courseDescription")?.focus();
+                    if ($("#courseDescription")) {
+                        $("#courseDescription").focus();
+                    }
 
                     return;
                 }
@@ -712,7 +769,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter the number of lessons."
                     );
 
-                    $("#lessonCount")?.focus();
+                    if ($("#lessonCount")) {
+                        $("#lessonCount").focus();
+                    }
 
                     return;
                 }
@@ -722,17 +781,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter the estimated duration."
                     );
 
-                    $("#courseDuration")?.focus();
+                    if ($("#courseDuration")) {
+                        $("#courseDuration").focus();
+                    }
 
                     return;
                 }
 
-                const courses =
+                var courses =
                     getCourses();
 
-                const newCourse = {
+                var newCourse = {
                     id: Date.now(),
-                    ...course,
+                    title: course.title,
+                    category: course.category,
+                    level: course.level,
+                    description: course.description,
+                    lessons: course.lessons,
+                    duration: course.duration,
                     createdAt:
                         new Date().toISOString()
                 };
@@ -757,7 +823,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Course created successfully!"
                 );
 
-                setTimeout(() => {
+                setTimeout(function () {
                     showSection("courses");
                 }, 600);
             }
@@ -769,10 +835,10 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     $$(".course-action").forEach(
-        (button) => {
+        function (button) {
             button.addEventListener(
                 "click",
-                () => {
+                function () {
                     showToast(
                         "Course options selected."
                     );
@@ -785,13 +851,13 @@ document.addEventListener("DOMContentLoaded", () => {
        LIVE SESSIONS
        ========================================================= */
 
-    const createSessionBtn =
+    var createSessionBtn =
         $("#createSessionBtn");
 
     if (createSessionBtn) {
         createSessionBtn.addEventListener(
             "click",
-            () => {
+            function () {
                 showToast(
                     "New session creation is ready."
                 );
@@ -803,13 +869,13 @@ document.addEventListener("DOMContentLoaded", () => {
        RESOURCES
        ========================================================= */
 
-    const uploadResourceBtn =
+    var uploadResourceBtn =
         $("#uploadResourceBtn");
 
     if (uploadResourceBtn) {
         uploadResourceBtn.addEventListener(
             "click",
-            () => {
+            function () {
                 showToast(
                     "Add Resource selected."
                 );
@@ -824,7 +890,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (compactSidebarToggle) {
         compactSidebarToggle.addEventListener(
             "change",
-            () => {
+            function () {
                 if (sidebar) {
                     sidebar.classList.toggle(
                         "compact",
@@ -847,7 +913,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener(
         "keydown",
-        (event) => {
+        function (event) {
             if (event.key === "Escape") {
                 closeSidebar();
                 closePreview();
@@ -868,5 +934,3 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 });
 ```
-
-    
