@@ -94,10 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     sections.forEach((section) => {
-      section.classList.remove("active");
+      section.classList.remove("active-section");
 
       if (section.id === sectionId) {
-        section.classList.add("active");
+        section.classList.add("active-section");
       }
     });
 
