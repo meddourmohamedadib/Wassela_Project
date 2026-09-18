@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    WASSLA - TEACHER DASHBOARD
    Frontend Prototype
