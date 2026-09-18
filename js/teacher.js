@@ -1508,4 +1508,4 @@ if (languageSelect) {
     console.log(
         "Wassla Teacher Dashboard initialized successfully."
     );
-});
+);
