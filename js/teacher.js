@@ -49,12 +49,10 @@ const sections = $$("section.page-section");
 const searchBtn = $("#searchBtn");
 const notificationBtn = $("#notificationBtn");
 const languageSelect = $("#languageSelect");
-
 const studentSearch = $("#studentSearch");
 
 const courseForm = $("#courseForm");
 const previewCourseBtn = $("#previewCourseBtn");
-
 const previewModal = $("#coursePreviewModal");
 const closePreviewBtn = $("#closeCoursePreview");
 
@@ -79,33 +77,36 @@ const sectionTitles = {
 };
 
 /* =========================================================
-   LANGUAGE
+   LANGUAGE SYSTEM
    ========================================================= */
 
-const translations = {
+const languageData = {
     en: {
-        "Dashboard": "Dashboard",
+        dir: "ltr",
+
+        Dashboard: "Dashboard",
         "My Courses": "My Courses",
         "Create Course": "Create Course",
-        "Students": "Students",
+        Students: "Students",
         "Student Progress": "Student Progress",
         "Live Sessions": "Live Sessions",
-        "Resources": "Resources",
-        "Settings": "Settings",
+        Resources: "Resources",
+        Settings: "Settings",
 
         "Teacher Space": "Teacher Space",
-        "Teacher": "Teacher",
-        "Instructor": "Instructor",
-        "MAIN": "MAIN",
-        "STUDENTS": "STUDENTS",
-        "TEACHING": "TEACHING",
+        Teacher: "Teacher",
+        Instructor: "Instructor",
 
-        "Welcome back,": "Welcome back,",
+        MAIN: "MAIN",
+        STUDENTS: "STUDENTS",
+        TEACHING: "TEACHING",
+
         "Teacher Dashboard": "Teacher Dashboard",
+        "Welcome back,": "Welcome back,",
         "Keep your courses organized, follow your students' progress, and create a better learning experience.":
             "Keep your courses organized, follow your students' progress, and create a better learning experience.",
-        "Create a Course": "Create a Course",
 
+        "Create a Course": "Create a Course",
         "Total Courses": "Total Courses",
         "Total Students": "Total Students",
         "Average Progress": "Average Progress",
@@ -124,30 +125,30 @@ const translations = {
         "Student List": "Student List",
         "Search students...": "Search students...",
 
-        "Analytics": "Analytics",
+        Analytics: "Analytics",
         "Understand how students are progressing through your courses.":
             "Understand how students are progressing through your courses.",
+        Overall: "Overall",
         "Learning Progress": "Learning Progress",
-        "Overall": "Overall",
         "Course analysis": "Course analysis",
         "Progress by Course": "Progress by Course",
 
         "Organize upcoming learning sessions with your students.":
             "Organize upcoming learning sessions with your students.",
         "New Session": "New Session",
-        "Upcoming": "Upcoming",
-        "View": "View",
+        Upcoming: "Upcoming",
+        View: "View",
 
-        "Library": "Library",
+        Library: "Library",
         "Keep your teaching materials organized.":
             "Keep your teaching materials organized.",
         "Add Resource": "Add Resource",
 
-        "Preferences": "Preferences",
+        Preferences: "Preferences",
         "Customize your teacher workspace.":
             "Customize your teacher workspace.",
         "Teacher Profile": "Teacher Profile",
-        "Notifications": "Notifications",
+        Notifications: "Notifications",
         "Receive updates about student activity.":
             "Receive updates about student activity.",
         "AI Insights": "AI Insights",
@@ -157,62 +158,68 @@ const translations = {
         "Use a smaller navigation sidebar.":
             "Use a smaller navigation sidebar.",
 
-        "Teaching": "Teaching",
-        "Manage the courses you are teaching on Wassla.":
-            "Manage the courses you are teaching on Wassla.",
-        "Create": "Create",
+        Teaching: "Teaching",
+        Create: "Create",
         "Build a new learning experience for your students.":
             "Build a new learning experience for your students.",
 
+        "Manage the courses you are teaching on Wassla.":
+            "Manage the courses you are teaching on Wassla.",
+
         "Course Title": "Course Title",
-        "Category": "Category",
-        "Level": "Level",
-        "Description": "Description",
+        Category: "Category",
+        Level: "Level",
+        Description: "Description",
         "Number of Lessons": "Number of Lessons",
         "Estimated Duration": "Estimated Duration",
-        "Preview": "Preview",
 
         "Select category": "Select category",
         "Select level": "Select level",
 
         "Artificial Intelligence": "Artificial Intelligence",
-        "Programming": "Programming",
-        "Mathematics": "Mathematics",
+        Programming: "Programming",
+        Mathematics: "Mathematics",
         "Computer Science": "Computer Science",
-        "Other": "Other",
+        Other: "Other",
 
-        "Beginner": "Beginner",
-        "Intermediate": "Intermediate",
-        "Advanced": "Advanced",
+        Beginner: "Beginner",
+        Intermediate: "Intermediate",
+        Advanced: "Advanced",
 
+        Preview: "Preview",
         "Course Preview": "Course Preview",
-        "Lessons": "Lessons",
+        Lessons: "Lessons",
         "Student progress": "Student progress",
 
         "Back to Login": "Back to Login"
     },
 
     fr: {
-        "Dashboard": "Tableau de bord",
+        dir: "ltr",
+
+        Dashboard: "Tableau de bord",
         "My Courses": "Mes cours",
         "Create Course": "Créer un cours",
-        "Students": "Étudiants",
+        Students: "Étudiants",
         "Student Progress": "Progression des étudiants",
         "Live Sessions": "Sessions en direct",
-        "Resources": "Ressources",
-        "Settings": "Paramètres",
+        Resources: "Ressources",
+        Settings: "Paramètres",
 
         "Teacher Space": "Espace enseignant",
-        "Teacher": "Enseignant",
-        "Instructor": "Formateur",
-        "MAIN": "PRINCIPAL",
-        "STUDENTS": "ÉTUDIANTS",
-        "TEACHING": "ENSEIGNEMENT",
+        Teacher: "Enseignant",
+        Instructor: "Formateur",
 
-        "Welcome back,": "Bon retour,",
+        MAIN: "PRINCIPAL",
+        STUDENTS: "ÉTUDIANTS",
+        TEACHING: "ENSEIGNEMENT",
+
         "Teacher Dashboard": "Tableau de bord enseignant",
-        "Create a Course": "Créer un cours",
+        "Welcome back,": "Bon retour,",
+        "Keep your courses organized, follow your students' progress, and create a better learning experience.":
+            "Organisez vos cours, suivez la progression de vos étudiants et créez une meilleure expérience d'apprentissage.",
 
+        "Create a Course": "Créer un cours",
         "Total Courses": "Total des cours",
         "Total Students": "Total des étudiants",
         "Average Progress": "Progression moyenne",
@@ -226,81 +233,106 @@ const translations = {
         "View students": "Voir les étudiants",
 
         "My Students": "Mes étudiants",
+        "A quick overview of students learning with you.":
+            "Un aperçu rapide des étudiants qui apprennent avec vous.",
         "Student List": "Liste des étudiants",
         "Search students...": "Rechercher des étudiants...",
 
-        "Analytics": "Analytique",
+        Analytics: "Analytique",
+        "Understand how students are progressing through your courses.":
+            "Suivez la progression des étudiants dans vos cours.",
+        Overall: "Global",
         "Learning Progress": "Progression d'apprentissage",
-        "Overall": "Global",
         "Course analysis": "Analyse des cours",
         "Progress by Course": "Progression par cours",
 
-        "Teaching": "Enseignement",
+        "Organize upcoming learning sessions with your students.":
+            "Organisez les prochaines sessions avec vos étudiants.",
         "New Session": "Nouvelle session",
-        "Upcoming": "À venir",
-        "View": "Voir",
+        Upcoming: "À venir",
+        View: "Voir",
 
-        "Library": "Bibliothèque",
+        Library: "Bibliothèque",
+        "Keep your teaching materials organized.":
+            "Organisez vos supports pédagogiques.",
         "Add Resource": "Ajouter une ressource",
 
-        "Preferences": "Préférences",
+        Preferences: "Préférences",
         "Customize your teacher workspace.":
             "Personnalisez votre espace enseignant.",
         "Teacher Profile": "Profil enseignant",
-        "Notifications": "Notifications",
+        Notifications: "Notifications",
+        "Receive updates about student activity.":
+            "Recevez les mises à jour sur l'activité des étudiants.",
         "AI Insights": "Analyses IA",
+        "Show learning insights on your dashboard.":
+            "Afficher les analyses d'apprentissage.",
         "Compact Sidebar": "Barre latérale compacte",
+        "Use a smaller navigation sidebar.":
+            "Utiliser une barre latérale plus petite.",
 
-        "Create": "Créer",
+        Teaching: "Enseignement",
+        Create: "Créer",
+        "Build a new learning experience for your students.":
+            "Créez une nouvelle expérience d'apprentissage.",
+
+        "Manage the courses you are teaching on Wassla.":
+            "Gérez les cours que vous enseignez sur Wassla.",
+
         "Course Title": "Titre du cours",
-        "Category": "Catégorie",
-        "Level": "Niveau",
-        "Description": "Description",
+        Category: "Catégorie",
+        Level: "Niveau",
+        Description: "Description",
         "Number of Lessons": "Nombre de leçons",
         "Estimated Duration": "Durée estimée",
-        "Preview": "Aperçu",
 
         "Select category": "Sélectionner une catégorie",
         "Select level": "Sélectionner un niveau",
 
         "Artificial Intelligence": "Intelligence artificielle",
-        "Programming": "Programmation",
-        "Mathematics": "Mathématiques",
+        Programming: "Programmation",
+        Mathematics: "Mathématiques",
         "Computer Science": "Informatique",
-        "Other": "Autre",
+        Other: "Autre",
 
-        "Beginner": "Débutant",
-        "Intermediate": "Intermédiaire",
-        "Advanced": "Avancé",
+        Beginner: "Débutant",
+        Intermediate: "Intermédiaire",
+        Advanced: "Avancé",
 
+        Preview: "Aperçu",
         "Course Preview": "Aperçu du cours",
-        "Lessons": "Leçons",
+        Lessons: "Leçons",
         "Student progress": "Progression des étudiants",
 
         "Back to Login": "Retour à la connexion"
     },
 
     ar: {
-        "Dashboard": "لوحة التحكم",
+        dir: "rtl",
+
+        Dashboard: "لوحة التحكم",
         "My Courses": "دوراتي",
         "Create Course": "إنشاء دورة",
-        "Students": "الطلاب",
+        Students: "الطلاب",
         "Student Progress": "تقدم الطلاب",
         "Live Sessions": "الجلسات المباشرة",
-        "Resources": "الموارد",
-        "Settings": "الإعدادات",
+        Resources: "الموارد",
+        Settings: "الإعدادات",
 
         "Teacher Space": "مساحة الأستاذ",
-        "Teacher": "الأستاذ",
-        "Instructor": "المدرّس",
-        "MAIN": "الرئيسية",
-        "STUDENTS": "الطلاب",
-        "TEACHING": "التدريس",
+        Teacher: "الأستاذ",
+        Instructor: "المدرّس",
 
-        "Welcome back,": "مرحبًا بعودتك،",
+        MAIN: "الرئيسية",
+        STUDENTS: "الطلاب",
+        TEACHING: "التدريس",
+
         "Teacher Dashboard": "لوحة تحكم الأستاذ",
-        "Create a Course": "إنشاء دورة",
+        "Welcome back,": "مرحبًا بعودتك،",
+        "Keep your courses organized, follow your students' progress, and create a better learning experience.":
+            "نظّم دوراتك، تابع تقدم طلابك، وأنشئ تجربة تعليمية أفضل.",
 
+        "Create a Course": "إنشاء دورة",
         "Total Courses": "إجمالي الدورات",
         "Total Students": "إجمالي الطلاب",
         "Average Progress": "متوسط التقدم",
@@ -314,218 +346,396 @@ const translations = {
         "View students": "عرض الطلاب",
 
         "My Students": "طلابي",
+        "A quick overview of students learning with you.":
+            "نظرة سريعة على الطلاب الذين يتعلمون معك.",
         "Student List": "قائمة الطلاب",
         "Search students...": "البحث عن الطلاب...",
 
-        "Analytics": "التحليلات",
+        Analytics: "التحليلات",
+        "Understand how students are progressing through your courses.":
+            "تابع كيفية تقدم الطلاب في دوراتك.",
+        Overall: "الإجمالي",
         "Learning Progress": "تقدم التعلم",
-        "Overall": "الإجمالي",
         "Course analysis": "تحليل الدورات",
         "Progress by Course": "التقدم حسب الدورة",
 
-        "Teaching": "التدريس",
+        "Organize upcoming learning sessions with your students.":
+            "نظّم الجلسات التعليمية القادمة مع طلابك.",
         "New Session": "جلسة جديدة",
-        "Upcoming": "قادمة",
-        "View": "عرض",
+        Upcoming: "قادمة",
+        View: "عرض",
 
-        "Library": "المكتبة",
+        Library: "المكتبة",
+        "Keep your teaching materials organized.":
+            "نظّم موادك التعليمية.",
         "Add Resource": "إضافة مورد",
 
-        "Preferences": "التفضيلات",
+        Preferences: "التفضيلات",
         "Customize your teacher workspace.":
             "خصص مساحة الأستاذ الخاصة بك.",
         "Teacher Profile": "ملف الأستاذ",
-        "Notifications": "الإشعارات",
+        Notifications: "الإشعارات",
+        "Receive updates about student activity.":
+            "تلقي تحديثات حول نشاط الطلاب.",
         "AI Insights": "تحليلات الذكاء الاصطناعي",
+        "Show learning insights on your dashboard.":
+            "عرض تحليلات التعلم في لوحة التحكم.",
         "Compact Sidebar": "الشريط الجانبي المصغّر",
+        "Use a smaller navigation sidebar.":
+            "استخدم شريطًا جانبيًا أصغر.",
 
-        "Create": "إنشاء",
+        Teaching: "التدريس",
+        Create: "إنشاء",
+        "Build a new learning experience for your students.":
+            "أنشئ تجربة تعليمية جديدة لطلابك.",
+
+        "Manage the courses you are teaching on Wassla.":
+            "إدارة الدورات التي تدرّسها على Wassla.",
+
         "Course Title": "عنوان الدورة",
-        "Category": "التصنيف",
-        "Level": "المستوى",
-        "Description": "الوصف",
+        Category: "التصنيف",
+        Level: "المستوى",
+        Description: "الوصف",
         "Number of Lessons": "عدد الدروس",
         "Estimated Duration": "المدة المتوقعة",
-        "Preview": "معاينة",
 
         "Select category": "اختر التصنيف",
         "Select level": "اختر المستوى",
 
         "Artificial Intelligence": "الذكاء الاصطناعي",
-        "Programming": "البرمجة",
-        "Mathematics": "الرياضيات",
+        Programming: "البرمجة",
+        Mathematics: "الرياضيات",
         "Computer Science": "علوم الحاسوب",
-        "Other": "أخرى",
+        Other: "أخرى",
 
-        "Beginner": "مبتدئ",
-        "Intermediate": "متوسط",
-        "Advanced": "متقدم",
+        Beginner: "مبتدئ",
+        Intermediate: "متوسط",
+        Advanced: "متقدم",
 
+        Preview: "معاينة",
         "Course Preview": "معاينة الدورة",
-        "Lessons": "الدروس",
+        Lessons: "الدروس",
         "Student progress": "تقدم الطلاب",
 
         "Back to Login": "العودة إلى تسجيل الدخول"
     }
 };
 
-const originalTexts = new WeakMap();
+/* =========================================================
+   LANGUAGE ELEMENT MAP
+   ========================================================= */
 
-function translateElement(element, lang) {
+const languageElements = [
+    [".sidebar-brand .brand-text strong", "Wassla"],
+    [".sidebar-brand .brand-text span", "Teacher Space"],
+    [".profile-info strong", "Teacher"],
+    [".profile-info span", "Instructor"],
+
+    [".nav-label:nth-of-type(1)", "MAIN"],
+    [".nav-label:nth-of-type(2)", "STUDENTS"],
+    [".nav-label:nth-of-type(3)", "TEACHING"],
+
+    ['[data-section="dashboard"] span', "Dashboard"],
+    ['[data-section="courses"] span', "My Courses"],
+    ['[data-section="create-course"] span', "Create Course"],
+    ['[data-section="students"] span', "Students"],
+    ['[data-section="progress"] span', "Student Progress"],
+    ['[data-section="live-sessions"] span', "Live Sessions"],
+    ['[data-section="resources"] span', "Resources"],
+    ['[data-section="settings"] span', "Settings"],
+
+    [".welcome-badge", "Teacher Dashboard"],
+    [".welcome-content h2", "Welcome back,"],
+
+    [".stat-card:nth-child(1) .stat-info span", "Total Courses"],
+    [".stat-card:nth-child(2) .stat-info span", "Total Students"],
+    [".stat-card:nth-child(3) .stat-info span", "Average Progress"],
+
+    [".course-performance-card h3", "Course Performance"],
+    [".course-performance-card .text-btn", "View all"],
+    [".ai-insights-card h3", "Student Insights"],
+
+    [".ai-insight:nth-of-type(1) strong", "Needs attention"],
+    [".ai-insight:nth-of-type(2) strong", "Positive progress"],
+
+    [".ai-insights-card .full-btn", "View Student Progress"],
+    [".recent-activity-card h3", "Recent Student Activity"],
+
+    ['#students .section-intro h2', "My Students"],
+    ['#students .section-intro p', "A quick overview of students learning with you."],
+    ["#students .card-header h3", "Student List"],
+
+    ['#progress .section-intro .page-kicker', "Analytics"],
+    ['#progress .section-intro h2', "Student Progress"],
+    ['#progress .section-intro p', "Understand how students are progressing through your courses."],
+    [".progress-main-card .card-kicker", "Overall"],
+    [".progress-main-card h3", "Learning Progress"],
+    [".progress-main-card p", "Average progress across your active courses."],
+    [".progress-course-list + *", "Course analysis"],
+
+    ['#live-sessions .section-intro .page-kicker', "Teaching"],
+    ['#live-sessions .section-intro h2', "Live Sessions"],
+    ['#live-sessions .section-intro p', "Organize upcoming learning sessions with your students."],
+    ["#createSessionBtn", "New Session"],
+
+    ['#resources .section-intro .page-kicker', "Library"],
+    ['#resources .section-intro h2', "Resources"],
+    ['#resources .section-intro p', "Keep your teaching materials organized."],
+    ["#uploadResourceBtn", "Add Resource"],
+
+    ['#settings .section-intro .page-kicker', "Preferences"],
+    ['#settings .section-intro h2', "Settings"],
+    ['#settings .section-intro p', "Customize your teacher workspace."],
+    [".settings-profile h3", "Teacher Profile"],
+
+    ['.setting-row:nth-of-type(1) strong', "Notifications"],
+    ['.setting-row:nth-of-type(2) strong', "AI Insights"],
+    ['.setting-row:nth-of-type(3) strong', "Compact Sidebar"],
+
+    ['#courses .section-intro .page-kicker', "Teaching"],
+    ['#courses .section-intro h2', "My Courses"],
+    ['#courses .section-intro p', "Manage the courses you are teaching on Wassla."],
+
+    ['#create-course .section-intro .page-kicker', "Create"],
+    ['#create-course .section-intro h2', "Create a Course"],
+    ['#create-course .section-intro p', "Build a new learning experience for your students."],
+
+    ['label[for="courseTitle"]', "Course Title"],
+    ['label[for="courseCategory"]', "Category"],
+    ['label[for="courseLevel"]', "Level"],
+    ['label[for="courseDescription"]', "Description"],
+    ['label[for="lessonCount"]', "Number of Lessons"],
+    ['label[for="courseDuration"]', "Estimated Duration"],
+
+    ["#previewCourseBtn", "Preview"],
+    [".modal-card .page-kicker", "Course Preview"],
+    [".preview-details div:nth-child(1) span", "Category"],
+    [".preview-details div:nth-child(2) span", "Level"],
+    [".preview-details div:nth-child(3) span", "Lessons"],
+    [".preview-details div:nth-child(4) span", "Duration"],
+
+    [".logout-item span", "Back to Login"]
+];
+
+const originalLanguageTexts = new Map();
+
+function translateElement(element, originalText, lang) {
     if (!element) return;
 
-    if (!originalTexts.has(element)) {
-        originalTexts.set(
+    if (!originalLanguageTexts.has(element)) {
+        originalLanguageTexts.set(
             element,
-            element.textContent.trim()
+            originalText
         );
     }
 
-    const original =
-        originalTexts.get(element);
+    const source =
+        originalLanguageTexts.get(element);
 
-    if (
-        translations[lang] &&
-        translations[lang][original]
-    ) {
-        element.textContent =
-            translations[lang][original];
-    } else if (lang === "en") {
-        element.textContent = original;
+    const translated =
+        languageData[lang]?.[source];
+
+    if (translated) {
+        element.textContent = translated;
+    } else {
+        element.textContent = source;
     }
 }
 
-function translateTextNodes(lang) {
-    const walker =
-        document.createTreeWalker(
-            document.body,
-            NodeFilter.SHOW_TEXT
-        );
-
-    const nodes = [];
-
-    while (walker.nextNode()) {
-        nodes.push(walker.currentNode);
-    }
-
-    nodes.forEach((node) => {
-        const parent = node.parentElement;
-
-        if (!parent) return;
-
-        if (
-            ["SCRIPT", "STYLE", "OPTION"].includes(
-                parent.tagName
-            )
-        ) {
-            return;
-        }
-
-        const original =
-            node.nodeValue.trim();
-
-        if (!original) return;
-
-        if (!node._wasslaOriginal) {
-            node._wasslaOriginal = original;
-        }
-
-        const source =
-            node._wasslaOriginal;
-
-        const translated =
-            translations[lang]?.[source];
-
-        if (translated) {
-            node.nodeValue =
-                node.nodeValue.replace(
-                    source,
-                    translated
-                );
-        } else if (lang === "en") {
-            node.nodeValue =
-                node.nodeValue.replace(
-                    source,
-                    source
-                );
-        }
-    });
-
-    translatePlaceholders(lang);
-}
-
-function translatePlaceholders(lang) {
-    const placeholderTranslations = {
-        fr: {
-            "Search students...":
-                "Rechercher des étudiants...",
-            "e.g. Machine Learning Fundamentals":
-                "ex. Fondamentaux du Machine Learning",
-            "Describe what students will learn...":
-                "Décrivez ce que les étudiants vont apprendre...",
-            "10": "10",
-            "e.g. 6 weeks": "ex. 6 semaines"
-        },
-        ar: {
-            "Search students...":
-                "البحث عن الطلاب...",
-            "e.g. Machine Learning Fundamentals":
-                "مثال: أساسيات تعلم الآلة",
-            "Describe what students will learn...":
-                "صف ما سيتعلمه الطلاب...",
-            "10": "10",
-            "e.g. 6 weeks": "مثال: 6 أسابيع"
-        }
-    };
-
-    $$("[placeholder]").forEach((element) => {
-        const original =
-            element.dataset.wasslaPlaceholder ||
-            element.getAttribute("placeholder");
-
-        element.dataset.wasslaPlaceholder =
-            original;
-
-        const translated =
-            placeholderTranslations[lang]?.[original];
-
-        element.setAttribute(
-            "placeholder",
-            translated || original
-        );
-    });
-}
-
-function applyLanguage(lang) {
-    if (!translations[lang]) {
-        lang = "en";
-    }
+function translateInterface(lang) {
+    const data =
+        languageData[lang] ||
+        languageData.en;
 
     document.documentElement.lang = lang;
+    document.documentElement.dir = data.dir;
+
+    document.body.dir = data.dir;
 
     if (lang === "ar") {
-        document.documentElement.dir = "rtl";
         document.body.classList.add("rtl-mode");
     } else {
-        document.documentElement.dir = "ltr";
         document.body.classList.remove("rtl-mode");
     }
 
-    translateTextNodes(lang);
+    languageElements.forEach(
+        ([selector, originalText]) => {
+            const elements =
+                $$(selector);
 
-    if (pageTitle) {
-        const activeSection =
-            $(".page-section.active-section");
-
-        if (activeSection) {
-            const id = activeSection.id;
-            const original =
-                sectionTitles[id] || "Dashboard";
-
-            pageTitle.textContent =
-                translations[lang]?.[original] ||
-                original;
+            elements.forEach((element) => {
+                translateElement(
+                    element,
+                    originalText,
+                    lang
+                );
+            });
         }
+    );
+
+    /* =========================
+       FORM PLACEHOLDERS
+    ========================== */
+
+    const placeholders = {
+        en: {
+            courseTitle:
+                "e.g. Machine Learning Fundamentals",
+            courseDescription:
+                "Describe what students will learn...",
+            lessonCount: "10",
+            courseDuration:
+                "e.g. 6 weeks",
+            studentSearch:
+                "Search students..."
+        },
+
+        fr: {
+            courseTitle:
+                "ex. Fondamentaux du Machine Learning",
+            courseDescription:
+                "Décrivez ce que les étudiants vont apprendre...",
+            lessonCount: "10",
+            courseDuration:
+                "ex. 6 semaines",
+            studentSearch:
+                "Rechercher des étudiants..."
+        },
+
+        ar: {
+            courseTitle:
+                "مثال: أساسيات تعلم الآلة",
+            courseDescription:
+                "صف ما سيتعلمه الطلاب...",
+            lessonCount: "10",
+            courseDuration:
+                "مثال: 6 أسابيع",
+            studentSearch:
+                "البحث عن الطلاب..."
+        }
+    };
+
+    const p =
+        placeholders[lang];
+
+    if ($("#courseTitle"))
+        $("#courseTitle").placeholder =
+            p.courseTitle;
+
+    if ($("#courseDescription"))
+        $("#courseDescription").placeholder =
+            p.courseDescription;
+
+    if ($("#lessonCount"))
+        $("#lessonCount").placeholder =
+            p.lessonCount;
+
+    if ($("#courseDuration"))
+        $("#courseDuration").placeholder =
+            p.courseDuration;
+
+    if ($("#studentSearch"))
+        $("#studentSearch").placeholder =
+            p.studentSearch;
+
+    /* =========================
+       SELECT OPTIONS
+    ========================== */
+
+    const categoryOptions = {
+        en: [
+            "Select category",
+            "Artificial Intelligence",
+            "Programming",
+            "Mathematics",
+            "Computer Science",
+            "Other"
+        ],
+        fr: [
+            "Sélectionner une catégorie",
+            "Intelligence artificielle",
+            "Programmation",
+            "Mathématiques",
+            "Informatique",
+            "Autre"
+        ],
+        ar: [
+            "اختر التصنيف",
+            "الذكاء الاصطناعي",
+            "البرمجة",
+            "الرياضيات",
+            "علوم الحاسوب",
+            "أخرى"
+        ]
+    };
+
+    const levelOptions = {
+        en: [
+            "Select level",
+            "Beginner",
+            "Intermediate",
+            "Advanced"
+        ],
+        fr: [
+            "Sélectionner un niveau",
+            "Débutant",
+            "Intermédiaire",
+            "Avancé"
+        ],
+        ar: [
+            "اختر المستوى",
+            "مبتدئ",
+            "متوسط",
+            "متقدم"
+        ]
+    };
+
+    function updateOptions(select, values) {
+        if (!select) return;
+
+        const currentValue =
+            select.value;
+
+        Array.from(
+            select.options
+        ).forEach((option, index) => {
+            if (values[index]) {
+                option.textContent =
+                    values[index];
+            }
+        });
+
+        select.value =
+            currentValue;
+    }
+
+    updateOptions(
+        $("#courseCategory"),
+        categoryOptions[lang]
+    );
+
+    updateOptions(
+        $("#courseLevel"),
+        levelOptions[lang]
+    );
+
+    /* =========================
+       PAGE TITLE
+    ========================== */
+
+    const activeSection =
+        $(".page-section.active-section");
+
+    if (activeSection && pageTitle) {
+        const originalTitle =
+            sectionTitles[
+                activeSection.id
+            ] || "Dashboard";
+
+        pageTitle.textContent =
+            languageData[lang]?.[
+                originalTitle
+            ] || originalTitle;
     }
 
     localStorage.setItem(
@@ -534,6 +744,10 @@ function applyLanguage(lang) {
     );
 }
 
+/* =========================================================
+   LANGUAGE SELECT EVENT
+   ========================================================= */
+
 if (languageSelect) {
     const savedLanguage =
         localStorage.getItem(
@@ -541,30 +755,39 @@ if (languageSelect) {
         ) || "en";
 
     languageSelect.value =
-        translations[savedLanguage]
+        ["en", "fr", "ar"].includes(
+            savedLanguage
+        )
             ? savedLanguage
             : "en";
 
     languageSelect.addEventListener(
         "change",
         () => {
-            applyLanguage(
-                languageSelect.value
+            const selectedLanguage =
+                languageSelect.value;
+
+            translateInterface(
+                selectedLanguage
             );
 
-            const languageName = {
-                en: "English",
-                fr: "Français",
-                ar: "العربية"
-            };
-
-            showToast(
-                languageSelect.value === "ar"
-                    ? "تم تغيير اللغة إلى العربية."
-                    : languageSelect.value === "fr"
-                    ? "La langue a été changée en français."
-                    : "Language changed to English."
-            );
+            if (
+                selectedLanguage === "ar"
+            ) {
+                showToast(
+                    "تم تغيير اللغة إلى العربية."
+                );
+            } else if (
+                selectedLanguage === "fr"
+            ) {
+                showToast(
+                    "La langue a été changée en français."
+                );
+            } else {
+                showToast(
+                    "Language changed to English."
+                );
+            }
         }
     );
 }
@@ -574,35 +797,29 @@ if (languageSelect) {
    ========================================================= */
 
 function closeSidebar() {
-    if (sidebar) {
-        sidebar.classList.remove("open");
-    }
-
-    if (overlay) {
-        overlay.classList.remove("show");
-        overlay.classList.remove("active");
-    }
+    sidebar?.classList.remove("open");
+    overlay?.classList.remove("show");
+    overlay?.classList.remove("active");
 }
 
 if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener("click", () => {
-        if (!sidebar) return;
-
-        sidebar.classList.toggle("open");
-
-        if (overlay) {
-            overlay.classList.toggle("show");
-            overlay.classList.toggle("active");
-        }
-    });
-}
-
-if (overlay) {
-    overlay.addEventListener(
+    mobileMenuBtn.addEventListener(
         "click",
-        closeSidebar
+        () => {
+            if (!sidebar) return;
+
+            sidebar.classList.toggle("open");
+
+            overlay?.classList.toggle("show");
+            overlay?.classList.toggle("active");
+        }
     );
 }
+
+overlay?.addEventListener(
+    "click",
+    closeSidebar
+);
 
 /* =========================================================
    SECTION NAVIGATION
@@ -614,13 +831,7 @@ function showSection(sectionId) {
     const target =
         document.getElementById(sectionId);
 
-    if (!target) {
-        console.warn(
-            "Wassla: section not found:",
-            sectionId
-        );
-        return;
-    }
+    if (!target) return;
 
     sections.forEach((section) => {
         section.classList.remove(
@@ -629,26 +840,30 @@ function showSection(sectionId) {
         section.style.display = "none";
     });
 
-    target.classList.add("active-section");
+    target.classList.add(
+        "active-section"
+    );
+
     target.style.display = "block";
 
     navItems.forEach((item) => {
         item.classList.toggle(
             "active",
-            item.dataset.section === sectionId
+            item.dataset.section ===
+                sectionId
         );
     });
 
-    const currentLanguage =
+    const lang =
         languageSelect?.value || "en";
 
     const title =
         sectionTitles[sectionId] ||
-        "Teacher Dashboard";
+        "Dashboard";
 
     if (pageTitle) {
         pageTitle.textContent =
-            translations[currentLanguage]?.[title] ||
+            languageData[lang]?.[title] ||
             title;
     }
 
@@ -678,9 +893,7 @@ navItems.forEach((item) => {
             event.preventDefault();
 
             showSection(
-                item.getAttribute(
-                    "data-section"
-                )
+                item.dataset.section
             );
         }
     );
@@ -693,9 +906,7 @@ sectionButtons.forEach((button) => {
             event.preventDefault();
 
             showSection(
-                button.getAttribute(
-                    "data-section-target"
-                )
+                button.dataset.sectionTarget
             );
         }
     );
@@ -727,73 +938,63 @@ window.addEventListener(
    SEARCH
    ========================================================= */
 
-if (searchBtn) {
-    searchBtn.addEventListener(
-        "click",
-        () => {
-            showSection("students");
+searchBtn?.addEventListener(
+    "click",
+    () => {
+        showSection("students");
 
-            setTimeout(() => {
-                if (studentSearch) {
-                    studentSearch.focus();
-                }
-            }, 200);
-        }
-    );
-}
+        setTimeout(() => {
+            studentSearch?.focus();
+        }, 200);
+    }
+);
 
-if (studentSearch) {
-    studentSearch.addEventListener(
-        "input",
-        () => {
-            const value =
-                studentSearch.value
-                    .trim()
-                    .toLowerCase();
+studentSearch?.addEventListener(
+    "input",
+    () => {
+        const value =
+            studentSearch.value
+                .trim()
+                .toLowerCase();
 
-            const rows =
-                $$(".students-table tbody tr");
-
-            rows.forEach((row) => {
-                const text =
-                    row.textContent.toLowerCase();
-
+        $$(".students-table tbody tr")
+            .forEach((row) => {
                 row.style.display =
-                    text.includes(value)
+                    row.textContent
+                        .toLowerCase()
+                        .includes(value)
                         ? ""
                         : "none";
             });
-        }
-    );
-}
+    }
+);
 
 /* =========================================================
    NOTIFICATIONS
    ========================================================= */
 
-if (notificationBtn) {
-    notificationBtn.addEventListener(
-        "click",
-        () => {
-            const lang =
-                languageSelect?.value || "en";
+notificationBtn?.addEventListener(
+    "click",
+    () => {
+        const lang =
+            languageSelect?.value ||
+            "en";
 
-            if (lang === "ar") {
-                showToast(
-                    "لديك إشعارات جديدة."
-                );
-            } else if (lang === "fr") {
-                showToast(
-                    "Vous avez de nouvelles notifications."
-                );
-            } else {
-                showToast(
-                    "You have new notifications."
-                );
-            }
+        if (lang === "ar") {
+            showToast(
+                "لديك إشعارات جديدة."
+            );
+        } else if (lang === "fr") {
+            showToast(
+                "Vous avez de nouvelles notifications."
+            );
+        } else {
+            showToast(
+                "You have new notifications."
+            );
         }
-    );
-}
+    }
+);
 
 /* =========================================================
    COURSE STORAGE
@@ -813,11 +1014,7 @@ function getCourses() {
             ? JSON.parse(saved)
             : [];
     } catch (error) {
-        console.error(
-            "Wassla: could not load courses.",
-            error
-        );
-
+        console.error(error);
         return [];
     }
 }
@@ -829,10 +1026,7 @@ function saveCourses(courses) {
             JSON.stringify(courses)
         );
     } catch (error) {
-        console.error(
-            "Wassla: could not save courses.",
-            error
-        );
+        console.error(error);
     }
 }
 
@@ -842,21 +1036,38 @@ function saveCourses(courses) {
 
 function getCourseIcon(category) {
     const value =
-        String(category || "").toLowerCase();
+        String(category || "")
+            .toLowerCase();
 
-    if (value.includes("artificial")) {
+    if (
+        value.includes("artificial") ||
+        value.includes("intelligence") ||
+        value.includes("ذكاء")
+    ) {
         return "fa-brain";
     }
 
-    if (value.includes("program")) {
+    if (
+        value.includes("program") ||
+        value.includes("programm") ||
+        value.includes("برمج")
+    ) {
         return "fa-code";
     }
 
-    if (value.includes("math")) {
+    if (
+        value.includes("math") ||
+        value.includes("mathématique") ||
+        value.includes("رياض")
+    ) {
         return "fa-calculator";
     }
 
-    if (value.includes("computer")) {
+    if (
+        value.includes("computer") ||
+        value.includes("informatique") ||
+        value.includes("حاسوب")
+    ) {
         return "fa-laptop-code";
     }
 
@@ -864,96 +1075,39 @@ function getCourseIcon(category) {
 }
 
 /* =========================================================
-   EDIT MODE
+   ESCAPE HTML
    ========================================================= */
 
-let editingCourseId = null;
+function escapeHTML(value) {
+    const div =
+        document.createElement("div");
 
-function setFormMode(isEditing) {
-    const submitButton =
-        courseForm?.querySelector(
-            'button[type="submit"]'
-        );
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
 
-    if (!submitButton) return;
-
-    if (isEditing) {
-        submitButton.innerHTML =
-            '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
-    } else {
-        submitButton.innerHTML =
-            '<i class="fa-solid fa-plus"></i> Create Course';
-    }
-}
-
-function startEditingCourse(course) {
-    if (!courseForm) return;
-
-    editingCourseId =
-        Number(course.id);
-
-    $("#courseTitle").value =
-        course.title || "";
-
-    $("#courseCategory").value =
-        course.category || "";
-
-    $("#courseLevel").value =
-        course.level || "";
-
-    $("#courseDescription").value =
-        course.description || "";
-
-    $("#lessonCount").value =
-        course.lessons || "";
-
-    $("#courseDuration").value =
-        course.duration || "";
-
-    setFormMode(true);
-
-    showSection("create-course");
-
-    setTimeout(() => {
-        $("#courseTitle")?.focus();
-    }, 250);
-
-    showToast(
-        "Course loaded for editing."
-    );
-}
-
-function cancelEditing() {
-    editingCourseId = null;
-
-    if (courseForm) {
-        courseForm.reset();
-    }
-
-    setFormMode(false);
+    return div.innerHTML;
 }
 
 /* =========================================================
-   CREATE COURSE CARD
+   COURSE CARD
    ========================================================= */
 
 function createCourseCard(course) {
     const article =
         document.createElement("article");
 
-    article.className = "course-card";
+    article.className =
+        "course-card";
 
     article.dataset.courseId =
         course.id;
 
     const icon =
-        getCourseIcon(course.category);
-
-    const lessons =
-        course.lessons || "—";
-
-    const duration =
-        course.duration || "—";
+        getCourseIcon(
+            course.category
+        );
 
     article.innerHTML = `
         <div class="course-card-icon">
@@ -975,7 +1129,6 @@ function createCourseCard(course) {
             </p>
 
             <div class="course-meta">
-
                 <span>
                     <i class="fa-solid fa-users"></i>
                     0 students
@@ -984,14 +1137,15 @@ function createCourseCard(course) {
                 <span>
                     <i class="fa-solid fa-layer-group"></i>
                     ${escapeHTML(
-                        String(lessons)
+                        String(
+                            course.lessons ||
+                                "—"
+                        )
                     )} lessons
                 </span>
-
             </div>
 
             <div class="course-progress">
-
                 <div>
                     <span>Student progress</span>
                     <strong>0%</strong>
@@ -1000,13 +1154,15 @@ function createCourseCard(course) {
                 <div class="progress-bar">
                     <span style="width:0%;"></span>
                 </div>
-
             </div>
 
             <small class="course-duration">
                 <i class="fa-regular fa-clock"></i>
                 ${escapeHTML(
-                    String(duration)
+                    String(
+                        course.duration ||
+                            "—"
+                    )
                 )}
             </small>
 
@@ -1021,35 +1177,17 @@ function createCourseCard(course) {
         </button>
     `;
 
-    const actionButton =
-        $(".course-action", article);
-
-    if (actionButton) {
-        actionButton.addEventListener(
+    $(".course-action", article)
+        ?.addEventListener(
             "click",
             () => {
-                startEditingCourse(course);
+                startEditingCourse(
+                    course
+                );
             }
         );
-    }
 
     return article;
-}
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(value) {
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        value == null
-            ? ""
-            : String(value);
-
-    return div.innerHTML;
 }
 
 /* =========================================================
@@ -1059,72 +1197,69 @@ function escapeHTML(value) {
 function loadSavedCourses() {
     if (!courseGrid) return;
 
-    const courses =
-        getCourses();
-
-    courses.forEach((course) => {
-        courseGrid.appendChild(
-            createCourseCard(course)
-        );
-    });
+    getCourses().forEach(
+        (course) => {
+            courseGrid.appendChild(
+                createCourseCard(course)
+            );
+        }
+    );
 }
 
 /* =========================================================
-   UPDATE COURSE COUNT
+   COURSE COUNT
    ========================================================= */
 
 function updateCourseCount() {
-    const savedCourses =
-        getCourses();
-
-    const defaultCourses = 3;
-
     const total =
-        defaultCourses +
-        savedCourses.length;
+        3 + getCourses().length;
 
-    const totalCoursesElement =
+    const element =
         document.querySelector(
             ".stats-grid .stat-card:first-child .stat-info strong"
         );
 
-    if (totalCoursesElement) {
-        totalCoursesElement.textContent =
+    if (element) {
+        element.textContent =
             total;
     }
 }
 
 /* =========================================================
-   COURSE PREVIEW
+   FORM DATA
    ========================================================= */
 
 function getCourseFormData() {
     return {
         title:
-            $("#courseTitle")?.value.trim() ||
-            "",
+            $("#courseTitle")
+                ?.value.trim() || "",
 
         category:
-            $("#courseCategory")?.value ||
-            "",
+            $("#courseCategory")
+                ?.value || "",
 
         level:
-            $("#courseLevel")?.value ||
-            "",
+            $("#courseLevel")
+                ?.value || "",
 
         description:
-            $("#courseDescription")?.value.trim() ||
-            "",
+            $("#courseDescription")
+                ?.value.trim() || "",
 
         lessons:
-            $("#lessonCount")?.value ||
-            "",
+            $("#lessonCount")
+                ?.value || "",
 
         duration:
-            $("#courseDuration")?.value.trim() ||
-            ""
+            $("#courseDuration")
+                ?.value.trim() || ""
     };
 }
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
 
 function openPreview() {
     if (!previewModal) return;
@@ -1136,9 +1271,7 @@ function openPreview() {
         showToast(
             "Please enter a course title."
         );
-
         $("#courseTitle")?.focus();
-
         return;
     }
 
@@ -1172,43 +1305,91 @@ function openPreview() {
 }
 
 function closePreview() {
-    if (!previewModal) return;
-
-    previewModal.classList.remove(
+    previewModal?.classList.remove(
         "show"
     );
 
-    previewModal.setAttribute(
+    previewModal?.setAttribute(
         "aria-hidden",
         "true"
     );
 }
 
-if (previewCourseBtn) {
-    previewCourseBtn.addEventListener(
-        "click",
-        openPreview
-    );
-}
+previewCourseBtn?.addEventListener(
+    "click",
+    openPreview
+);
 
-if (closePreviewBtn) {
-    closePreviewBtn.addEventListener(
-        "click",
-        closePreview
-    );
-}
+closePreviewBtn?.addEventListener(
+    "click",
+    closePreview
+);
 
-if (previewModal) {
-    previewModal.addEventListener(
-        "click",
-        (event) => {
-            if (
-                event.target ===
-                previewModal
-            ) {
-                closePreview();
-            }
+previewModal?.addEventListener(
+    "click",
+    (event) => {
+        if (
+            event.target ===
+            previewModal
+        ) {
+            closePreview();
         }
+    }
+);
+
+/* =========================================================
+   EDIT COURSE
+   ========================================================= */
+
+let editingCourseId = null;
+
+function setFormMode(editing) {
+    const button =
+        courseForm?.querySelector(
+            'button[type="submit"]'
+        );
+
+    if (!button) return;
+
+    if (editing) {
+        button.innerHTML =
+            '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
+    } else {
+        button.innerHTML =
+            '<i class="fa-solid fa-plus"></i> Create Course';
+    }
+}
+
+function startEditingCourse(course) {
+    editingCourseId =
+        Number(course.id);
+
+    $("#courseTitle").value =
+        course.title || "";
+
+    $("#courseCategory").value =
+        course.category || "";
+
+    $("#courseLevel").value =
+        course.level || "";
+
+    $("#courseDescription").value =
+        course.description || "";
+
+    $("#lessonCount").value =
+        course.lessons || "";
+
+    $("#courseDuration").value =
+        course.duration || "";
+
+    setFormMode(true);
+
+    showSection(
+        "create-course"
+    );
+
+    showToast(
+        "Course loaded for editing."
     );
 }
 
@@ -1216,215 +1397,183 @@ if (previewModal) {
    CREATE / UPDATE COURSE
    ========================================================= */
 
-if (courseForm) {
-    courseForm.addEventListener(
-        "submit",
-        (event) => {
-            event.preventDefault();
+courseForm?.addEventListener(
+    "submit",
+    (event) => {
+        event.preventDefault();
 
-            const course =
-                getCourseFormData();
+        const course =
+            getCourseFormData();
 
-            if (!course.title) {
-                showToast(
-                    "Please enter a course title."
-                );
-
-                $("#courseTitle")?.focus();
-
-                return;
-            }
-
-            if (!course.category) {
-                showToast(
-                    "Please select a category."
-                );
-
-                $("#courseCategory")?.focus();
-
-                return;
-            }
-
-            if (!course.level) {
-                showToast(
-                    "Please select a level."
-                );
-
-                $("#courseLevel")?.focus();
-
-                return;
-            }
-
-            if (!course.description) {
-                showToast(
-                    "Please enter a course description."
-                );
-
-                $("#courseDescription")?.focus();
-
-                return;
-            }
-
-            if (!course.lessons) {
-                showToast(
-                    "Please enter the number of lessons."
-                );
-
-                $("#lessonCount")?.focus();
-
-                return;
-            }
-
-            if (!course.duration) {
-                showToast(
-                    "Please enter the estimated duration."
-                );
-
-                $("#courseDuration")?.focus();
-
-                return;
-            }
-
-            const courses =
-                getCourses();
-
-            /* =========================
-               UPDATE EXISTING COURSE
-            ========================== */
-
-            if (editingCourseId !== null) {
-                const index =
-                    courses.findIndex(
-                        (item) =>
-                            Number(item.id) ===
-                            Number(editingCourseId)
-                    );
-
-                if (index !== -1) {
-                    courses[index] = {
-                        ...courses[index],
-                        ...course,
-                        updatedAt:
-                            new Date().toISOString()
-                    };
-
-                    saveCourses(courses);
-
-                    const oldCard =
-                        courseGrid?.querySelector(
-                            `[data-course-id="${editingCourseId}"]`
-                        );
-
-                    if (oldCard) {
-                        oldCard.replaceWith(
-                            createCourseCard(
-                                courses[index]
-                            )
-                        );
-                    }
-
-                    editingCourseId =
-                        null;
-
-                    setFormMode(false);
-
-                    courseForm.reset();
-
-                    closePreview();
-
-                    showToast(
-                        "Course updated successfully!"
-                    );
-
-                    setTimeout(() => {
-                        showSection(
-                            "courses"
-                        );
-                    }, 500);
-
-                    return;
-                }
-            }
-
-            /* =========================
-               CREATE NEW COURSE
-            ========================== */
-
-            const newCourse = {
-                id: Date.now(),
-                ...course,
-                createdAt:
-                    new Date().toISOString()
-            };
-
-            courses.push(newCourse);
-
-            saveCourses(courses);
-
-            if (courseGrid) {
-                courseGrid.appendChild(
-                    createCourseCard(
-                        newCourse
-                    )
-                );
-            }
-
-            updateCourseCount();
-
-            courseForm.reset();
-
-            closePreview();
-
-            setFormMode(false);
-
+        if (!course.title) {
             showToast(
-                "Course created successfully!"
+                "Please enter a course title."
             );
-
-            setTimeout(() => {
-                showSection("courses");
-            }, 600);
-        }
-    );
-}
-
-/* =========================================================
-   EXISTING STATIC COURSE ACTIONS
-   ========================================================= */
-
-$$(".course-grid .course-card").forEach(
-    (card) => {
-        if (
-            card.dataset.courseId
-        ) {
+            $("#courseTitle")?.focus();
             return;
         }
 
-        const button =
-            $(".course-action", card);
+        if (!course.category) {
+            showToast(
+                "Please select a category."
+            );
+            $("#courseCategory")?.focus();
+            return;
+        }
 
-        if (!button) return;
+        if (!course.level) {
+            showToast(
+                "Please select a level."
+            );
+            $("#courseLevel")?.focus();
+            return;
+        }
 
-        button.addEventListener(
-            "click",
-            () => {
-                showToast(
-                    "This sample course is part of the prototype."
+        if (!course.description) {
+            showToast(
+                "Please enter a course description."
+            );
+            $("#courseDescription")?.focus();
+            return;
+        }
+
+        if (!course.lessons) {
+            showToast(
+                "Please enter the number of lessons."
+            );
+            $("#lessonCount")?.focus();
+            return;
+        }
+
+        if (!course.duration) {
+            showToast(
+                "Please enter the estimated duration."
+            );
+            $("#courseDuration")?.focus();
+            return;
+        }
+
+        const courses =
+            getCourses();
+
+        /* UPDATE */
+
+        if (editingCourseId !== null) {
+            const index =
+                courses.findIndex(
+                    (item) =>
+                        Number(item.id) ===
+                        Number(
+                            editingCourseId
+                        )
                 );
+
+            if (index !== -1) {
+                courses[index] = {
+                    ...courses[index],
+                    ...course,
+                    updatedAt:
+                        new Date().toISOString()
+                };
+
+                saveCourses(courses);
+
+                const oldCard =
+                    courseGrid?.querySelector(
+                        `[data-course-id="${editingCourseId}"]`
+                    );
+
+                oldCard?.replaceWith(
+                    createCourseCard(
+                        courses[index]
+                    )
+                );
+
+                editingCourseId = null;
+
+                setFormMode(false);
+
+                courseForm.reset();
+
+                closePreview();
+
+                showToast(
+                    "Course updated successfully!"
+                );
+
+                setTimeout(() => {
+                    showSection(
+                        "courses"
+                    );
+                }, 500);
+
+                return;
             }
+        }
+
+        /* CREATE */
+
+        const newCourse = {
+            id: Date.now(),
+            ...course,
+            createdAt:
+                new Date().toISOString()
+        };
+
+        courses.push(newCourse);
+
+        saveCourses(courses);
+
+        courseGrid?.appendChild(
+            createCourseCard(
+                newCourse
+            )
         );
+
+        updateCourseCount();
+
+        courseForm.reset();
+
+        closePreview();
+
+        setFormMode(false);
+
+        showToast(
+            "Course created successfully!"
+        );
+
+        setTimeout(() => {
+            showSection("courses");
+        }, 600);
     }
 );
+
+/* =========================================================
+   STATIC COURSE BUTTONS
+   ========================================================= */
+
+$$(".course-grid .course-card")
+    .forEach((card) => {
+        if (card.dataset.courseId)
+            return;
+
+        $(".course-action", card)
+            ?.addEventListener(
+                "click",
+                () => {
+                    showToast(
+                        "This sample course is part of the prototype."
+                    );
+                }
+            );
+    });
 
 /* =========================================================
    LIVE SESSIONS
    ========================================================= */
 
-const createSessionBtn =
-    $("#createSessionBtn");
-
-if (createSessionBtn) {
-    createSessionBtn.addEventListener(
+$("#createSessionBtn")
+    ?.addEventListener(
         "click",
         () => {
             showToast(
@@ -1432,17 +1581,13 @@ if (createSessionBtn) {
             );
         }
     );
-}
 
 /* =========================================================
-   RESOURCE
+   RESOURCES
    ========================================================= */
 
-const uploadResourceBtn =
-    $("#uploadResourceBtn");
-
-if (uploadResourceBtn) {
-    uploadResourceBtn.addEventListener(
+$("#uploadResourceBtn")
+    ?.addEventListener(
         "click",
         () => {
             showToast(
@@ -1450,34 +1595,29 @@ if (uploadResourceBtn) {
             );
         }
     );
-}
 
 /* =========================================================
    COMPACT SIDEBAR
    ========================================================= */
 
-if (compactSidebarToggle) {
-    compactSidebarToggle.addEventListener(
-        "change",
-        () => {
-            if (sidebar) {
-                sidebar.classList.toggle(
-                    "compact",
-                    compactSidebarToggle.checked
-                );
-            }
+compactSidebarToggle?.addEventListener(
+    "change",
+    () => {
+        sidebar?.classList.toggle(
+            "compact",
+            compactSidebarToggle.checked
+        );
 
-            showToast(
-                compactSidebarToggle.checked
-                    ? "Compact sidebar enabled."
-                    : "Compact sidebar disabled."
-            );
-        }
-    );
-}
+        showToast(
+            compactSidebarToggle.checked
+                ? "Compact sidebar enabled."
+                : "Compact sidebar disabled."
+        );
+    }
+);
 
 /* =========================================================
-   KEYBOARD
+   ESCAPE KEY
    ========================================================= */
 
 document.addEventListener(
@@ -1495,13 +1635,14 @@ document.addEventListener(
    ========================================================= */
 
 loadSavedCourses();
-
 updateCourseCount();
-
 loadInitialSection();
 
-applyLanguage(
-    languageSelect?.value || "en"
+const initialLanguage =
+    languageSelect?.value || "en";
+
+translateInterface(
+    initialLanguage
 );
 
 console.log(
