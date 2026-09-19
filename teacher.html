@@ -161,10 +161,13 @@
         <main class="teacher-main">
 
            <!-- ================= TOPBAR ================= -->
+<!-- ================= PROFESSIONAL TOPBAR ================= -->
 <header class="teacher-topbar">
 
+    <!-- LEFT -->
     <div class="topbar-left">
 
+        <!-- Mobile Menu -->
         <button
             class="mobile-menu-btn"
             id="mobileMenuBtn"
@@ -176,58 +179,75 @@
 
         <div class="page-heading">
 
-            <div class="page-heading-top">
-                <span class="page-kicker">
+            <!-- Breadcrumb -->
+            <div class="page-breadcrumb">
+                <span class="breadcrumb-main">
                     Teacher Space
                 </span>
 
                 <i class="fa-solid fa-chevron-right"></i>
 
-                <span class="current-page-label" id="currentPageLabel">
+                <span
+                    class="breadcrumb-current"
+                    id="currentPageLabel"
+                >
                     Dashboard
                 </span>
             </div>
 
-            <h1 id="pageTitle">Dashboard</h1>
+            <!-- Main title -->
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
+
+            <p class="page-subtitle">
+                Manage your teaching space and activities
+            </p>
 
         </div>
 
     </div>
 
 
+    <!-- RIGHT -->
     <div class="topbar-actions">
 
         <!-- Search -->
         <button
-            class="topbar-control search-control"
+            class="topbar-search"
             type="button"
-            title="Search"
             id="searchBtn"
+            title="Search"
         >
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>Search</span>
-            <kbd>⌘ K</kbd>
+            <span class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+
+            <span class="search-text">
+                Search
+            </span>
+
+            <kbd>Ctrl K</kbd>
         </button>
 
 
-        <!-- Notifications -->
+        <!-- Notification -->
         <button
-            class="topbar-control notification-control"
+            class="topbar-icon-btn notification-btn"
             type="button"
-            title="Notifications"
             id="notificationBtn"
+            title="Notifications"
+            aria-label="Notifications"
         >
-            <span class="notification-icon">
-                <i class="fa-regular fa-bell"></i>
-                <span class="notification-dot"></span>
-            </span>
+            <i class="fa-regular fa-bell"></i>
 
-            <span class="notification-label">
-                Notifications
+            <span class="notification-badge">
+                3
             </span>
         </button>
 
 
+        <!-- Divider -->
         <span class="topbar-divider"></span>
 
 
@@ -246,13 +266,36 @@
                 <option value="ar">AR</option>
             </select>
 
+            <i class="fa-solid fa-chevron-down language-arrow"></i>
+
         </div>
+
+
+        <!-- Teacher Profile -->
+        <button
+            class="teacher-profile"
+            type="button"
+            title="Teacher Profile"
+        >
+
+            <div class="profile-avatar">
+                TS
+            </div>
+
+            <div class="profile-info">
+                <strong>Teacher</strong>
+                <span>Wassla</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+        </button>
 
     </div>
 
 </header>
-               
 
+      
 
             <!-- ================= CONTENT ================= -->
             <div class="teacher-content">
