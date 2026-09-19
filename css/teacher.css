@@ -2747,45 +2747,40 @@ ul {
 }
 
 /* =========================================================
-   WASSLA — FINAL LIGHT LOGO
+   WASSLA — LIGHT LOGO
    ========================================================= */
 
-/* Remove duplicated Teacher Space */
 .sidebar-brand .brand-link::after {
     content: none !important;
 }
 
-/* Brand alignment */
 .sidebar-brand .brand-link {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
 }
 
-/* Elegant logo box */
+/* Elegant light logo box */
 .sidebar-brand .sidebar-logo {
     width: 56px !important;
     height: 56px !important;
 
     object-fit: contain !important;
 
-    background: #eef8f3 !important;
-
-    border: 1px solid #d7ebe1 !important;
-
+    background: #f1faf6 !important;
+    border: 1px solid #dcefe6 !important;
     border-radius: 14px !important;
 
     padding: 7px !important;
 
-    box-shadow:
-        0 4px 12px rgba(47, 143, 104, 0.10) !important;
+    box-shadow: 0 4px 12px rgba(47, 143, 104, 0.08) !important;
 
-    /* Light Wassla logo */
+    /* يجعل Logo "وصلة" أخضر فاتح */
     filter: brightness(0) saturate(100%)
-            invert(56%)
-            sepia(22%)
-            saturate(1050%)
+            invert(57%)
+            sepia(18%)
+            saturate(650%)
             hue-rotate(105deg)
-            brightness(96%)
-            contrast(88%) !important;
+            brightness(105%)
+            contrast(82%) !important;
 }
