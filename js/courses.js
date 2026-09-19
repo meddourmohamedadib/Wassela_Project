@@ -532,3 +532,341 @@ function closeFeatureModal() {
         modal.classList.remove('active');
     }
 }
+/* =========================================================
+   WASSLA - TEACHER COURSES INTEGRATION
+   Teacher-created courses → Courses page
+   ========================================================= */
+
+function loadTeacherCourses() {
+    const savedCourses = JSON.parse(
+        localStorage.getItem('wassla_teacher_courses') || '[]'
+    );
+
+    const grid = document.getElementById('courses-grid');
+
+    if (!grid || savedCourses.length === 0) return;
+
+    savedCourses.forEach(course => {
+
+        // منع تكرار نفس الكورس
+        if (
+            grid.querySelector(
+                `[data-teacher-course-id="${course.id}"]`
+            )
+        ) {
+            return;
+        }
+
+        const card = document.createElement('article');
+
+        card.className = 'course-card';
+
+        card.dataset.teacherCourseId = course.id;
+        card.dataset.category = convertTeacherCategory(course.category);
+        card.dataset.price = '0';
+        card.dataset.rating = '0';
+        card.dataset.popularity = '0';
+
+        card.innerHTML = `
+            <div class="course-thumb thumb-cs">
+
+                <span class="level-tag tag-univ">
+                    <i class="fa-solid fa-code"></i>
+                    ${escapeCourseText(course.level || 'Course')}
+                </span>
+
+                <span class="price-badge free-badge">
+                    مجاني
+                </span>
+
+                <i class="fa-solid fa-laptop-code course-bg-icon"></i>
+
+            </div>
+
+            <div class="course-body">
+
+                <div class="course-meta-top">
+
+                    <span class="subject-chip">
+                        <i class="fa-solid fa-book"></i>
+                        ${escapeCourseText(
+                            course.category || 'Programming'
+                        )}
+                    </span>
+
+                    <span class="rating-stars">
+                        <i class="fa-solid fa-star"></i>
+                        جديد
+                    </span>
+
+                </div>
+
+                <h3 class="course-title">
+                    ${escapeCourseText(course.title)}
+                </h3>
+
+                <p class="course-desc">
+                    ${escapeCourseText(course.description || '')}
+                </p>
+
+                <div class="teacher-info">
+
+                    <div
+                        class="teacher-img"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background:#e8f7f0;
+                            border-radius:50%;
+                            width:45px;
+                            height:45px;
+                        "
+                    >
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+
+                    <div>
+                        <strong>أستاذ وصلة</strong>
+                        <small>دورة جديدة</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="course-footer">
+
+                <div class="course-details-pills">
+
+                    <span>
+                        <i class="fa-solid fa-circle-play"></i>
+                        ${escapeCourseText(
+                            String(course.lessons || 0)
+                        )} درس
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-clock"></i>
+                        ${escapeCourseText(
+                            course.duration || ''
+                        )}
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-view-course"
+                    onclick="openTeacherCoursePreview('${String(course.id)}')"
+                >
+                    <i class="fa-solid fa-eye"></i>
+                    استعراض الدروس
+                </button>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    updateTeacherCourseCount();
+}
+
+
+/* =========================
+   تحويل التصنيفات
+   ========================= */
+
+function convertTeacherCategory(category) {
+
+    const value = String(category || '').toLowerCase();
+
+    if (
+        value.includes('ai') ||
+        value.includes('artificial') ||
+        value.includes('program')
+    ) {
+        return 'ai_tech';
+    }
+
+    if (
+        value.includes('bac') ||
+        value.includes('secondary')
+    ) {
+        return 'bac';
+    }
+
+    if (
+        value.includes('univ') ||
+        value.includes('university')
+    ) {
+        return 'univ';
+    }
+
+    if (
+        value.includes('school') ||
+        value.includes('grande')
+    ) {
+        return 'grandes_ecoles';
+    }
+
+    return 'univ';
+}
+
+
+/* =========================
+   حماية النصوص
+   ========================= */
+
+function escapeCourseText(value) {
+
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+
+/* =========================
+   فتح كورس أنشأه الأستاذ
+   ========================= */
+
+function openTeacherCoursePreview(courseId) {
+
+    const savedCourses = JSON.parse(
+        localStorage.getItem('wassla_teacher_courses') || '[]'
+    );
+
+    const course = savedCourses.find(
+        item => String(item.id) === String(courseId)
+    );
+
+    if (!course) return;
+
+    const badge =
+        document.getElementById('modal-course-badge');
+
+    const title =
+        document.getElementById('modal-course-title');
+
+    const teacher =
+        document.getElementById('modal-course-teacher');
+
+    const lessonsCount =
+        document.getElementById('modal-lessons-count');
+
+    const duration =
+        document.getElementById('modal-course-duration');
+
+    const price =
+        document.getElementById('modal-course-price');
+
+    const accordion =
+        document.getElementById('modal-lessons-accordion');
+
+    const modal =
+        document.getElementById('coursePreviewModal');
+
+    if (!modal) return;
+
+    if (badge) {
+        badge.textContent =
+            `${course.category || 'Course'} - ${course.level || ''}`;
+    }
+
+    if (title) {
+        title.textContent =
+            course.title || 'Course';
+    }
+
+    if (teacher) {
+        teacher.innerHTML =
+            `<i class="fa-solid fa-chalkboard-user"></i>
+             الأستاذ: أستاذ وصلة`;
+    }
+
+    if (lessonsCount) {
+        lessonsCount.textContent =
+            `${course.lessons || 0} درساً`;
+    }
+
+    if (duration) {
+        duration.textContent =
+            course.duration || 'غير محددة';
+    }
+
+    if (price) {
+        price.textContent = 'مجاني';
+    }
+
+    if (accordion) {
+
+        accordion.innerHTML = `
+
+            <div class="lesson-item">
+
+                <div>
+                    <i class="fa-solid fa-circle-play"></i>
+
+                    <strong>محتوى الدورة:</strong>
+
+                    ${escapeCourseText(
+                        course.description || ''
+                    )}
+                </div>
+
+            </div>
+
+            <div class="lesson-item">
+
+                <div>
+                    <i class="fa-solid fa-book-open"></i>
+
+                    <strong>عدد الدروس:</strong>
+
+                    ${escapeCourseText(
+                        String(course.lessons || 0)
+                    )}
+                </div>
+
+            </div>
+
+        `;
+    }
+
+    modal.classList.add('active');
+}
+
+
+/* =========================
+   تحديث عدد الدورات
+   ========================= */
+
+function updateTeacherCourseCount() {
+
+    const savedCourses = JSON.parse(
+        localStorage.getItem('wassla_teacher_courses') || '[]'
+    );
+
+    const countElement =
+        document.getElementById('total-courses-count');
+
+    if (countElement) {
+
+        const baseCount = 128;
+
+        countElement.textContent =
+            `${baseCount + savedCourses.length}+`;
+    }
+}
+
+
+/* =========================
+   تشغيل الربط
+   ========================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadTeacherCourses();
+});
