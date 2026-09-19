@@ -2748,20 +2748,30 @@ ul {
         justify-content: center !important;
     }
 }
-.sidebar-logo-text {
-    width: 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ===== LIGHT WASSLA LOGO ===== */
 
-    background: transparent;
-    border: none;
-    box-shadow: none;
+.sidebar-brand .brand-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
 
-    color: #2f8f68;
-    font-family: "Cairo", sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1;
+.sidebar-brand .sidebar-logo {
+    width: 58px !important;
+    height: 58px !important;
+    object-fit: contain !important;
+
+    /* تحويل الشعار للفاتح */
+    filter: brightness(0) saturate(100%)
+            invert(43%)
+            sepia(30%)
+            saturate(900%)
+            hue-rotate(105deg)
+            brightness(90%)
+            contrast(90%) !important;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
 }
