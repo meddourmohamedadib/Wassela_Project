@@ -114,46 +114,41 @@ ul {
 /* Brand */
 
 .sidebar-brand {
-    padding: 24px 22px 20px;
+    padding: 18px 18px 16px;
+
+    background: linear-gradient(
+        135deg,
+        var(--wassla-green-soft),
+        #ffffff
+    );
+
     border-bottom: 1px solid var(--border);
+
+    position: relative;
 }
 .brand-link {
     display: flex;
     align-items: center;
     gap: 12px;
 
-    padding: 4px;
-    border-radius: 12px;
+    padding: 6px;
+
+    border-radius: 14px;
 
     transition: var(--transition);
 }
 
 .brand-link:hover {
-    background: var(--wassla-green-soft);
+    background: rgba(255, 255, 255, 0.75);
 }
 
 .sidebar-logo {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
+
     border-radius: 12px;
 
-    object-fit: contain;
-
-    background: var(--wassla-green-light);
-
-    padding: 5px;
-
-    box-shadow: 0 5px 14px rgba(47, 143, 104, 0.16);
-
-    flex-shrink: 0;
-
-    transition: var(--transition);
-}
-
-.brand-link:hover .sidebar-logo {
-    transform: translateY(-1px);
-    box-shadow: 0 7px 18px rgba(47, 143, 104, 0.22);
-}
+    background: var(--wassla-green);
 
     display: flex;
     align-items: center;
@@ -167,12 +162,25 @@ ul {
 }
 
 .brand-text {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text);
     letter-spacing: -0.5px;
 }
 
+.brand-link::after {
+    content: "Teacher Space";
+
+    position: absolute;
+
+    left: 76px;
+    top: 46px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
 /* Profile */
 
 .sidebar-profile {
@@ -268,7 +276,6 @@ ul {
     font-weight: 600;
 
     transition: var(--transition);
-   position: relative;
 }
 
 .nav-item:hover {
@@ -281,23 +288,7 @@ ul {
     color: var(--wassla-green-dark);
     font-weight: 700;
 }
-.nav-item.active::before {
-    content: "";
 
-    position: absolute;
-
-    left: 0;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 3px;
-    height: 22px;
-
-    border-radius: 0 4px 4px 0;
-
-    background: var(--wassla-green);
-}
 .nav-item i,
 .nav-item svg {
     width: 18px;
@@ -325,33 +316,530 @@ ul {
 }
 
 /* =========================================================
-   TOPBAR
+   WASSLA — PROFESSIONAL TEACHER TOPBAR
    ========================================================= */
 
+
+/* ================= TOPBAR ================= */
+
 .teacher-topbar {
-    height: 76px;
+    min-height: 92px;
 
-    background: rgba(255, 255, 255, 0.96);
+    background: linear-gradient(
+        135deg,
+        #f2faf6 0%,
+        #eef8f3 55%,
+        #e8f5ee 100%
+    );
 
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(47, 143, 104, 0.10);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 32px;
+    padding: 0 30px;
 
     position: sticky;
     top: 0;
 
     z-index: 100;
+
+    box-shadow:
+        0 4px 18px rgba(31, 41, 51, 0.045);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
+
+
+/* ================= LEFT SIDE ================= */
 
 .topbar-left {
     display: flex;
     align-items: center;
+
     gap: 15px;
+
+    min-width: 0;
 }
+
+
+/* ================= PAGE HEADING ================= */
+
+.page-heading {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+/* ================= BREADCRUMB ================= */
+
+.page-breadcrumb {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    height: 18px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.15px;
+
+    white-space: nowrap;
+}
+
+
+.breadcrumb-main {
+    color: #789087;
+}
+
+
+.page-breadcrumb i {
+    color: #a6b7af;
+
+    font-size: 7px;
+}
+
+
+.breadcrumb-current {
+    color: #2f8f68;
+
+    font-weight: 700;
+}
+
+
+/* ================= MAIN TITLE ================= */
+
+.page-heading h1 {
+    margin: 0;
+
+    color: #18231f;
+
+    font-size: 27px;
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    letter-spacing: -0.75px;
+}
+
+
+/* ================= SUBTITLE ================= */
+
+.page-subtitle {
+    margin: 1px 0 0;
+
+    color: #718078;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.topbar-search {
+    height: 42px;
+
+    min-width: 175px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #687870;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-search:hover {
+    background: #ffffff;
+
+    border-color: rgba(47, 143, 104, 0.22);
+
+    color: #2f8f68;
+
+    box-shadow:
+        0 5px 15px rgba(47, 143, 104, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.search-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #edf8f2;
+
+    color: #2f8f68;
+}
+
+
+.search-icon i {
+    font-size: 12px;
+}
+
+
+.search-text {
+    flex: 1;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.topbar-search kbd {
+    padding: 3px 6px;
+
+    border: 1px solid #dfeae4;
+
+    border-radius: 5px;
+
+    background: #f8fbf9;
+
+    color: #93a29b;
+
+    font-family: inherit;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+   ========================================================= */
+
+.topbar-icon-btn {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #65746d;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-icon-btn:hover {
+    background: #ffffff;
+
+    color: #2f8f68;
+
+    box-shadow:
+        0 5px 15px rgba(47, 143, 104, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.topbar-icon-btn > i {
+    font-size: 15px;
+}
+
+
+/* ================= NOTIFICATION ================= */
+
+.notification-badge {
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    min-width: 15px;
+    height: 15px;
+
+    padding: 0 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50px;
+
+    background: #2f8f68;
+
+    color: white;
+
+    border: 2px solid #f0f9f4;
+
+    font-size: 7px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.topbar-divider {
+    width: 1px;
+    height: 28px;
+
+    margin: 0 3px;
+
+    background: rgba(47, 143, 104, 0.13);
+}
+
+
+/* =========================================================
+   LANGUAGE
+   ========================================================= */
+
+.language-control {
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #65746d;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.language-control:hover {
+    background: #ffffff;
+
+    border-color: rgba(47, 143, 104, 0.20);
+
+    color: #2f8f68;
+}
+
+
+.language-control > i:first-child {
+    font-size: 13px;
+}
+
+
+.language-select {
+    height: 30px;
+
+    padding: 0 1px;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #33413b;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+}
+
+
+.language-arrow {
+    font-size: 7px !important;
+
+    color: #93a29b;
+}
+
+
+/* =========================================================
+   TEACHER PROFILE
+   ========================================================= */
+
+.teacher-profile {
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 10px 0 6px;
+
+    border: 1px solid rgba(47, 143, 104, 0.11);
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.teacher-profile:hover {
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 18px rgba(47, 143, 104, 0.09);
+
+    transform: translateY(-1px);
+}
+
+
+/* ================= AVATAR ================= */
+
+.profile-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #d8f0e3,
+        #bfe4d1
+    );
+
+    color: #237452;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* ================= PROFILE TEXT ================= */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 1px;
+
+    line-height: 1.2;
+}
+
+
+.profile-info strong {
+    color: #26342e;
+
+    font-size: 11px;
+
+    font-weight: 750;
+}
+
+
+.profile-info span {
+    color: #829089;
+
+    font-size: 9px;
+
+    font-weight: 550;
+}
+
+
+.profile-arrow {
+    margin-left: 2px;
+
+    color: #93a29b;
+
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
 .mobile-menu-btn {
     display: none;
@@ -359,85 +847,158 @@ ul {
     width: 40px;
     height: 40px;
 
-    border-radius: 10px;
-
-    background: var(--wassla-green-light);
-    color: var(--wassla-green);
-}
-
-.page-heading {
-    font-size: 22px;
-    font-weight: 750;
-    letter-spacing: -0.4px;
-}
-
-.page-kicker {
-    color: var(--text-secondary);
-    font-size: 13px;
-}
-
-.topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.topbar-icon-btn {
-    position: relative;
-
-    width: 40px;
-    height: 40px;
-
-    border-radius: 10px;
-
-    background: #f7f9f8;
-    color: var(--text-secondary);
-
-    display: flex;
     align-items: center;
     justify-content: center;
+
+    border: 1px solid rgba(47, 143, 104, 0.12);
+
+    border-radius: 11px;
+
+    background: #e7f5ed;
+
+    color: #2f8f68;
+
+    cursor: pointer;
 
     transition: var(--transition);
 }
 
-.topbar-icon-btn:hover {
-    background: var(--wassla-green-light);
-    color: var(--wassla-green);
+
+.mobile-menu-btn:hover {
+    background: #2f8f68;
+
+    color: white;
+
+    transform: translateY(-1px);
 }
 
-.notification-btn {
-    position: relative;
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .teacher-topbar {
+        padding: 0 22px;
+    }
+
+    .topbar-search {
+        min-width: 135px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .teacher-profile {
+        padding-right: 7px;
+    }
 }
 
-.notification-dot {
-    position: absolute;
 
-    width: 8px;
-    height: 8px;
+@media (max-width: 800px) {
 
-    border-radius: 50%;
+    .teacher-topbar {
+        min-height: 78px;
 
-    background: var(--wassla-green);
+        padding: 0 16px;
+    }
 
-    top: 8px;
-    right: 8px;
+    .mobile-menu-btn {
+        display: flex;
+    }
 
-    border: 2px solid white;
+    .page-subtitle {
+        display: none;
+    }
+
+    .page-heading h1 {
+        font-size: 23px;
+    }
+
+    .topbar-search {
+        min-width: 42px;
+
+        width: 42px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .search-text,
+    .topbar-search kbd {
+        display: none;
+    }
+
+    .search-icon {
+        background: transparent;
+    }
+
+    .notification-btn,
+    .language-control {
+        width: 42px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .language-select {
+        display: none;
+    }
+
+    .language-arrow {
+        display: none;
+    }
+
+    .language-control > i:first-child {
+        font-size: 14px;
+    }
 }
 
-.language-select {
-    height: 40px;
 
-    padding: 0 12px;
+@media (max-width: 560px) {
 
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    .teacher-topbar {
+        padding: 0 12px;
+    }
 
-    background: white;
-    color: var(--text);
+    .topbar-actions {
+        gap: 5px;
+    }
 
-    outline: none;
+    .topbar-divider {
+        display: none;
+    }
+
+    .teacher-profile {
+        width: 42px;
+        height: 42px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .profile-arrow {
+        display: none;
+    }
+
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .page-breadcrumb {
+        display: none;
+    }
+
+    .page-heading h1 {
+        font-size: 21px;
+    }
 }
+
+
 
 /* =========================================================
    CONTENT
@@ -1443,14 +2004,14 @@ ul {
     padding: 24px;
 
     box-shadow: var(--shadow-sm);
-       max-width: 850px;
 }
-    
+
 .settings-profile {
     display: flex;
     align-items: center;
     gap: 15px;
 }
+
 .large-profile-avatar {
     width: 70px;
     height: 70px;
@@ -1492,17 +2053,15 @@ ul {
     border-bottom: none;
 }
 
-.setting-row > div:first-child strong {
-    display: block;
+.setting-row h4 {
     font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 3px;
 }
 
-.setting-row > div:first-child span {
+.setting-row p {
     color: var(--text-secondary);
     font-size: 12px;
 }
+
 /* =========================================================
    TOGGLE
    ========================================================= */
@@ -1870,5 +2429,322 @@ ul {
         left: 15px;
         right: 15px;
         min-width: auto;
+    }
+}
+/* =========================================================
+   WASSLA — FINAL PREMIUM TOPBAR
+   ========================================================= */
+
+.teacher-topbar {
+    min-height: 84px !important;
+    height: 84px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f4fbf7 0%,
+            #f8fcfa 45%,
+            #ffffff 100%
+        ) !important;
+
+    border-bottom: 1px solid #e2ece7 !important;
+
+    padding: 0 28px !important;
+
+    box-shadow: 0 3px 14px rgba(31, 41, 51, 0.04) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+
+/* LEFT */
+
+.teacher-topbar .topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+}
+
+.teacher-topbar .page-heading {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+
+/* BREADCRUMB */
+
+.teacher-topbar .page-breadcrumb {
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+
+    height: auto !important;
+
+    font-size: 10px !important;
+    font-weight: 600 !important;
+
+    color: #82948c !important;
+}
+
+.teacher-topbar .breadcrumb-main {
+    color: #7d9087 !important;
+}
+
+.teacher-topbar .page-breadcrumb i {
+    font-size: 7px !important;
+    color: #aabbb3 !important;
+}
+
+.teacher-topbar .breadcrumb-current {
+    color: #2f8f68 !important;
+    font-weight: 700 !important;
+}
+
+
+/* TITLE */
+
+.teacher-topbar .page-heading h1 {
+    margin: 0 !important;
+
+    font-size: 23px !important;
+    line-height: 1.15 !important;
+
+    font-weight: 750 !important;
+    letter-spacing: -0.4px !important;
+
+    color: #1d2924 !important;
+}
+
+
+/* SUBTITLE */
+
+.teacher-topbar .page-subtitle {
+    display: block !important;
+
+    margin: 2px 0 0 !important;
+
+    color: #819089 !important;
+
+    font-size: 10px !important;
+    font-weight: 500 !important;
+}
+
+
+/* RIGHT */
+
+.teacher-topbar .topbar-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+
+/* SEARCH */
+
+.teacher-topbar .topbar-search {
+    height: 40px !important;
+    min-width: 165px !important;
+
+    padding: 0 11px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #7a8983 !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .topbar-search:hover {
+    border-color: #b9dcca !important;
+
+    color: #2f8f68 !important;
+
+    box-shadow: 0 5px 14px rgba(47,143,104,0.08) !important;
+
+    transform: translateY(-1px);
+}
+
+.teacher-topbar .search-icon {
+    width: 27px !important;
+    height: 27px !important;
+
+    border-radius: 8px !important;
+
+    background: #eef8f3 !important;
+    color: #2f8f68 !important;
+}
+
+.teacher-topbar .search-text {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+
+/* ICON BUTTONS */
+
+.teacher-topbar .topbar-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #65746d !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .topbar-icon-btn:hover {
+    background: #f2faf6 !important;
+    color: #2f8f68 !important;
+    border-color: #c7e4d5 !important;
+}
+
+
+/* NOTIFICATION */
+
+.teacher-topbar .notification-badge {
+    background: #2f8f68 !important;
+    border-color: #ffffff !important;
+}
+
+
+/* DIVIDER */
+
+.teacher-topbar .topbar-divider {
+    height: 25px !important;
+    background: #dfe9e4 !important;
+}
+
+
+/* LANGUAGE */
+
+.teacher-topbar .language-control {
+    height: 40px !important;
+
+    padding: 0 10px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #65746d !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .language-select {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+
+/* PROFILE */
+
+.teacher-topbar .teacher-profile {
+    height: 44px !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 8px !important;
+
+    padding: 0 10px 0 6px !important;
+
+    border: 1px solid #dfeae4 !important;
+    border-radius: 12px !important;
+
+    background: #ffffff !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .profile-avatar {
+    width: 32px !important;
+    height: 32px !important;
+
+    border-radius: 9px !important;
+
+    background: #e1f3e9 !important;
+    color: #287c59 !important;
+
+    font-size: 10px !important;
+}
+
+.teacher-topbar .profile-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+}
+
+.teacher-topbar .profile-info strong {
+    font-size: 11px !important;
+    color: #293630 !important;
+}
+
+.teacher-topbar .profile-info span {
+    font-size: 9px !important;
+    color: #85938d !important;
+}
+
+.teacher-topbar .profile-arrow {
+    font-size: 7px !important;
+    color: #9aa8a2 !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .teacher-topbar {
+        min-height: 72px !important;
+        height: 72px !important;
+        padding: 0 16px !important;
+    }
+
+    .teacher-topbar .page-heading h1 {
+        font-size: 20px !important;
+    }
+
+    .teacher-topbar .page-subtitle {
+        display: none !important;
+    }
+
+    .teacher-topbar .topbar-search {
+        min-width: 40px !important;
+        width: 40px !important;
+        padding: 0 !important;
+    }
+
+    .teacher-topbar .search-text,
+    .teacher-topbar .topbar-search kbd {
+        display: none !important;
+    }
+
+    .teacher-topbar .profile-info,
+    .teacher-topbar .profile-arrow {
+        display: none !important;
+    }
+
+    .teacher-topbar .teacher-profile {
+        width: 40px !important;
+        padding: 0 !important;
+        justify-content: center !important;
     }
 }
