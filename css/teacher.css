@@ -114,14 +114,32 @@ ul {
 /* Brand */
 
 .sidebar-brand {
-    padding: 24px 22px 20px;
-    border-bottom: 1px solid var(--border);
-}
+    padding: 18px 18px 16px;
 
+    background: linear-gradient(
+        135deg,
+        var(--wassla-green-soft),
+        #ffffff
+    );
+
+    border-bottom: 1px solid var(--border);
+
+    position: relative;
+}
 .brand-link {
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
+
+    padding: 6px;
+
+    border-radius: 14px;
+
+    transition: var(--transition);
+}
+
+.brand-link:hover {
+    background: rgba(255, 255, 255, 0.75);
 }
 
 .sidebar-logo {
@@ -144,12 +162,25 @@ ul {
 }
 
 .brand-text {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text);
     letter-spacing: -0.5px;
 }
 
+.brand-link::after {
+    content: "Teacher Space";
+
+    position: absolute;
+
+    left: 76px;
+    top: 46px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
 /* Profile */
 
 .sidebar-profile {
