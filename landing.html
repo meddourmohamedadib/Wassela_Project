@@ -24,7 +24,8 @@
                 <a href="#features" data-i18n="nav_features">المميزات</a>
                 <a href="#tracks" data-i18n="nav_tracks">المسارات التعليمية</a>
                 <a href="#about" data-i18n="nav_about">عن المنصة</a>
-                <a href="#developers" data-i18n="nav_devs">فريق التطوير</a>
+                <a href="#developers" data-i18n="nav_devs">فريق وصلة</a>
+                <a href="courses.html">محتوى المنصة</a>
             </nav>
 
             <div class="nav-actions">
@@ -55,11 +56,14 @@
             <h1 data-i18n="hero_title">المستقبل الذكي للتعليم في الجزائر</h1>
             <p data-i18n="hero_desc">منصة تعليمية متكاملة تدمج بين خبرة أساتذة النخبة وقوة الذكاء الاصطناعي لتأطير التلاميذ والطلبة في جميع المراحل والمسارات.</p>
             <div class="hero-cta">
-                <button id="openPricingModal" class="btn btn-primary">
-    <i class="fa-solid fa-gem"></i>
-    <span data-i18n="btn_subscriptions">عرض الاشتراكات</span>
-</button>
-                <a href="#tracks" class="btn-secondary" data-i18n="btn_explore_tracks">استكشف التخصصات</a>
+                <a href="courses.html" class="btn btn-primary">
+                    <i class="fa-solid fa-gem"></i>
+                    <span>تصفح الدورات</span>
+                </a>
+                <button id="openPricingModal" class="btn btn-secondary">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span data-i18n="btn_subscriptions">عرض الاشتراكات</span>
+                </button>
             </div>
         </div>
     </section>
@@ -148,44 +152,125 @@
         </div>
     </section>
 
-    <!-- قسم فريق التطوير (3 المطورين) -->
+    <!-- قسم فريق وصلة -->
     <section class="section-container" id="developers">
         <div class="section-header">
             <span class="sub-title" data-i18n="devs_subtitle">الخلفية التقنية</span>
-            <h2 data-i18n="devs_heading">فريق الهندسة والتطوير للمشروع</h2>
+            <h2 data-i18n="devs_heading">فريق وصلة</h2>
         </div>
-        <div class="developers-grid">
-            
-            <!-- المطور الأول: محمد أمين -->
-            <div class="dev-card">
-                <div class="dev-avatar">
-                    <img src="assets/images/dev1.png" alt="محمد أمين">
+
+        <div class="team-pyramid">
+            <div class="team-row founders-row">
+                <div class="dev-card founder-card">
+                    <div class="dev-avatar">
+                        <img src="assets/images/Khawa Younes.jpg" alt="خوة يونس">
+                    </div>
+                    <h3>خوة يونس</h3>
+                    <span class="dev-role">مؤسس المنصة & Strategic Vision</span>
+                    <p>رئيسة الرؤية الاستراتيجية لمنصة وصلة، وتساهم في توجيه الاتجاه المؤسسي والتعليمي.</p>
                 </div>
-                <h3>محمد أمين</h3>
-                <span class="dev-role">Lead Full-Stack & System Engineer</span>
-                <p data-i18n="dev1_desc">مهندس معماري للمنصة ومطور الأنظمة البرمجية والربط المتكامل بين أجزاء المشروع.</p>
+
+                <div class="dev-card founder-card">
+                    <div class="dev-avatar">
+                        <img src="assets/images/Boutbina Chaker.jpg" alt="بوتبينة شاكر">
+                    </div>
+                    <h3>بوتبينة شاكر</h3>
+                    <span class="dev-role">مؤسسة المنصة & Growth & Partnerships</span>
+                    <p>تساهم في بناء شراكات المنصة وتطوير تجربة المستخدم وتعزيز حضور العلامة في السوق.</p>
+                </div>
             </div>
 
-            <!-- المطور الثاني: سعاد سايحي -->
-            <div class="dev-card">
-                <div class="dev-avatar">
-                    <img src="assets/images/dev2.png" alt="سعاد سايحي">
+            <div class="team-row developers-row">
+                <div class="dev-card">
+                    <div class="dev-avatar">
+                        <img src="assets/images/dev3.png" alt="أديب مدور">
+                    </div>
+                    <h3>أديب مدور</h3>
+                    <span class="dev-role">UI/UX Architect</span>
+                    <p>مصمم واجهات المستخدم لضمان تجربة سلسة وتصميم عصري متناسق ومريح للعين.</p>
                 </div>
-                <h3 data-i18n="dev2_name">سعاد سايحي</h3>
-                <span class="dev-role">AI & Data Science Specialist</span>
-                <p data-i18n="dev2_desc">المسؤول عن تطوير نماذج التقييم الآلي وأنظمة التتبع المستمر 24/7 للتلاميذ.</p>
+
+                <div class="dev-card">
+                    <div class="dev-avatar">
+                        <img src="assets/images/dev2.png" alt="سعاد سايحي">
+                    </div>
+                    <h3>سعاد سايحي</h3>
+                    <span class="dev-role">AI & Data Science Specialist</span>
+                    <p>المسؤول عن تطوير نماذج التقييم الآلي وأنظمة التتبع المستمر 24/7 للتلاميذ.</p>
+                </div>
+
+                <div class="dev-card">
+                    <div class="dev-avatar">
+                        <img src="assets/images/dev1.png" alt="محمد أمين">
+                    </div>
+                    <h3>محمد أمين</h3>
+                    <span class="dev-role">Lead Full-Stack & System Engineer</span>
+                    <p>مهندس معماري للمنصة ومطور الأنظمة البرمجية والربط المتكامل بين أجزاء المشروع.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم معاينة المنصة -->
+    <section class="section-container preview-section" id="preview">
+        <div class="section-header">
+            <span class="sub-title">نظرة سريعة</span>
+            <h2>واجهة المنصة في العمل</h2>
+        </div>
+
+        <div class="preview-grid">
+            <div class="preview-card">
+                <div class="preview-visual preview-courses-ui">
+                    <div class="mini-header">
+                        <span class="mini-logo"></span>
+                        <span class="mini-pill">دورات</span>
+                    </div>
+                    <div class="mini-layout">
+                        <div class="mini-sidebar-lines"></div>
+                        <div class="mini-content">
+                            <div class="mini-card"></div>
+                            <div class="mini-card"></div>
+                            <div class="mini-card long"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>واجهة الدورات المتاحة</h3>
+                <p>استعراض منظم للدروس، المسارات، والأقسام بالتصميم نفسه للمنصة وواجهة التعليمية.</p>
             </div>
 
-            <!-- المطور الثالث: أديب مدور -->
-            <div class="dev-card">
-                <div class="dev-avatar">
-                    <img src="assets/images/dev3.png" alt="أديب مدور">
+            <div class="preview-card">
+                <div class="preview-visual preview-dashboard-ui">
+                    <div class="mini-header dashboard-header">
+                        <span class="mini-logo"></span>
+                        <span class="mini-pill">لوحة الأستاذ</span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="mini-stat"></div>
+                        <div class="mini-stat"></div>
+                        <div class="mini-stat long"></div>
+                    </div>
+                    <div class="dashboard-table">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
-                <h3 data-i18n="dev3_name">أديب مدور</h3>
-                <span class="dev-role">UI/UX Architect</span>
-                <p data-i18n="dev3_desc">مصمم واجهات المستخدم لضمان تجربة سلسة ولتصميم عصري متناسق ومريح للعين.</p>
+                <h3>لوحة التحكم والإحصائيات</h3>
+                <p>عرض يتضمن إحصائيات الطلبة، دخل المنصة، ومؤشرات الأداء في واجهة الأستاذ.</p>
             </div>
 
+            <div class="preview-card">
+                <div class="preview-visual preview-mobile-ui">
+                    <div class="phone-frame">
+                        <div class="phone-top"></div>
+                        <div class="phone-card"></div>
+                        <div class="phone-card small"></div>
+                        <div class="phone-actions"></div>
+                    </div>
+                </div>
+                <h3>تجربة مستخدم متجاوبة</h3>
+                <p>واجهة ذات تصميم حديث ومريح، تناسب جميع الشاشات من الهاتف إلى سطح المكتب.</p>
+            </div>
         </div>
     </section>
 

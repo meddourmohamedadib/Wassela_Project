@@ -399,11 +399,27 @@ body {
 }
 
 /* Developers Grid */
-.developers-grid {
+.team-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.team-row {
     display: flex;
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
+}
+
+.founders-row {
+    width: 100%;
+}
+
+.developers-row {
+    width: 100%;
+    padding-top: 8px;
 }
 
 .dev-card {
@@ -420,6 +436,12 @@ body {
 .dev-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-glow);
+}
+
+.founder-card {
+    border: 1.5px solid rgba(22, 90, 53, 0.18);
+    background: linear-gradient(180deg, #ffffff 0%, #f3f8f5 100%);
+    width: 360px;
 }
 
 .dev-avatar {
@@ -457,6 +479,178 @@ body {
 .dev-card p {
     font-size: 14px;
     color: var(--text-muted);
+}
+
+/* Landing Preview Section */
+.preview-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f6faf7 100%);
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+}
+
+.preview-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.preview-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-glow);
+}
+
+.preview-card h3 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--dark-slate);
+}
+
+.preview-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.preview-visual {
+    background: linear-gradient(135deg, #eefaf3 0%, #e6f0eb 100%);
+    border-radius: 18px;
+    min-height: 200px;
+    padding: 16px;
+    border: 1px solid rgba(22, 90, 53, 0.12);
+}
+
+.mini-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.mini-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--primary-emerald), #2ecc71);
+    display: inline-block;
+}
+
+.mini-pill {
+    background: rgba(22, 90, 53, 0.12);
+    color: var(--primary-emerald);
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.mini-layout {
+    display: flex;
+    gap: 12px;
+    height: 140px;
+}
+
+.mini-sidebar-lines {
+    width: 24%;
+    background: rgba(22, 90, 53, 0.12);
+    border-radius: 12px;
+}
+
+.mini-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-card {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+}
+
+.mini-card.long {
+    flex: 1.4;
+}
+
+.preview-dashboard-ui .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.mini-stat {
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(22, 90, 53, 0.12);
+}
+
+.mini-stat.long {
+    grid-column: span 2;
+}
+
+.dashboard-table {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 8px;
+}
+
+.dashboard-table span {
+    display: block;
+    height: 30px;
+    border-radius: 8px;
+    background: white;
+}
+
+.preview-mobile-ui {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone-frame {
+    width: 130px;
+    height: 170px;
+    background: #ffffff;
+    border: 3px solid rgba(22, 90, 53, 0.2);
+    border-radius: 20px;
+    padding: 12px;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+.phone-top {
+    height: 22px;
+    border-radius: 10px;
+    background: rgba(22, 90, 53, 0.12);
+    margin-bottom: 10px;
+}
+
+.phone-card {
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(22, 90, 53, 0.12);
+    margin-bottom: 8px;
+}
+
+.phone-card.small {
+    height: 18px;
+    width: 60%;
+}
+
+.phone-actions {
+    height: 32px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-emerald), #2ecc71);
 }
 
 /* Footer */
