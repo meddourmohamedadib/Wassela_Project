@@ -117,20 +117,43 @@ ul {
     padding: 24px 22px 20px;
     border-bottom: 1px solid var(--border);
 }
-
 .brand-link {
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
+
+    padding: 4px;
+    border-radius: 12px;
+
+    transition: var(--transition);
+}
+
+.brand-link:hover {
+    background: var(--wassla-green-soft);
 }
 
 .sidebar-logo {
-    width: 42px;
-    height: 42px;
-
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
 
-    background: var(--wassla-green);
+    object-fit: contain;
+
+    background: var(--wassla-green-light);
+
+    padding: 5px;
+
+    box-shadow: 0 5px 14px rgba(47, 143, 104, 0.16);
+
+    flex-shrink: 0;
+
+    transition: var(--transition);
+}
+
+.brand-link:hover .sidebar-logo {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(47, 143, 104, 0.22);
+}
 
     display: flex;
     align-items: center;
@@ -245,6 +268,7 @@ ul {
     font-weight: 600;
 
     transition: var(--transition);
+   position: relative;
 }
 
 .nav-item:hover {
@@ -257,7 +281,23 @@ ul {
     color: var(--wassla-green-dark);
     font-weight: 700;
 }
+.nav-item.active::before {
+    content: "";
 
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 3px;
+    height: 22px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: var(--wassla-green);
+}
 .nav-item i,
 .nav-item svg {
     width: 18px;
@@ -1403,14 +1443,14 @@ ul {
     padding: 24px;
 
     box-shadow: var(--shadow-sm);
+       max-width: 850px;
 }
-
+    
 .settings-profile {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-
 .large-profile-avatar {
     width: 70px;
     height: 70px;
@@ -1452,15 +1492,17 @@ ul {
     border-bottom: none;
 }
 
-.setting-row h4 {
+.setting-row > div:first-child strong {
+    display: block;
     font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
 }
 
-.setting-row p {
+.setting-row > div:first-child span {
     color: var(--text-secondary);
     font-size: 12px;
 }
-
 /* =========================================================
    TOGGLE
    ========================================================= */
