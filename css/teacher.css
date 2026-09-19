@@ -2756,22 +2756,25 @@ ul {
     gap: 12px !important;
 }
 
+/* ===== WASSLA LIGHT LOGO — FINAL ===== */
+
 .sidebar-brand .sidebar-logo {
     width: 58px !important;
     height: 58px !important;
     object-fit: contain !important;
 
-    /* تحويل الشعار للفاتح */
-    filter: brightness(0) saturate(100%)
-            invert(43%)
-            sepia(30%)
-            saturate(900%)
-            hue-rotate(105deg)
-            brightness(90%)
-            contrast(90%) !important;
-
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+
+    /* اللون الفاتح تاع Wassla */
+    filter: brightness(0) saturate(100%)
+            invert(56%)
+            sepia(22%)
+            saturate(1050%)
+            hue-rotate(105deg)
+            brightness(96%)
+            contrast(88%) !important;
+}
 }
