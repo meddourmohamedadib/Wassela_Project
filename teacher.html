@@ -160,9 +160,97 @@
         <!-- ================= MAIN AREA ================= -->
         <main class="teacher-main">
 
-            <!-- Topbar -->
-            <header class="teacher-topbar">
+           <!-- ================= TOPBAR ================= -->
+<header class="teacher-topbar">
 
+    <div class="topbar-left">
+
+        <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Open menu"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="page-heading">
+
+            <div class="page-heading-top">
+                <span class="page-kicker">
+                    Teacher Space
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <span class="current-page-label" id="currentPageLabel">
+                    Dashboard
+                </span>
+            </div>
+
+            <h1 id="pageTitle">Dashboard</h1>
+
+        </div>
+
+    </div>
+
+
+    <div class="topbar-actions">
+
+        <!-- Search -->
+        <button
+            class="topbar-control search-control"
+            type="button"
+            title="Search"
+            id="searchBtn"
+        >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+            <kbd>⌘ K</kbd>
+        </button>
+
+
+        <!-- Notifications -->
+        <button
+            class="topbar-control notification-control"
+            type="button"
+            title="Notifications"
+            id="notificationBtn"
+        >
+            <span class="notification-icon">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-dot"></span>
+            </span>
+
+            <span class="notification-label">
+                Notifications
+            </span>
+        </button>
+
+
+        <span class="topbar-divider"></span>
+
+
+        <!-- Language -->
+        <div class="language-control">
+
+            <i class="fa-solid fa-globe"></i>
+
+            <select
+                class="language-select"
+                id="languageSelect"
+                aria-label="Language"
+            >
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+                <option value="ar">AR</option>
+            </select>
+
+        </div>
+
+    </div>
+
+</header>
                 <div class="topbar-left">
 
                     <button
