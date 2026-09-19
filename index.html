@@ -70,9 +70,9 @@
                     <input type="password" placeholder="كلمة المرور" data-i18n="password_placeholder" required>
                 </div>
                 <a href="#" class="forgot-password" data-i18n="forgot_pass">نسيت كلمة المرور؟</a>
-               <button type="submit" class="submit-btn" data-i18n="btn_login">
+               <a href="courses.html" class="submit-btn" data-i18n="btn_login">
     تسجيل الدخول
-</button>
+</a>
             </form>
 
             <!-- 2. نموذج إنشاء حساب الطالب -->
@@ -177,11 +177,6 @@ document.getElementById("form-teacher-login").addEventListener("submit", functio
     window.location.href = "teacher.html";
 });
 </script>
-<script>
-document.getElementById("form-student-login").addEventListener("submit", function(e) {
-    e.preventDefault();
-    window.location.href = "courses.html";
-});
-</script>
+
 </body>
 </html>
