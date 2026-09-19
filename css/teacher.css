@@ -2431,3 +2431,320 @@ ul {
         min-width: auto;
     }
 }
+/* =========================================================
+   WASSLA — FINAL PREMIUM TOPBAR
+   ========================================================= */
+
+.teacher-topbar {
+    min-height: 84px !important;
+    height: 84px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f4fbf7 0%,
+            #f8fcfa 45%,
+            #ffffff 100%
+        ) !important;
+
+    border-bottom: 1px solid #e2ece7 !important;
+
+    padding: 0 28px !important;
+
+    box-shadow: 0 3px 14px rgba(31, 41, 51, 0.04) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+
+/* LEFT */
+
+.teacher-topbar .topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+}
+
+.teacher-topbar .page-heading {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+
+/* BREADCRUMB */
+
+.teacher-topbar .page-breadcrumb {
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+
+    height: auto !important;
+
+    font-size: 10px !important;
+    font-weight: 600 !important;
+
+    color: #82948c !important;
+}
+
+.teacher-topbar .breadcrumb-main {
+    color: #7d9087 !important;
+}
+
+.teacher-topbar .page-breadcrumb i {
+    font-size: 7px !important;
+    color: #aabbb3 !important;
+}
+
+.teacher-topbar .breadcrumb-current {
+    color: #2f8f68 !important;
+    font-weight: 700 !important;
+}
+
+
+/* TITLE */
+
+.teacher-topbar .page-heading h1 {
+    margin: 0 !important;
+
+    font-size: 23px !important;
+    line-height: 1.15 !important;
+
+    font-weight: 750 !important;
+    letter-spacing: -0.4px !important;
+
+    color: #1d2924 !important;
+}
+
+
+/* SUBTITLE */
+
+.teacher-topbar .page-subtitle {
+    display: block !important;
+
+    margin: 2px 0 0 !important;
+
+    color: #819089 !important;
+
+    font-size: 10px !important;
+    font-weight: 500 !important;
+}
+
+
+/* RIGHT */
+
+.teacher-topbar .topbar-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+
+/* SEARCH */
+
+.teacher-topbar .topbar-search {
+    height: 40px !important;
+    min-width: 165px !important;
+
+    padding: 0 11px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #7a8983 !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .topbar-search:hover {
+    border-color: #b9dcca !important;
+
+    color: #2f8f68 !important;
+
+    box-shadow: 0 5px 14px rgba(47,143,104,0.08) !important;
+
+    transform: translateY(-1px);
+}
+
+.teacher-topbar .search-icon {
+    width: 27px !important;
+    height: 27px !important;
+
+    border-radius: 8px !important;
+
+    background: #eef8f3 !important;
+    color: #2f8f68 !important;
+}
+
+.teacher-topbar .search-text {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+
+/* ICON BUTTONS */
+
+.teacher-topbar .topbar-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #65746d !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .topbar-icon-btn:hover {
+    background: #f2faf6 !important;
+    color: #2f8f68 !important;
+    border-color: #c7e4d5 !important;
+}
+
+
+/* NOTIFICATION */
+
+.teacher-topbar .notification-badge {
+    background: #2f8f68 !important;
+    border-color: #ffffff !important;
+}
+
+
+/* DIVIDER */
+
+.teacher-topbar .topbar-divider {
+    height: 25px !important;
+    background: #dfe9e4 !important;
+}
+
+
+/* LANGUAGE */
+
+.teacher-topbar .language-control {
+    height: 40px !important;
+
+    padding: 0 10px !important;
+
+    border: 1px solid #e1ebe6 !important;
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #65746d !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .language-select {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+
+/* PROFILE */
+
+.teacher-topbar .teacher-profile {
+    height: 44px !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 8px !important;
+
+    padding: 0 10px 0 6px !important;
+
+    border: 1px solid #dfeae4 !important;
+    border-radius: 12px !important;
+
+    background: #ffffff !important;
+
+    box-shadow: 0 2px 8px rgba(31,41,51,0.025) !important;
+}
+
+.teacher-topbar .profile-avatar {
+    width: 32px !important;
+    height: 32px !important;
+
+    border-radius: 9px !important;
+
+    background: #e1f3e9 !important;
+    color: #287c59 !important;
+
+    font-size: 10px !important;
+}
+
+.teacher-topbar .profile-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+}
+
+.teacher-topbar .profile-info strong {
+    font-size: 11px !important;
+    color: #293630 !important;
+}
+
+.teacher-topbar .profile-info span {
+    font-size: 9px !important;
+    color: #85938d !important;
+}
+
+.teacher-topbar .profile-arrow {
+    font-size: 7px !important;
+    color: #9aa8a2 !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .teacher-topbar {
+        min-height: 72px !important;
+        height: 72px !important;
+        padding: 0 16px !important;
+    }
+
+    .teacher-topbar .page-heading h1 {
+        font-size: 20px !important;
+    }
+
+    .teacher-topbar .page-subtitle {
+        display: none !important;
+    }
+
+    .teacher-topbar .topbar-search {
+        min-width: 40px !important;
+        width: 40px !important;
+        padding: 0 !important;
+    }
+
+    .teacher-topbar .search-text,
+    .teacher-topbar .topbar-search kbd {
+        display: none !important;
+    }
+
+    .teacher-topbar .profile-info,
+    .teacher-topbar .profile-arrow {
+        display: none !important;
+    }
+
+    .teacher-topbar .teacher-profile {
+        width: 40px !important;
+        padding: 0 !important;
+        justify-content: center !important;
+    }
+}
