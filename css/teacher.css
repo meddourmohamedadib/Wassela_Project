@@ -2739,7 +2739,7 @@ ul {
     }
 }
 /* =========================================================
-   WASSLA — LIGHT PREMIUM BRAND
+   WASSLA — SIDEBAR BRAND
    ========================================================= */
 
 .sidebar-brand .brand-link {
@@ -2749,60 +2749,39 @@ ul {
     padding: 6px !important;
 }
 
-/* Hide the old image */
+/* LOGO */
 .sidebar-brand .sidebar-logo {
-    display: none !important;
+    display: flex !important;
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 42px !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 12px !important;
+
+    background: #2f8f68 !important;
+    color: #ffffff !important;
+
+    font-size: 19px !important;
+    font-weight: 800 !important;
+
+    box-shadow: 0 6px 16px rgba(47, 143, 104, 0.20) !important;
 }
 
-/* Light Arabic logo */
+/* REMOVE THE FAKE ARABIC LOGO */
 .sidebar-brand .brand-link::before {
-    content: "وَصْلَة";
-
-    width: 58px;
-    height: 58px;
-
-    flex: 0 0 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f5fbf8;
-
-    border: 1px solid #dceee6;
-
-    border-radius: 15px;
-
-    color: #69aa8d;
-
-    font-family:
-        "Amiri",
-        "Noto Naskh Arabic",
-        "Scheherazade New",
-        "Traditional Arabic",
-        serif;
-
-    font-size: 18px;
-    font-weight: 700;
-
-    direction: rtl;
-
-    box-shadow:
-        0 4px 12px rgba(47, 143, 104, 0.08);
-
-    text-shadow:
-        0 1px 0 rgba(255,255,255,0.8);
+    content: none !important;
 }
 
-/* Brand name */
+/* BRAND TEXT */
 .sidebar-brand .brand-text {
     display: flex !important;
     flex-direction: column !important;
-
     gap: 2px !important;
 
     font-size: 0 !important;
-
     line-height: 1.1 !important;
 }
 
@@ -2810,15 +2789,14 @@ ul {
 .sidebar-brand .brand-text strong {
     display: block !important;
 
-    color: #2f8f68 !important;
+    color: #1f2933 !important;
 
     font-family:
         Inter,
         "Segoe UI",
         sans-serif !important;
 
-    font-size: 16px !important;
-
+    font-size: 15px !important;
     font-weight: 800 !important;
 
     letter-spacing: -0.3px !important;
@@ -2828,23 +2806,21 @@ ul {
 .sidebar-brand .brand-text span {
     display: block !important;
 
-    color: #7d9188 !important;
+    color: #66737c !important;
 
     font-family:
         Inter,
         "Segoe UI",
         sans-serif !important;
 
-    font-size: 11px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
 
-    font-weight: 600 !important;
-
-    letter-spacing: 0.3px !important;
-
+    letter-spacing: 0 !important;
     margin: 0 !important;
 }
 
-/* Never duplicate Teacher Space */
+/* NEVER DUPLICATE TEXT */
 .sidebar-brand .brand-link::after {
     content: none !important;
 }
