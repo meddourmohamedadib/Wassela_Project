@@ -2738,89 +2738,113 @@ ul {
         justify-content: center !important;
     }
 }
-/* ===== LIGHT WASSLA LOGO ===== */
-
-.sidebar-brand .brand-link {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-}
-
 /* =========================================================
-   WASSLA — FINAL LIGHT LOGO
+   WASSLA — LIGHT PREMIUM BRAND
    ========================================================= */
 
 .sidebar-brand .brand-link {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
+    padding: 6px !important;
 }
 
-/* Hide original dark logo */
+/* Hide the old image */
 .sidebar-brand .sidebar-logo {
     display: none !important;
 }
 
-/* Create the new light logo */
+/* Light Arabic logo */
 .sidebar-brand .brand-link::before {
     content: "وَصْلَة";
 
-    width: 58px !important;
-    height: 58px !important;
+    width: 58px;
+    height: 58px;
 
-    flex: 0 0 58px !important;
+    flex: 0 0 58px;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background: #f1faf6 !important;
+    background: #f5fbf8;
 
-    border: 1px solid #d8eee4 !important;
-    border-radius: 16px !important;
+    border: 1px solid #dceee6;
 
-    box-shadow:
-        0 4px 14px rgba(47, 143, 104, 0.10) !important;
+    border-radius: 15px;
 
-    color: #62a989 !important;
+    color: #69aa8d;
 
     font-family:
         "Amiri",
         "Noto Naskh Arabic",
+        "Scheherazade New",
         "Traditional Arabic",
-        serif !important;
+        serif;
 
-    font-size: 17px !important;
-    font-weight: 700 !important;
+    font-size: 18px;
+    font-weight: 700;
 
-    direction: rtl !important;
+    direction: rtl;
 
-    text-align: center !important;
+    box-shadow:
+        0 4px 12px rgba(47, 143, 104, 0.08);
 
-    line-height: 1 !important;
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.8);
 }
 
-/* Brand text */
+/* Brand name */
 .sidebar-brand .brand-text {
     display: flex !important;
     flex-direction: column !important;
-    line-height: 1.15 !important;
+
+    gap: 2px !important;
+
+    font-size: 0 !important;
+
+    line-height: 1.1 !important;
 }
 
+/* Wassla Teacher */
 .sidebar-brand .brand-text strong {
+    display: block !important;
+
     color: #2f8f68 !important;
-    font-size: 17px !important;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        sans-serif !important;
+
+    font-size: 16px !important;
+
     font-weight: 800 !important;
+
+    letter-spacing: -0.3px !important;
 }
 
+/* Space */
 .sidebar-brand .brand-text span {
-    color: #71847b !important;
+    display: block !important;
+
+    color: #7d9188 !important;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        sans-serif !important;
+
     font-size: 11px !important;
+
     font-weight: 600 !important;
-    margin-top: 3px !important;
+
+    letter-spacing: 0.3px !important;
+
+    margin: 0 !important;
 }
 
-/* Remove old duplicated Teacher Space */
+/* Never duplicate Teacher Space */
 .sidebar-brand .brand-link::after {
     content: none !important;
 }
