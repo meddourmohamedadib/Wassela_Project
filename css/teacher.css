@@ -2747,52 +2747,60 @@ ul {
 }
 
 /* =========================================================
-   WASSLA — LIGHT ARABIC LOGO
+   WASSLA — FINAL LIGHT LOGO
    ========================================================= */
 
-/* منع تكرار Teacher Space */
-.sidebar-brand .brand-link::after {
-    content: none !important;
-}
-
-/* ترتيب الشعار والنص */
 .sidebar-brand .brand-link {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
 }
 
-/* صندوق الشعار */
+/* Hide original dark logo */
 .sidebar-brand .sidebar-logo {
+    display: none !important;
+}
+
+/* Create the new light logo */
+.sidebar-brand .brand-link::before {
+    content: "وَصْلَة";
+
     width: 58px !important;
     height: 58px !important;
 
-    display: block !important;
-    object-fit: contain !important;
+    flex: 0 0 58px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
     background: #f1faf6 !important;
 
     border: 1px solid #d8eee4 !important;
     border-radius: 16px !important;
 
-    padding: 7px !important;
-
     box-shadow:
         0 4px 14px rgba(47, 143, 104, 0.10) !important;
 
-    /* وصلة بلون أخضر فاتح وأنيق */
-    filter:
-        brightness(0)
-        saturate(100%)
-        invert(59%)
-        sepia(17%)
-        saturate(650%)
-        hue-rotate(105deg)
-        brightness(103%)
-        contrast(82%) !important;
+    color: #62a989 !important;
+
+    font-family:
+        "Amiri",
+        "Noto Naskh Arabic",
+        "Traditional Arabic",
+        serif !important;
+
+    font-size: 17px !important;
+    font-weight: 700 !important;
+
+    direction: rtl !important;
+
+    text-align: center !important;
+
+    line-height: 1 !important;
 }
 
-/* اسم المنصة */
+/* Brand text */
 .sidebar-brand .brand-text {
     display: flex !important;
     flex-direction: column !important;
@@ -2800,17 +2808,19 @@ ul {
 }
 
 .sidebar-brand .brand-text strong {
+    color: #2f8f68 !important;
     font-size: 17px !important;
     font-weight: 800 !important;
-    color: #2f8f68 !important;
-    letter-spacing: -0.3px !important;
 }
 
 .sidebar-brand .brand-text span {
-    display: block !important;
-    margin-top: 3px !important;
+    color: #71847b !important;
     font-size: 11px !important;
     font-weight: 600 !important;
-    color: #71847b !important;
-    letter-spacing: 0.2px !important;
+    margin-top: 3px !important;
+}
+
+/* Remove old duplicated Teacher Space */
+.sidebar-brand .brand-link::after {
+    content: none !important;
 }
