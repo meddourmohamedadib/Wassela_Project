@@ -803,21 +803,29 @@ document.addEventListener("DOMContentLoaded", () => {
         settings: "Settings"
     };
 
-    function updatePageTitle() {
+   function updatePageTitle() {
 
-        if (!pageTitle) return;
+    if (!pageTitle) return;
 
-        const sectionId =
-            pageTitle.dataset.currentSection ||
-            "dashboard";
+    const sectionId =
+        pageTitle.dataset.currentSection ||
+        "dashboard";
 
-        const title =
-            sectionTitles[sectionId] ||
-            "Teacher Dashboard";
+    const title =
+        sectionTitles[sectionId] ||
+        "Teacher Dashboard";
 
-        pageTitle.textContent =
-            translateText(title);
+    const translatedTitle = translateText(title);
+
+    pageTitle.textContent = translatedTitle;
+
+    const currentPageLabel =
+        document.getElementById("currentPageLabel");
+
+    if (currentPageLabel) {
+        currentPageLabel.textContent = translatedTitle;
     }
+}
 
     /* =========================================================
        APPLY LANGUAGE
