@@ -316,31 +316,40 @@ ul {
 }
 
 /* =========================================================
-   PROFESSIONAL TOPBAR
+   WASSLA — PROFESSIONAL TEACHER TOPBAR
    ========================================================= */
 
+
+/* ================= TOPBAR ================= */
+
 .teacher-topbar {
-    min-height: 82px;
+    min-height: 92px;
 
-    background: rgba(255, 255, 255, 0.96);
+    background: linear-gradient(
+        135deg,
+        #f2faf6 0%,
+        #eef8f3 55%,
+        #e8f5ee 100%
+    );
 
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(47, 143, 104, 0.10);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 32px;
+    padding: 0 30px;
 
     position: sticky;
     top: 0;
 
     z-index: 100;
 
-    box-shadow: 0 4px 18px rgba(31, 41, 51, 0.035);
+    box-shadow:
+        0 4px 18px rgba(31, 41, 51, 0.045);
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 
@@ -349,63 +358,644 @@ ul {
 .topbar-left {
     display: flex;
     align-items: center;
-    gap: 16px;
+
+    gap: 15px;
 
     min-width: 0;
 }
 
 
+/* ================= PAGE HEADING ================= */
+
 .page-heading {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+
+    gap: 3px;
+
+    min-width: 0;
 }
 
 
-.page-heading-top {
+/* ================= BREADCRUMB ================= */
+
+.page-breadcrumb {
     display: flex;
     align-items: center;
+
     gap: 7px;
 
-    color: var(--text-light);
+    height: 18px;
 
     font-size: 11px;
+
     font-weight: 600;
 
-    letter-spacing: 0.1px;
+    letter-spacing: 0.15px;
+
+    white-space: nowrap;
 }
 
 
-.page-heading-top i {
-    font-size: 8px;
-    color: #b8c1bd;
+.breadcrumb-main {
+    color: #789087;
 }
 
 
-.page-kicker {
-    color: var(--text-secondary);
-    font-size: 11px;
-    font-weight: 600;
+.page-breadcrumb i {
+    color: #a6b7af;
+
+    font-size: 7px;
 }
 
 
-.current-page-label {
-    color: var(--wassla-green);
+.breadcrumb-current {
+    color: #2f8f68;
+
     font-weight: 700;
 }
 
 
+/* ================= MAIN TITLE ================= */
+
 .page-heading h1 {
     margin: 0;
 
-    font-size: 25px;
-    line-height: 1.25;
+    color: #18231f;
+
+    font-size: 27px;
+
+    line-height: 1.15;
 
     font-weight: 800;
 
-    letter-spacing: -0.6px;
+    letter-spacing: -0.75px;
+}
 
-    color: var(--text);
+
+/* ================= SUBTITLE ================= */
+
+.page-subtitle {
+    margin: 1px 0 0;
+
+    color: #718078;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.topbar-search {
+    height: 42px;
+
+    min-width: 175px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #687870;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-search:hover {
+    background: #ffffff;
+
+    border-color: rgba(47, 143, 104, 0.22);
+
+    color: #2f8f68;
+
+    box-shadow:
+        0 5px 15px rgba(47, 143, 104, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.search-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #edf8f2;
+
+    color: #2f8f68;
+}
+
+
+.search-icon i {
+    font-size: 12px;
+}
+
+
+.search-text {
+    flex: 1;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.topbar-search kbd {
+    padding: 3px 6px;
+
+    border: 1px solid #dfeae4;
+
+    border-radius: 5px;
+
+    background: #f8fbf9;
+
+    color: #93a29b;
+
+    font-family: inherit;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+   ========================================================= */
+
+.topbar-icon-btn {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #65746d;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-icon-btn:hover {
+    background: #ffffff;
+
+    color: #2f8f68;
+
+    box-shadow:
+        0 5px 15px rgba(47, 143, 104, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.topbar-icon-btn > i {
+    font-size: 15px;
+}
+
+
+/* ================= NOTIFICATION ================= */
+
+.notification-badge {
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    min-width: 15px;
+    height: 15px;
+
+    padding: 0 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50px;
+
+    background: #2f8f68;
+
+    color: white;
+
+    border: 2px solid #f0f9f4;
+
+    font-size: 7px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.topbar-divider {
+    width: 1px;
+    height: 28px;
+
+    margin: 0 3px;
+
+    background: rgba(47, 143, 104, 0.13);
+}
+
+
+/* =========================================================
+   LANGUAGE
+   ========================================================= */
+
+.language-control {
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border: 1px solid rgba(47, 143, 104, 0.10);
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    color: #65746d;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.language-control:hover {
+    background: #ffffff;
+
+    border-color: rgba(47, 143, 104, 0.20);
+
+    color: #2f8f68;
+}
+
+
+.language-control > i:first-child {
+    font-size: 13px;
+}
+
+
+.language-select {
+    height: 30px;
+
+    padding: 0 1px;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #33413b;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+}
+
+
+.language-arrow {
+    font-size: 7px !important;
+
+    color: #93a29b;
+}
+
+
+/* =========================================================
+   TEACHER PROFILE
+   ========================================================= */
+
+.teacher-profile {
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 10px 0 6px;
+
+    border: 1px solid rgba(47, 143, 104, 0.11);
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.teacher-profile:hover {
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 18px rgba(47, 143, 104, 0.09);
+
+    transform: translateY(-1px);
+}
+
+
+/* ================= AVATAR ================= */
+
+.profile-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #d8f0e3,
+        #bfe4d1
+    );
+
+    color: #237452;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* ================= PROFILE TEXT ================= */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 1px;
+
+    line-height: 1.2;
+}
+
+
+.profile-info strong {
+    color: #26342e;
+
+    font-size: 11px;
+
+    font-weight: 750;
+}
+
+
+.profile-info span {
+    color: #829089;
+
+    font-size: 9px;
+
+    font-weight: 550;
+}
+
+
+.profile-arrow {
+    margin-left: 2px;
+
+    color: #93a29b;
+
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobile-menu-btn {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(47, 143, 104, 0.12);
+
+    border-radius: 11px;
+
+    background: #e7f5ed;
+
+    color: #2f8f68;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+
+.mobile-menu-btn:hover {
+    background: #2f8f68;
+
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .teacher-topbar {
+        padding: 0 22px;
+    }
+
+    .topbar-search {
+        min-width: 135px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .teacher-profile {
+        padding-right: 7px;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .teacher-topbar {
+        min-height: 78px;
+
+        padding: 0 16px;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .page-subtitle {
+        display: none;
+    }
+
+    .page-heading h1 {
+        font-size: 23px;
+    }
+
+    .topbar-search {
+        min-width: 42px;
+
+        width: 42px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .search-text,
+    .topbar-search kbd {
+        display: none;
+    }
+
+    .search-icon {
+        background: transparent;
+    }
+
+    .notification-btn,
+    .language-control {
+        width: 42px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .language-select {
+        display: none;
+    }
+
+    .language-arrow {
+        display: none;
+    }
+
+    .language-control > i:first-child {
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .teacher-topbar {
+        padding: 0 12px;
+    }
+
+    .topbar-actions {
+        gap: 5px;
+    }
+
+    .topbar-divider {
+        display: none;
+    }
+
+    .teacher-profile {
+        width: 42px;
+        height: 42px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .profile-arrow {
+        display: none;
+    }
+
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .page-breadcrumb {
+        display: none;
+    }
+
+    .page-heading h1 {
+        font-size: 21px;
+    }
 }
 
 
