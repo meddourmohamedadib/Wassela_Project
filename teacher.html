@@ -160,65 +160,234 @@
         <!-- ================= MAIN AREA ================= -->
         <main class="teacher-main">
 
-            <!-- Topbar -->
-            <header class="teacher-topbar">
+           <!-- ================= TOPBAR ================= -->
+<!-- ================= PROFESSIONAL TOPBAR ================= -->
+<header class="teacher-topbar">
 
-                <div class="topbar-left">
+    <!-- LEFT -->
+    <div class="topbar-left">
 
-                    <button
-                        class="mobile-menu-btn"
-                        id="mobileMenuBtn"
-                        type="button"
-                        aria-label="Open menu"
-                    >
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+        <!-- Mobile Menu -->
+        <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Open menu"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-                    <div class="page-heading">
-                        <span class="page-kicker">Teacher Space</span>
-                        <h1 id="pageTitle">Dashboard</h1>
-                    </div>
+        <div class="page-heading">
 
-                </div>
+            <!-- Breadcrumb -->
+            <div class="page-breadcrumb">
+                <span class="breadcrumb-main">
+                    Teacher Space
+                </span>
 
-                <div class="topbar-actions">
+                <i class="fa-solid fa-chevron-right"></i>
 
-                    <!-- Search -->
-                    <button
-                        class="topbar-icon-btn"
-                        type="button"
-                        title="Search"
-                        id="searchBtn"
-                    >
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
+                <span
+                    class="breadcrumb-current"
+                    id="currentPageLabel"
+                >
+                    Dashboard
+                </span>
+            </div>
 
-                    <!-- Notifications -->
-                    <button
-                        class="topbar-icon-btn notification-btn"
-                        type="button"
-                        title="Notifications"
-                        id="notificationBtn"
-                    >
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
+            <!-- Main title -->
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
 
-                    <!-- Language -->
-                    <select
-                        class="language-select"
-                        id="languageSelect"
-                        aria-label="Language"
-                    >
-                        <option value="en">EN</option>
-                        <option value="fr">FR</option>
-                        <option value="ar">AR</option>
-                    </select>
+            <p class="page-subtitle">
+                Manage your teaching space and activities
+            </p>
 
-                </div>
+        </div>
 
-            </header>
+    </div>
 
+
+    <!-- RIGHT -->
+    <div class="topbar-actions">
+
+        <!-- Search -->
+        <button
+            class="topbar-search"
+            type="button"
+            id="searchBtn"
+            title="Search"
+        >
+            <span class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+
+            <span class="search-text">
+                Search
+            </span>
+
+            <kbd>Ctrl K</kbd>
+        </button>
+
+
+        <!-- Notification -->
+        <button
+            class="topbar-icon-btn notification-btn"
+            type="button"
+            id="notificationBtn"
+            title="Notifications"
+            aria-label="Notifications"
+        >
+            <i class="fa-regular fa-bell"></i>
+
+            <span class="notification-badge">
+                3
+            </span>
+        </button>
+
+
+        <!-- Divider -->
+        <span class="topbar-divider"></span>
+
+
+        <!-- Language -->
+        <div class="language-control">
+
+            <i class="fa-solid fa-globe"></i>
+
+            <select
+                class="language-select"
+                id="languageSelect"
+                aria-label="Language"
+            >
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+                <option value="ar">AR</option>
+            </select>
+
+            <i class="fa-solid fa-chevron-down language-arrow"></i>
+
+        </div>
+
+
+        <!-- Teacher Profile -->
+        <button
+            class="teacher-profile"
+            type="button"
+            title="Teacher Profile"
+        >
+
+            <div class="profile-avatar">
+                TS
+            </div>
+
+            <div class="profile-info">
+                <strong>Teacher</strong>
+                <span>Wassla</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+        </button>
+
+    </div>
+<style>
+.teacher-topbar{
+  background: linear-gradient(135deg,#f7fcfa 0%,#eef8f3 100%) !important;
+  border-bottom:1px solid #dceee5 !important;
+  min-height:84px !important;
+  padding:14px 28px !important;
+  box-shadow:0 4px 18px rgba(38,90,65,.06) !important;
+}
+
+.teacher-topbar .page-breadcrumb{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  font-size:13px !important;
+  margin-bottom:4px !important;
+}
+
+.teacher-topbar .breadcrumb-main{
+  color:#6b8277 !important;
+}
+
+.teacher-topbar .breadcrumb-current{
+  color:#3d6b55 !important;
+  font-weight:600 !important;
+}
+
+.teacher-topbar .page-heading h1{
+  color:#193b2d !important;
+  font-size:25px !important;
+  font-weight:700 !important;
+  margin:0 !important;
+}
+
+.teacher-topbar .page-subtitle{
+  color:#789087 !important;
+  font-size:12px !important;
+  margin:3px 0 0 !important;
+}
+
+.teacher-topbar .topbar-actions{
+  background:transparent !important;
+  border:0 !important;
+  padding:0 !important;
+}
+
+.teacher-topbar .topbar-search{
+  height:42px !important;
+  min-width:155px !important;
+  background:#fff !important;
+  border:1px solid #dcebe3 !important;
+  border-radius:12px !important;
+  box-shadow:0 3px 10px rgba(38,90,65,.05) !important;
+}
+
+.teacher-topbar .topbar-icon-btn{
+  width:42px !important;
+  height:42px !important;
+  background:#fff !important;
+  border:1px solid #dcebe3 !important;
+  border-radius:12px !important;
+}
+
+.teacher-topbar .language-control{
+  height:42px !important;
+  background:#fff !important;
+  border:1px solid #dcebe3 !important;
+  border-radius:12px !important;
+  padding:0 10px !important;
+}
+
+.teacher-topbar .teacher-profile{
+  background:#fff !important;
+  border:1px solid #dcebe3 !important;
+  border-radius:12px !important;
+  padding:6px 10px !important;
+}
+
+.teacher-topbar .profile-avatar{
+  background:#dcefe5 !important;
+  color:#32634d !important;
+  width:34px !important;
+  height:34px !important;
+  border-radius:10px !important;
+}
+
+.teacher-topbar .profile-info strong{
+  color:#244b39 !important;
+}
+
+.teacher-topbar .profile-info span{
+  color:#82958c !important;
+}
+</style>
+</header>
+
+      
 
             <!-- ================= CONTENT ================= -->
             <div class="teacher-content">
