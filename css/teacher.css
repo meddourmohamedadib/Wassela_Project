@@ -169,17 +169,7 @@ ul {
 }
 
 .brand-link::after {
-    content: "Teacher Space";
-
-    position: absolute;
-
-    left: 76px;
-    top: 46px;
-
-    color: var(--text-secondary);
-
-    font-size: 11px;
-    font-weight: 600;
+    content: none !important;
 }
 /* Profile */
 
@@ -2756,19 +2746,41 @@ ul {
     gap: 12px !important;
 }
 
-/* ===== WASSLA LIGHT LOGO — FINAL ===== */
+/* =========================================================
+   WASSLA — FINAL LIGHT LOGO
+   ========================================================= */
 
+/* Remove duplicated Teacher Space */
+.sidebar-brand .brand-link::after {
+    content: none !important;
+}
+
+/* Brand alignment */
+.sidebar-brand .brand-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* Elegant logo box */
 .sidebar-brand .sidebar-logo {
-    width: 58px !important;
-    height: 58px !important;
+    width: 56px !important;
+    height: 56px !important;
+
     object-fit: contain !important;
 
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
+    background: #eef8f3 !important;
 
-    /* اللون الفاتح تاع Wassla */
+    border: 1px solid #d7ebe1 !important;
+
+    border-radius: 14px !important;
+
+    padding: 7px !important;
+
+    box-shadow:
+        0 4px 12px rgba(47, 143, 104, 0.10) !important;
+
+    /* Light Wassla logo */
     filter: brightness(0) saturate(100%)
             invert(56%)
             sepia(22%)
@@ -2776,5 +2788,4 @@ ul {
             hue-rotate(105deg)
             brightness(96%)
             contrast(88%) !important;
-}
 }
