@@ -2747,40 +2747,70 @@ ul {
 }
 
 /* =========================================================
-   WASSLA — LIGHT LOGO
+   WASSLA — LIGHT ARABIC LOGO
    ========================================================= */
 
+/* منع تكرار Teacher Space */
 .sidebar-brand .brand-link::after {
     content: none !important;
 }
 
+/* ترتيب الشعار والنص */
 .sidebar-brand .brand-link {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
 }
 
-/* Elegant light logo box */
+/* صندوق الشعار */
 .sidebar-brand .sidebar-logo {
-    width: 56px !important;
-    height: 56px !important;
+    width: 58px !important;
+    height: 58px !important;
 
+    display: block !important;
     object-fit: contain !important;
 
     background: #f1faf6 !important;
-    border: 1px solid #dcefe6 !important;
-    border-radius: 14px !important;
+
+    border: 1px solid #d8eee4 !important;
+    border-radius: 16px !important;
 
     padding: 7px !important;
 
-    box-shadow: 0 4px 12px rgba(47, 143, 104, 0.08) !important;
+    box-shadow:
+        0 4px 14px rgba(47, 143, 104, 0.10) !important;
 
-    /* يجعل Logo "وصلة" أخضر فاتح */
-    filter: brightness(0) saturate(100%)
-            invert(57%)
-            sepia(18%)
-            saturate(650%)
-            hue-rotate(105deg)
-            brightness(105%)
-            contrast(82%) !important;
+    /* وصلة بلون أخضر فاتح وأنيق */
+    filter:
+        brightness(0)
+        saturate(100%)
+        invert(59%)
+        sepia(17%)
+        saturate(650%)
+        hue-rotate(105deg)
+        brightness(103%)
+        contrast(82%) !important;
+}
+
+/* اسم المنصة */
+.sidebar-brand .brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+    line-height: 1.15 !important;
+}
+
+.sidebar-brand .brand-text strong {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    color: #2f8f68 !important;
+    letter-spacing: -0.3px !important;
+}
+
+.sidebar-brand .brand-text span {
+    display: block !important;
+    margin-top: 3px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #71847b !important;
+    letter-spacing: 0.2px !important;
 }
