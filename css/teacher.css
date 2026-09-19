@@ -322,7 +322,7 @@ ul {
 .teacher-topbar {
     height: 76px;
 
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.98);
 
     border-bottom: 1px solid var(--border);
 
@@ -336,6 +336,8 @@ ul {
     top: 0;
 
     z-index: 100;
+
+    box-shadow: 0 2px 12px rgba(31, 41, 51, 0.04);
 }
 
 .topbar-left {
@@ -357,11 +359,11 @@ ul {
 }
 
 .page-heading {
-    font-size: 22px;
-    font-weight: 750;
-    letter-spacing: -0.4px;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
 }
-
 .page-kicker {
     color: var(--text-secondary);
     font-size: 13px;
@@ -370,9 +372,16 @@ ul {
 .topbar-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
+    gap: 8px;
 
+    padding: 5px;
+
+    background: #f7f9f8;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+}
 .topbar-icon-btn {
     position: relative;
 
