@@ -5,7 +5,7 @@
    Supports existing teacher.html / teacher.js class names
    ========================================================= */
 
-/* 1. Design tokens and reset */
+/* 1. Design tokens and reset */ 
 :root {
     --wassla-green: #2f8f68;
     --wassla-green-dark: #237052;
