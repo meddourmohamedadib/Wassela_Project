@@ -2971,3 +2971,132 @@ html[dir="rtl"] .toast {
         transform: none;
     }
 }
+
+/* ==========================================
+   WASSLA — MAGICAL LIGHT PARTICLES
+   ========================================== */
+
+#dashboard .wassla-model-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Particles layer */
+#dashboard .wassla-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Individual light particles */
+#dashboard .wassla-particles span {
+    position: absolute;
+    bottom: 27%;
+    left: 50%;
+
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+
+    background: #eafff2;
+    box-shadow:
+        0 0 6px #ffffff,
+        0 0 12px #65ffac,
+        0 0 22px #19e88a;
+
+    opacity: 0;
+    animation: wasslaParticleRise 3.8s ease-out infinite;
+}
+
+/* Different starting positions and timings */
+#dashboard .wassla-particles span:nth-child(1) {
+    --drift: -65px;
+    animation-delay: 0s;
+}
+
+#dashboard .wassla-particles span:nth-child(2) {
+    --drift: 48px;
+    animation-delay: .5s;
+}
+
+#dashboard .wassla-particles span:nth-child(3) {
+    --drift: -30px;
+    animation-delay: 1s;
+}
+
+#dashboard .wassla-particles span:nth-child(4) {
+    --drift: 75px;
+    animation-delay: 1.4s;
+}
+
+#dashboard .wassla-particles span:nth-child(5) {
+    --drift: -85px;
+    animation-delay: 1.8s;
+}
+
+#dashboard .wassla-particles span:nth-child(6) {
+    --drift: 20px;
+    animation-delay: 2.2s;
+}
+
+#dashboard .wassla-particles span:nth-child(7) {
+    --drift: -48px;
+    animation-delay: 2.6s;
+}
+
+#dashboard .wassla-particles span:nth-child(8) {
+    --drift: 90px;
+    animation-delay: 3s;
+}
+
+#dashboard .wassla-particles span:nth-child(9) {
+    --drift: -15px;
+    animation-delay: .8s;
+}
+
+#dashboard .wassla-particles span:nth-child(10) {
+    --drift: 58px;
+    animation-delay: 1.7s;
+}
+
+#dashboard .wassla-particles span:nth-child(11) {
+    --drift: -100px;
+    animation-delay: 2.5s;
+}
+
+#dashboard .wassla-particles span:nth-child(12) {
+    --drift: 5px;
+    animation-delay: 3.2s;
+}
+
+/* Light rises from the book */
+@keyframes wasslaParticleRise {
+    0% {
+        transform: translate(0, 0) scale(.3);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+        transform: translate(0, -15px) scale(1);
+    }
+
+    70% {
+        opacity: .8;
+    }
+
+    100% {
+        transform: translate(var(--drift), -145px) scale(.15);
+        opacity: 0;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    #dashboard .wassla-particles span {
+        animation: none;
+        opacity: 0;
+    }
+}
