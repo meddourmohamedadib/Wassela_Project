@@ -1966,165 +1966,60 @@ html[dir="rtl"] .toast {
     }
 }
 
-/* =====================================================
-   WASSLA — PREMIUM SIDEBAR POLISH
-   Logo balance + uniform navigation
-   ===================================================== */
 
-/* Brand area */
+/* WASSLA — FINAL SIZE ADJUSTMENTS */
+
+/* Logo: smaller, fully visible */
 .teacher-sidebar .sidebar-brand {
-    min-height: 112px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #f0faf4, #ffffff);
-    border-bottom: 1px solid #e7f0ea;
+    min-height: 100px;
+    height: 100px;
+    padding: 8px 12px;
 }
 
-/* Logo alignment and size */
 .teacher-sidebar .sidebar-brand .brand-link {
     width: 100%;
-    min-width: 0;
-    padding: 4px;
+    height: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
-    border-radius: 12px;
 }
 
 .teacher-sidebar .sidebar-brand .sidebar-logo {
     display: block;
-    width: 148px;
-    height: 62px;
-    min-height: 0;
+    width: 125px;
+    height: 68px;
     max-width: 100%;
+    min-height: 0;
     padding: 0;
     object-fit: contain;
-    border: 0;
-    border-radius: 0;
     flex: 0 0 auto;
 }
 
-/* Small brand subtitle */
-.teacher-sidebar .brand-text {
-    text-align: center;
-    line-height: 1.2;
-}
-
-.teacher-sidebar .brand-text strong {
-    display: none;
-}
-
-.teacher-sidebar .brand-text span {
-    display: block;
-    margin: 0;
-    color: #81958a;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-}
-
-/* Profile card */
-.teacher-sidebar .sidebar-profile {
-    min-height: 64px;
-    margin: 14px 14px 12px;
-    padding: 11px 13px;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    border: 1px solid #e0eee5;
-    border-radius: 15px;
-    background: linear-gradient(135deg, #f5fbf7, #edf7f1);
-    box-shadow: 0 3px 12px rgba(35, 112, 82, .045);
-}
-
-/* Navigation spacing */
-.teacher-sidebar .sidebar-nav {
-    padding: 8px 14px 20px;
-}
-
-/* Section labels */
-.teacher-sidebar .nav-label {
-    margin: 15px 8px 8px;
-    color: #91a198;
-    font-size: 10px;
+/* Dashboard title: slightly smaller */
+.teacher-topbar .page-heading h1 {
+    font-size: 21px;
+    line-height: 1.25;
     font-weight: 800;
-    letter-spacing: 1.2px;
-    line-height: 1.4;
 }
 
-/* Every navigation button has exactly the same width */
-.teacher-sidebar .nav-item {
-    width: 100%;
-    min-width: 0;
-    min-height: 46px;
-    margin: 5px 0;
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
-    border: 1px solid transparent;
-    border-radius: 13px;
-    background: #f5f7f5;
-    color: #61736a;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: left;
-    transition: all .22s ease;
-}
-
-.teacher-sidebar .nav-item i {
-    width: 19px;
-    min-width: 19px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.teacher-sidebar .nav-item span {
-    flex: 1;
-    min-width: 0;
-}
-
-.teacher-sidebar .nav-item:hover {
+/* Hamburger button: remove the oversized rectangle */
+.teacher-topbar .mobile-menu-btn {
+    width: 42px;
+    min-width: 42px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dce9e1;
+    border-radius: 10px;
+    background: #f5faf7;
     color: #237052;
+    font-size: 15px;
+    box-shadow: none;
+}
+
+.teacher-topbar .mobile-menu-btn:hover {
     background: #eaf7f1;
-    border-color: #d8ecdf;
-    transform: translateX(2px);
+    border-color: #bcdcc9;
 }
-
-.teacher-sidebar .nav-item.active {
-    color: #ffffff;
-    background: linear-gradient(115deg, #2f9870, #237052);
-    border-color: transparent;
-    box-shadow: 0 6px 15px rgba(35, 112, 82, .19);
-}
-
-.teacher-sidebar .nav-item.active:hover {
-    color: #ffffff;
-    background: linear-gradient(115deg, #278661, #1e6549);
-}
-
-/* Keyboard accessibility */
-.teacher-sidebar .nav-item:focus-visible {
-    outline: 3px solid rgba(47, 143, 104, .25);
-    outline-offset: 2px;
-}
-
-/* Responsive logo and sidebar */
-@media (max-width: 768px) {
-    .teacher-sidebar .sidebar-brand .sidebar-logo {
-        width: 125px;
-        height: 54px;
-    }
-
-    .teacher-sidebar .nav-item {
-        min-height: 44px;
-    }
-}
-
