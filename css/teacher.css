@@ -2521,3 +2521,203 @@ html[dir="rtl"] .toast {
         grid-template-columns: 1fr;
     }
 }
+
+/* =====================================================
+   WASSLA — FINAL PREMIUM FINISHING TOUCHES
+   ===================================================== */
+
+/* 1. Welcome title: elegant and balanced */
+.welcome-card h2 {
+    font-size: clamp(25px, 2.2vw, 31px);
+    line-height: 1.3;
+    font-weight: 850;
+    letter-spacing: -.5px;
+    margin-bottom: 16px;
+}
+
+.welcome-card p {
+    max-width: 440px;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* 2. Statistics: four perfectly equal cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: 22px;
+    width: 100%;
+}
+
+.stats-grid .stat-card {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 128px;
+    height: 100%;
+    padding: 19px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+    background: #fff;
+    border: 1px solid #dfede5;
+    border-radius: 18px;
+    box-shadow: 0 5px 18px rgba(20, 70, 45, .045);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.stats-grid .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(7, 91, 67, .10);
+}
+
+.stats-grid .stat-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    color: #07845b;
+    background: #e7f6ed;
+    font-size: 19px;
+}
+
+.stats-grid .stat-info {
+    min-width: 0;
+}
+
+.stats-grid .stat-info span {
+    display: block;
+    color: #75877d;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.stats-grid .stat-info strong {
+    display: block;
+    margin: 3px 0;
+    color: #18392b;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.stats-grid .stat-info small {
+    display: block;
+    color: #7a8d82;
+    font-size: 10px;
+}
+
+/* 3. 3D book: soft emerald glow */
+.wassla-model-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 18% 25%, rgba(190,255,218,.55) 1px, transparent 3px),
+        radial-gradient(circle at 82% 22%, rgba(190,255,218,.5) 1px, transparent 3px),
+        radial-gradient(circle at 75% 75%, rgba(190,255,218,.4) 1px, transparent 3px),
+        radial-gradient(ellipse at center, rgba(85,255,174,.16), transparent 72%),
+        rgba(255,255,255,.09);
+    border: 1px solid rgba(220,255,235,.3);
+    box-shadow:
+        0 12px 32px rgba(0,0,0,.10),
+        inset 0 0 30px rgba(142,255,194,.07);
+    animation: wasslaCardGlow 4s ease-in-out infinite alternate;
+}
+
+/* Light aura behind the actual 3D model */
+.wassla-model-card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 65%;
+    height: 65%;
+    top: 17%;
+    left: 17%;
+    border-radius: 50%;
+    background: rgba(72,255,170,.75);
+    filter: blur(65px);
+    opacity: .30;
+    pointer-events: none;
+    animation: wasslaBookAura 3.5s ease-in-out infinite alternate;
+}
+
+/* Keep the light ring subtle */
+.wassla-model-card::after {
+    opacity: .55;
+    pointer-events: none;
+}
+
+.wassla-model-card model-viewer {
+    position: relative;
+    z-index: 2;
+    filter:
+        drop-shadow(0 8px 8px rgba(0,0,0,.16))
+        drop-shadow(0 0 12px rgba(126,255,186,.22));
+}
+
+/* 4. Gentle glow animations */
+@keyframes wasslaCardGlow {
+    from {
+        box-shadow:
+            0 12px 28px rgba(0,0,0,.09),
+            inset 0 0 20px rgba(142,255,194,.04);
+    }
+    to {
+        box-shadow:
+            0 14px 36px rgba(0,0,0,.12),
+            0 0 24px rgba(105,255,174,.14),
+            inset 0 0 30px rgba(142,255,194,.10);
+    }
+}
+
+@keyframes wasslaBookAura {
+    from {
+        opacity: .20;
+        transform: scale(.85);
+    }
+    to {
+        opacity: .48;
+        transform: scale(1.15);
+    }
+}
+
+/* 5. Responsive statistics */
+@media (max-width: 1050px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stats-grid .stat-card {
+        min-height: 105px;
+    }
+
+    .welcome-card h2 {
+        font-size: 25px;
+    }
+}
+
+/* Respect reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .wassla-model-card,
+    .wassla-model-card::before {
+        animation: none;
+    }
+
+    .stats-grid .stat-card {
+        transition: none;
+    }
+}
