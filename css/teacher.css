@@ -2721,3 +2721,148 @@ html[dir="rtl"] .toast {
         transition: none;
     }
 }
+
+/* =====================================================
+   WASSLA — VERIFIED FINAL FIX
+   Matches the actual teacher.html markup
+   ===================================================== */
+
+/* Welcome heading: actual HTML uses h2 */
+.welcome-card .welcome-content h2 {
+    color: #ffffff;
+    font-size: clamp(25px, 2.1vw, 31px);
+    font-weight: 850;
+    line-height: 1.35;
+    letter-spacing: -.4px;
+    margin: 0 0 16px;
+}
+
+.welcome-card .welcome-content h2 span {
+    color: #c5ffdc;
+}
+
+/* Statistics: four equal columns */
+#dashboard .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: 16px;
+    width: 100%;
+}
+
+#dashboard .stats-grid .stat-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 132px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #dcece2;
+    box-shadow: 0 5px 18px rgba(7, 91, 67, .06);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#dashboard .stats-grid .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(7, 91, 67, .12);
+}
+
+#dashboard .stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: #e5f6ec;
+    color: #07845b;
+}
+
+#dashboard .stat-card .stat-info {
+    min-width: 0;
+}
+
+#dashboard .stat-card .stat-info strong {
+    font-size: 24px;
+    font-weight: 900;
+    color: #173c2d;
+}
+
+/* Actual 3D book: visible glow */
+#dashboard .wassla-model-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 55%,
+            rgba(106,255,179,.28),
+            transparent 65%),
+        rgba(255,255,255,.10);
+    border: 1px solid rgba(220,255,235,.38);
+    box-shadow:
+        0 0 22px rgba(92,255,174,.16),
+        0 12px 30px rgba(0,0,0,.12),
+        inset 0 0 30px rgba(142,255,194,.12);
+    animation: wasslaFinalGlow 3.5s ease-in-out infinite alternate;
+}
+
+#dashboard .wassla-model-card::before {
+    content: "";
+    position: absolute;
+    inset: 15% 12%;
+    z-index: 0;
+    border-radius: 50%;
+    background: rgba(78,255,169,.38);
+    filter: blur(55px);
+    pointer-events: none;
+    animation: wasslaFinalAura 3s ease-in-out infinite alternate;
+}
+
+#dashboard .wassla-model-card model-viewer {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 260px;
+    background: transparent;
+    filter:
+        drop-shadow(0 9px 9px rgba(0,0,0,.18))
+        drop-shadow(0 0 13px rgba(125,255,185,.35));
+}
+
+@keyframes wasslaFinalGlow {
+    from {
+        box-shadow: 0 0 15px rgba(92,255,174,.12),
+                    0 12px 30px rgba(0,0,0,.10);
+    }
+    to {
+        box-shadow: 0 0 32px rgba(92,255,174,.30),
+                    0 12px 35px rgba(0,0,0,.13);
+    }
+}
+
+@keyframes wasslaFinalAura {
+    from { opacity: .35; transform: scale(.9); }
+    to { opacity: .8; transform: scale(1.1); }
+}
+
+/* Keep four cards on desktop, two on tablet, one on mobile */
+@media (max-width: 1200px) {
+    #dashboard .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    #dashboard .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    #dashboard .stats-grid .stat-card {
+        min-height: 110px;
+    }
+}
