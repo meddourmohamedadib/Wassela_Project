@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
     <title>Wassla — Teacher Dashboard</title>
 
@@ -19,11 +19,16 @@
 
     <!-- Teacher Styles -->
     <link rel="stylesheet" href="css/teacher.css">
+   <!-- 3D Book Viewer -->
+<script
+    type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js">
+</script> 
 </head>
 
 <body>
 
-    <!-- =====================================================
+   <!--=====================================================
          TEACHER DASHBOARD
          Frontend Prototype — No Backend / No Database
     ====================================================== -->
@@ -35,7 +40,7 @@
 
             <!-- Brand -->
             <div class="sidebar-brand">
-                <a href="landing.html" class="brand-link">
+               <a href="https://meddourmohamedadib.github.io/Wassela_Project/landing.html" class="brand-link"> 
                     <img
     src="assets/images/logo.png"
     alt="Wassla Logo"
@@ -147,7 +152,7 @@
                     <span>Settings</span>
                 </button>
 
-                <a href="index.html" class="logout-item">
+                <a href="https://meddourmohamedadib.github.io/Wassela_Project/index.html" class="logout-item">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Back to Login</span>
                 </a>
@@ -162,12 +167,12 @@
 
            <!-- ================= TOPBAR ================= -->
 <!-- ================= PROFESSIONAL TOPBAR ================= -->
+
+
+<!-- ================= TOPBAR ================= -->
 <header class="teacher-topbar">
 
-    <!-- LEFT -->
     <div class="topbar-left">
-
-        <!-- Mobile Menu -->
         <button
             class="mobile-menu-btn"
             id="mobileMenuBtn"
@@ -178,41 +183,21 @@
         </button>
 
         <div class="page-heading">
-
-            <!-- Breadcrumb -->
             <div class="page-breadcrumb">
-                <span class="breadcrumb-main">
-                    Teacher Space
-                </span>
-
+                <span class="breadcrumb-main">Teacher Space</span>
                 <i class="fa-solid fa-chevron-right"></i>
-
-                <span
-                    class="breadcrumb-current"
-                    id="currentPageLabel"
-                >
-                    Dashboard
-                </span>
+                <span class="breadcrumb-current" id="currentPageLabel">Dashboard</span>
             </div>
 
-            <!-- Main title -->
-            <h1 id="pageTitle">
-                Dashboard
-            </h1>
+            <h1 id="pageTitle">Dashboard</h1>
 
             <p class="page-subtitle">
                 Manage your teaching space and activities
             </p>
-
         </div>
-
     </div>
 
-
-    <!-- RIGHT -->
     <div class="topbar-actions">
-
-        <!-- Search -->
         <button
             class="topbar-search"
             type="button"
@@ -222,16 +207,10 @@
             <span class="search-icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </span>
-
-            <span class="search-text">
-                Search
-            </span>
-
+            <span class="search-text">Search</span>
             <kbd>Ctrl K</kbd>
         </button>
 
-
-        <!-- Notification -->
         <button
             class="topbar-icon-btn notification-btn"
             type="button"
@@ -240,20 +219,12 @@
             aria-label="Notifications"
         >
             <i class="fa-regular fa-bell"></i>
-
-            <span class="notification-badge">
-                3
-            </span>
+            <span class="notification-badge">3</span>
         </button>
 
-
-        <!-- Divider -->
         <span class="topbar-divider"></span>
 
-
-        <!-- Language -->
         <div class="language-control">
-
             <i class="fa-solid fa-globe"></i>
 
             <select
@@ -267,20 +238,14 @@
             </select>
 
             <i class="fa-solid fa-chevron-down language-arrow"></i>
-
         </div>
 
-
-        <!-- Teacher Profile -->
         <button
             class="teacher-profile"
             type="button"
             title="Teacher Profile"
         >
-
-            <div class="profile-avatar">
-                TS
-            </div>
+            <div class="profile-avatar">TS</div>
 
             <div class="profile-info">
                 <strong>Teacher</strong>
@@ -288,106 +253,11 @@
             </div>
 
             <i class="fa-solid fa-chevron-down profile-arrow"></i>
-
         </button>
-
     </div>
-<style>
-.teacher-topbar{
-  background: linear-gradient(135deg,#f7fcfa 0%,#eef8f3 100%) !important;
-  border-bottom:1px solid #dceee5 !important;
-  min-height:84px !important;
-  padding:14px 28px !important;
-  box-shadow:0 4px 18px rgba(38,90,65,.06) !important;
-}
 
-.teacher-topbar .page-breadcrumb{
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-  font-size:13px !important;
-  margin-bottom:4px !important;
-}
-
-.teacher-topbar .breadcrumb-main{
-  color:#6b8277 !important;
-}
-
-.teacher-topbar .breadcrumb-current{
-  color:#3d6b55 !important;
-  font-weight:600 !important;
-}
-
-.teacher-topbar .page-heading h1{
-  color:#193b2d !important;
-  font-size:25px !important;
-  font-weight:700 !important;
-  margin:0 !important;
-}
-
-.teacher-topbar .page-subtitle{
-  color:#789087 !important;
-  font-size:12px !important;
-  margin:3px 0 0 !important;
-}
-
-.teacher-topbar .topbar-actions{
-  background:transparent !important;
-  border:0 !important;
-  padding:0 !important;
-}
-
-.teacher-topbar .topbar-search{
-  height:42px !important;
-  min-width:155px !important;
-  background:#fff !important;
-  border:1px solid #dcebe3 !important;
-  border-radius:12px !important;
-  box-shadow:0 3px 10px rgba(38,90,65,.05) !important;
-}
-
-.teacher-topbar .topbar-icon-btn{
-  width:42px !important;
-  height:42px !important;
-  background:#fff !important;
-  border:1px solid #dcebe3 !important;
-  border-radius:12px !important;
-}
-
-.teacher-topbar .language-control{
-  height:42px !important;
-  background:#fff !important;
-  border:1px solid #dcebe3 !important;
-  border-radius:12px !important;
-  padding:0 10px !important;
-}
-
-.teacher-topbar .teacher-profile{
-  background:#fff !important;
-  border:1px solid #dcebe3 !important;
-  border-radius:12px !important;
-  padding:6px 10px !important;
-}
-
-.teacher-topbar .profile-avatar{
-  background:#dcefe5 !important;
-  color:#32634d !important;
-  width:34px !important;
-  height:34px !important;
-  border-radius:10px !important;
-}
-
-.teacher-topbar .profile-info strong{
-  color:#244b39 !important;
-}
-
-.teacher-topbar .profile-info span{
-  color:#82958c !important;
-}
-</style>
 </header>
 
-      
 
             <!-- ================= CONTENT ================= -->
             <div class="teacher-content">
@@ -432,16 +302,58 @@
 
                         </div>
 
-                        <div class="welcome-visual">
-                            <div class="welcome-icon">
-                                <i class="fa-solid fa-chalkboard-user"></i>
-                            </div>
-                        </div>
 
-                    </div>
+<div class="welcome-visual">
+    <div class="wassla-model-card">
 
+        <model-viewer
+            id="wasslaBookModel"
+            src="assets/open-notebook.glb"
+            alt="Interactive 3D open book for Wassla"
+            camera-controls
+            auto-rotate
+            rotation-per-second="15deg"
+            shadow-intensity="1"
+            exposure="1.1"
+            environment-image="neutral"
+            interaction-prompt="auto"
+            loading="eager">
+        
+        </model-viewer>
 
-                    <!-- Statistics -->
+        <!-- WASSLA LIGHT PARTICLES -->
+        <div class="wassla-particles" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+
+    <div class="welcome-book-brand">
+        <strong>WASSLA</strong>
+        <span>KNOWLEDGE IN MOTION</span>
+        <span class="interactive-3d-badge">
+            <i class="fa-solid fa-cube"></i>
+            Interactive 3D
+        </span>
+   
+    </div>
+</div>
+
+</div> <!-- End of welcome-card -->
+
+<!-- Statistics -->
+
                     <div class="stats-grid">
 
                         <div class="stat-card">
@@ -856,7 +768,7 @@
                                 <div class="course-progress">
                                     <div>
                                         <span>Student progress</span>
-                                        <strong>82%</strong>
+                                      <strong>82%</strong>
                                     </div>
 
                                     <div class="progress-bar">
@@ -1006,14 +918,14 @@
                                         Category
                                     </label>
 
-                                    <select id="courseCategory">
-                                        <option value="">Select category</option>
-                                        <option>Artificial Intelligence</option>
-                                        <option>Programming</option>
-                                        <option>Mathematics</option>
-                                        <option>Computer Science</option>
-                                        <option>Other</option>
-                                    </select>
+                                  <select id="courseCategory">
+    <option value="">Select category</option>
+    <option value="Artificial Intelligence">Artificial Intelligence</option>
+    <option value="Programming">Programming</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="Other">Other</option>
+</select> 
                                 </div>
 
 
@@ -1022,12 +934,12 @@
                                         Level
                                     </label>
 
-                                    <select id="courseLevel">
-                                        <option value="">Select level</option>
-                                        <option>Beginner</option>
-                                        <option>Intermediate</option>
-                                        <option>Advanced</option>
-                                    </select>
+                                   <select id="courseLevel">
+    <option value="">Select level</option>
+    <option value="Beginner">Beginner</option>
+    <option value="Intermediate">Intermediate</option>
+    <option value="Advanced">Advanced</option>
+</select>
                                 </div>
 
 
@@ -1758,7 +1670,7 @@
                     <strong id="previewDuration">—</strong>
                 </div>
 
-            </div>
+            </div> 
 
             <div class="prototype-note">
                 <i class="fa-solid fa-circle-info"></i>
@@ -1788,8 +1700,9 @@
     </div>
 
 
-    <!-- Teacher JavaScript -->
-    <script src="js/teacher.js"></script>
+<!-- Teacher JavaScript -->
+<script src="js/teacher.js"></script>
 
 </body>
 </html>
+   
