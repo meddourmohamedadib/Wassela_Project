@@ -182,8 +182,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "Language changed to":
                 "Language changed to",
 
-            "Course is ready to manage.":
-                "Course is ready to manage."
+           "Course is ready to manage.":
+    "Course is ready to manage.",
+
+"Course updated successfully!":
+    "Course updated successfully!",
+
+"Course not found. Please try again.":
+    "Course not found. Please try again.",
+
+"This is a demo course and cannot be edited yet.":
+    "This is a demo course and cannot be edited yet.",
+
         },
 
         /* ---------------- FRENCH ---------------- */
@@ -297,10 +307,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "Language changed to":
                 "Langue changée en",
 
-            "Course is ready to manage.":
-                "Le cours est prêt à être géré."
-        },
+           "Course is ready to manage.":
+    "Le cours est prêt à être géré.",
 
+"Course updated successfully!":
+    "Cours modifié avec succès !",
+
+"Course not found. Please try again.":
+    "Cours introuvable. Veuillez réessayer.",
+
+"This is a demo course and cannot be edited yet.":
+    "Ce cours de démonstration ne peut pas encore être modifié.",
+        },
         /* ---------------- ARABIC ---------------- */
 
         ar: {
@@ -472,11 +490,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             "Language changed to":
                 "تم تغيير اللغة إلى",
+"Course is ready to manage.":
+    "الدورة جاهزة للإدارة.",
 
-            "Course is ready to manage.":
-                "الدورة جاهزة للإدارة."
-        }
-    };
+"Course updated successfully!":
+    "تم تعديل الدورة بنجاح!",
+
+"Course not found. Please try again.":
+    "لم يتم العثور على الدورة. يرجى المحاولة مجددًا.",
+
+"This is a demo course and cannot be edited yet.":
+    "لا يمكن تعديل هذه الدورة التجريبية حاليًا.",
+           },
+};
 
     /* =========================================================
        BUILD REVERSE TRANSLATION MAP
@@ -684,10 +710,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     ar: "الرياضيات"
                 },
                 "Computer Science": {
-                    en: "Computer Science",
-                    fr: "Informatique",
-                    ar: "علوم الحاسوب"
-                }
+    en: "Computer Science",
+    fr: "Informatique",
+    ar: "علوم الحاسوب"
+},
+"Other": {
+    en: "Other",
+    fr: "Autre",
+    ar: "أخرى"
+},
+"Select category": {
+    en: "Select category",
+    fr: "Sélectionner une catégorie",
+    ar: "اختر الفئة"
+}
+  
             }
         );
 
@@ -704,11 +741,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     fr: "Intermédiaire",
                     ar: "متوسط"
                 },
-                "Advanced": {
-                    en: "Advanced",
-                    fr: "Avancé",
-                    ar: "متقدم"
-                }
+              "Advanced": {
+    en: "Advanced",
+    fr: "Avancé",
+    ar: "متقدم"
+},
+"Select level": {
+    en: "Select level",
+    fr: "Sélectionner un niveau",
+    ar: "اختر المستوى"
+} 
             }
         );
 
@@ -1166,8 +1208,9 @@ document.addEventListener("DOMContentLoaded", () => {
        COURSE STORAGE
        ========================================================= */
 
-    const STORAGE_KEY =
-        "wassla_teacher_courses";
+    const STORAGE_KEY = "wassla_teacher_courses";
+
+let editingCourseId = null;
 
     function getCourses() {
 
@@ -1406,29 +1449,57 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
         `;
 
-        const actionButton =
-            $(".course-action", article);
+const actionButton = $(".course-action", article);
 
-        if (actionButton) {
+if (actionButton) {
+    actionButton.setAttribute(
+        "aria-label",
+        getCourseLabel("Edit Course")
+    );
 
-            actionButton.addEventListener(
-                "click",
-                () => {
+    actionButton.title =
+        getCourseLabel("Edit Course");
 
-                    showToast(
-                        `${course.title} ${
-                            getCourseLabel(
-                                "Course is ready to manage."
-                            )
-                        }`
-                    );
-                }
+    actionButton.addEventListener("click", () => {
+        if (course.id == null) {
+            showToast(
+                translateText(
+                    "This is a demo course and cannot be edited yet."
+                )
             );
+            return;
         }
 
-        return article;
+        editingCourseId = course.id;
+
+        $("#courseTitle").value = course.title || "";
+        $("#courseCategory").value = course.category || "";
+        $("#courseLevel").value = course.level || "";
+        $("#courseDescription").value = course.description || "";
+        $("#lessonCount").value = course.lessons || "";
+        $("#courseDuration").value = course.duration || "";
+
+        const form = $("#courseForm");
+        const submitButton = form?.querySelector(
+            'button[type="submit"]'
+        );
+
+        if (submitButton) {
+            submitButton.innerHTML =
+                `<i class="fa-solid fa-floppy-disk"></i> ${
+                    escapeHTML(getCourseLabel("Save Changes"))
+                }`;
+        }
+
+        showSection("create-course");
+        $("#courseTitle")?.focus();
+    });
+}
+
+return article;
     }
 
+       
     /* =========================================================
        REFRESH COURSE CARDS
        ========================================================= */
@@ -1676,158 +1747,123 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    /* =========================================================
-       CREATE COURSE
-       ========================================================= */
+   
+/* =========================================================
+   CREATE / EDIT COURSE
+   ========================================================= */
 
-    if (courseForm) {
+if (courseForm) {
+    courseForm.addEventListener("submit", (event) => {
+        event.preventDefault();
 
-        courseForm.addEventListener(
-            "submit",
-            (event) => {
+        const course = getCourseFormData();
 
-                event.preventDefault();
+        if (!course.title) {
+            showToast(translateText("Please enter a course title."));
+            $("#courseTitle")?.focus();
+            return;
+        }
 
-                const course =
-                    getCourseFormData();
+        if (!course.category) {
+            showToast(translateText("Please select a category."));
+            $("#courseCategory")?.focus();
+            return;
+        }
 
-                if (!course.title) {
+        if (!course.level) {
+            showToast(translateText("Please select a level."));
+            $("#courseLevel")?.focus();
+            return;
+        }
 
-                    showToast(
-                        translateText(
-                            "Please enter a course title."
-                        )
-                    );
+        if (!course.description) {
+            showToast(translateText("Please enter a course description."));
+            $("#courseDescription")?.focus();
+            return;
+        }
 
-                    $("#courseTitle")?.focus();
+        if (!course.lessons) {
+            showToast(translateText("Please enter the number of lessons."));
+            $("#lessonCount")?.focus();
+            return;
+        }
 
-                    return;
-                }
+        if (!course.duration) {
+            showToast(translateText("Please enter the estimated duration."));
+            $("#courseDuration")?.focus();
+            return;
+        }
 
-                if (!course.category) {
+        const courses = getCourses();
 
-                    showToast(
-                        translateText(
-                            "Please select a category."
-                        )
-                    );
+        if (editingCourseId !== null) {
+            const index = courses.findIndex(
+                (item) => item.id === editingCourseId
+            );
 
-                    $("#courseCategory")?.focus();
-
-                    return;
-                }
-
-                if (!course.level) {
-
-                    showToast(
-                        translateText(
-                            "Please select a level."
-                        )
-                    );
-
-                    $("#courseLevel")?.focus();
-
-                    return;
-                }
-
-                if (!course.description) {
-
-                    showToast(
-                        translateText(
-                            "Please enter a course description."
-                        )
-                    );
-
-                    $("#courseDescription")?.focus();
-
-                    return;
-                }
-
-                if (!course.lessons) {
-
-                    showToast(
-                        translateText(
-                            "Please enter the number of lessons."
-                        )
-                    );
-
-                    $("#lessonCount")?.focus();
-
-                    return;
-                }
-
-                if (!course.duration) {
-
-                    showToast(
-                        translateText(
-                            "Please enter the estimated duration."
-                        )
-                    );
-
-                    $("#courseDuration")?.focus();
-
-                    return;
-                }
-
-                const courses =
-                    getCourses();
-
-                const newCourse = {
-
-                    id: Date.now(),
-
-                    ...course,
-
-                    createdAt:
-                        new Date().toISOString()
-                };
-
-                courses.push(
-                    newCourse
-                );
-
-                saveCourses(
-                    courses
-                );
-
-                if (courseGrid) {
-
-                    const card =
-                        createCourseCard(
-                            newCourse
-                        );
-
-                    card.dataset.wasslaCourse =
-                        "true";
-
-                    courseGrid.appendChild(
-                        card
-                    );
-                }
-
-                updateCourseCount();
-
-                courseForm.reset();
-
-                closePreview();
-
+            if (index === -1) {
+                editingCourseId = null;
                 showToast(
-                    translateText(
-                        "Course created successfully!"
-                    )
-                );
-
-                setTimeout(
-                    () => {
-                        showSection(
-                            "courses"
-                        );
-                    },
-                    600
-                );
+    translateText("Course not found. Please try again.")
+);
+                return;
             }
+
+            courses[index] = {
+                ...courses[index],
+                ...course,
+                updatedAt: new Date().toISOString()
+            };
+
+            saveCourses(courses);
+
+            editingCourseId = null;
+
+            showToast(
+    translateText("Course updated successfully!")
+);
+        } else {
+            const newCourse = {
+                id: Date.now(),
+                ...course,
+                createdAt: new Date().toISOString()
+            };
+
+            courses.push(newCourse);
+            saveCourses(courses);
+
+            showToast(
+                translateText("Course created successfully!")
+            );
+        }
+
+        refreshCourseCards();
+        updateCourseCount();
+        courseForm.reset();
+        closePreview();
+
+        const submitButton = courseForm.querySelector(
+            'button[type="submit"]'
         );
-    }
+
+        if (submitButton) {
+    submitButton.innerHTML =
+        `<i class="fa-solid fa-plus"></i> ${
+            escapeHTML(getCourseLabel("Create Course"))
+        }`;
+}
+
+        setTimeout(() => {
+            showSection("courses");
+        }, 600);
+    });
+}
+
+       
+
+            
+
+                
 
     /* =========================================================
        EXISTING COURSE ACTIONS
